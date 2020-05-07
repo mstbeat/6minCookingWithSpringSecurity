@@ -1,0 +1,134 @@
+@charset "UTF-8";
+
+/* bodyのフォント指定 */
+body {
+  font-family: sans-serif;
+  font-size: 20px;
+}
+
+/* 「商品情報一覧」をセンター寄せ */
+h2 {
+  text-align: center;
+}
+
+/* 商品情報テーブルの基本設定 */
+table {
+  border-collapse: collapse;
+  margin: auto;
+  table-layout: fixed;
+  width: 65%;
+}
+
+/* テーブルのヘッダーとデータのフォント指定 */
+table th, table td {
+  font-weight: normal;
+  border: solid 1px #000;
+}
+
+/* 商品情報更新ページの更新・削除ボタン */
+.btn {
+  display: flex;
+}
+
+/* 登録ボタン */
+.submit-btn {
+  display: block;
+  margin: 10px 0 20px 90%;
+  border-radius: 5%;
+  font-size: 20px;
+  padding: 5px 20px;
+  border-style: none;
+  border: 1px solid #000;
+  background-color: #808080;
+}
+
+/* 商品情報一覧ページの更新ボタン */
+.update-btn {
+  border-radius: 5%;
+  font-size: 20px;
+  padding: 5px 20px;
+  border-style: none;
+  border: 1px solid #000;
+  background-color: #808080;
+}
+
+/* 商品情報更新ページの更新ボタン */
+.btn-update-btn {
+  display: block;
+  margin: 10px 0 20px 80%;
+  border-radius: 5%;
+  font-size: 20px;
+  padding: 5px 20px;
+  border-style: none;
+  border: 1px solid #000;
+  background-color: #808080;
+}
+
+/* 商品情報更新ページの削除ボタン */
+.btn-delete-btn {
+  position: absolute;
+  top: 154px;
+  left: 87%;
+  margin: 10px 0 20px 10px;
+  border-radius: 5%;
+  font-size: 20px;
+  padding: 5px 20px;
+  border-style: none;
+  border: 1px solid #000;
+  background-color: #808080;
+}
+
+/* 商品情報一覧ページの商品情報件数 */
+.list-count {
+  margin: 70px 0 10px 70% ;
+}
+
+/* フォームのマージン設定 */
+.form-input {
+  margin: 0 25%
+}
+
+/* 商品情報更新ページのフォーム */
+.form-item {
+  display: flex;
+}
+
+/* 商品情報更新ページの商品ID */
+.form-item-id {
+  margin-left: 490px;
+}
+
+/* 商品情報登録ページのテキストボックス */
+.form-input-box {
+  margin: 10px 0;
+}
+
+/* 商品情報登録ページの販売価格のテキストボックス */
+.form-input-box-price {
+  text-align: right;
+}
+
+/* 商品情報登録ページのテキストボックス */
+.form-input-box input{
+  width: 500px;
+  height: 25px;
+  font-size: 100%;
+  border: 1px solid #000;
+}
+
+/* 商品情報登録ページのドロップダウン */
+.form-input-box select{
+  width: 505px;
+  font-size: 100%;
+  border: 1px solid #000;
+}
+
+/* 商品情報登録ページの商品説明 */
+.form-input-box textarea{
+  height: calc( 1.3em * 5 );
+  line-height: 1.3;
+  width: 500px;
+  font-size: 100%;
+  vertical-align: top;
+  border: 1px solid #000;
+}
