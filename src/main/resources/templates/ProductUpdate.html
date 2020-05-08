@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/InventoryControl.css}">
+<title>商品情報更新</title>
+</head>
+<body>
+	<h3>商品情報管理システム</h3>
+	<h2>商品情報更新</h2>
+	<form th:action="@{/createProduct}" method="post" th:object="${product}">
+		<div class="btn">
+			<input type="hidden" name="productId" th:value="${product.productId}">
+			<input class="btn-update-btn" type="submit" value="更新" onclick="return confirm('更新してよろしいですか？');">
+		</div>
+		<div class="form-input">
+			<div class="form-item">
+				<div>　商品ID：</div>
+				<div class="form-item-id" th:text="${product.productId}"></div>
+			</div>
+			<div class="form-input-box">
+				<label for="genre">ジャンル：</label>
+				<select name="genre" id="genre">
+					<!-- <div th:each="genre : ${Genre.values()}">
+						<option th:value="${genre.value}" <c:if test="${product.genre == genre.value}">selected</c:if>>${genre.key}</option>
+					</div> -->
+					<option th:value="${product.genre}" th:text="${product.genre}">
+				</select>
+			</div>
+			<div class="form-input-box">
+				<label for="maker">メーカー：</label>
+				<input type="text" name="maker" th:value="${product.maker}" id="maker">
+			</div>
+			<div class="form-input-box">
+				<label for="ProductName">　商品名：</label>
+				<input type="text" name="productName" th:value="${product.productName}" id="ProductName">
+			</div>
+			<div class="form-input-box">
+				<label for="sellingPrice">販売価格：</label>
+				<input type="text" name="sellingPrice" class="form-input-box-price" th:value="${product.sellingPrice}" id="sellingPrice">
+			</div>
+			<div class="form-input-box">
+				<label for="productDetail">商品説明：</label>
+				<textarea name="productDetail" id="productDetail" th:field="${product.productDetail}"></textarea>
+			</div>
+		</div>
+	</form>
+	<form th:action="@{/product-delete}" method="post" th:object="${product}">
+		<div class="btn">
+			<input type="hidden" name="productId" th:value="${product.productId}">
+			<input class="btn-delete-btn" type="submit" value="削除" onclick="return confirm('削除してよろしいですか？');">
+		</div>
+	</form>
+</body>
+</html>

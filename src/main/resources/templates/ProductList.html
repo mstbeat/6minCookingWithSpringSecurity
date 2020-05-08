@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/InventoryControl.css}">
+<title>商品情報一覧</title>
+</head>
+<body>
+	<h3>商品情報管理システム</h3>
+	<h2>商品情報一覧</h2>
+	<button type="button" class="submit-btn" onclick="window.location.href='product-registration'">登録</button>
+	<div class="list-count">商品情報件数 <nobr th:text="${listproducts.size()}" /> 件</div>
+	<table border="1">
+		<tr>
+			<th bgcolor="#BAD3FF">商品ID</th>
+			<th bgcolor="#BAD3FF">ジャンル</th>
+			<th bgcolor="#BAD3FF">メーカー</th>
+			<th bgcolor="#BAD3FF">商品名</th>
+			<th bgcolor="#BAD3FF">販売価格</th>
+			<th bgcolor="#BAD3FF">更新</th>
+		</tr>
+		<tr th:each="product : ${listproducts}">
+			<td align="right" th:text="${product.productId}" /></td>
+			<div th:switch="${product.genre}">
+	 			<td th:case="0" th:text="指定なし" /></td>
+	 			<td th:case="1" th:text="家電" /></td>
+	 			<td th:case="2" th:text="家具" /></td>
+	 			<td th:case="3" th:text="食品" /></td>
+	 			<td th:case="4" th:text="ファッション" /></td>
+	 			<td th:case="5" th:text="書籍" /></td>
+			</div>
+			<td th:text="${product.maker}" />
+			<td th:text="${product.productName}" />
+			<td align="right" th:text="${product.sellingPrice}" />
+			<td align="center">
+				<form th:action="@{/product-edit}" method="post" th:object="${product}">
+					<input type="hidden" name="productId" th:value="${product.productId}">
+					<input class="update-btn" type="submit" value="更新">
+				</form>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

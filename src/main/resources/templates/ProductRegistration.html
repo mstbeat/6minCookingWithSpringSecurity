@@ -1,26 +1,25 @@
-<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="enums.Genre" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../css/InventoryControl.css">
+<link rel="stylesheet" th:href="@{/css/InventoryControl.css}">
 <title>商品情報登録</title>
 </head>
 <body>
 	<h3>商品情報管理システム</h3>
 	<h2>商品情報登録</h2>
-	<form action="/m.yasuda/product-registration" method="post">
+	<form th:action="@{/createProduct}" method="post" th:object="${product}">
 		<input class="submit-btn" type="submit" value="登録">
 		<div class="form-input">
 			<div class="form-input-box">
 				<label for="genre">ジャンル：</label>
 				<select name="genre" id="genre">
-					<c:forEach var="genre" items="${Genre.values()}">
-						<option value="${genre.value}">${genre.key}</option>
-					</c:forEach>
+					<option th:value="0" th:text="指定なし">
+					<option th:value="1" th:text="家電">
+					<option th:value="2" th:text="家具">
+					<option th:value="3" th:text="食品">
+					<option th:value="4" th:text="ファッション">
+					<option th:value="5" th:text="書籍">
 				</select>
 			</div>
 			<div class="form-input-box">

@@ -1,48 +1,61 @@
 package cooking.app;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cooking.dao.ProductMapper;
+import cooking.entity.Product;
 
 @Controller
 public class CookingController {
-
-	private final JdbcTemplate jdbcTemplate;
 	
 	@Autowired
-	public CookingController(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
-	@GetMapping("/")
-	public String showList(Model model) {
-		String sql = "SELECT genre, maker, productName, sellingPrice FROM t_ProductInfo WHERE productId=11";
-		Map<String, Object> map = jdbcTemplate.queryForMap(sql);
-		model.addAttribute("productId", map.get("productId"));
-		model.addAttribute("genre", map.get("genre"));
-		model.addAttribute("maker", map.get("maker"));
-		model.addAttribute("productName", map.get("productName"));
-		model.addAttribute("sellingPrice", map.get("sellingPrice"));
-		return "list";
-	}
+	ProductMapper mapper;
+	
+	@GetMapping("/product-list")
+	public ModelAndView index(Model model) {
 		
-	@GetMapping("/registration")
-	public String registration(Model model) {
-		model.addAttribute("title", "商品登録");
-		return "registration";
+		ModelAndView mav = new ModelAndView("ProductList");
+		mav.addObject("listproducts", mapper.getAllProducts());
+		return mav;
+
 	}
 	
-	
-	@GetMapping("/update")
-	public String update(Model model) {
-		return "update";
+	@RequestMapping("product-registration")
+	public ModelAndView showForm() {
+		ModelAndView mav = new ModelAndView("ProductRegistration");
+		mav.addObject("product", new Product());
+		return mav;
 	}
 	
-	@GetMapping("/delete")
-	public String delete(Model model) {
-		return "update";
+	@PostMapping("/createProduct")
+	public String createProduct(@ModelAttribute("product") Product product) {
+		
+		if (product.getProductId() == 0){
+			mapper.createProduct(product);
+		} else {
+			mapper.updateProduct(product);
+		}
+		return "redirect:/product-list";
+	}
+	
+	@PostMapping("/product-edit")
+	public  ModelAndView editProduct(@ModelAttribute("productId") int productId) {
+		ModelAndView mav = new ModelAndView("ProductUpdate");
+		Product product = mapper.findById(productId);
+		mav.addObject("product", product);
+		return mav;
+	}
+	
+	@PostMapping("/product-delete")
+	public String deleteProduct(@ModelAttribute("productId") int productId) {
+		mapper.deleteProduct(productId);
+		return "redirect:/product-list";
 	}
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cooking.dao.ProductMapper">
+	<resultMap type="product" id="result">
+		<id property="productId" column="productId"/>
+		<result property="productName" column="productName"/>
+		<result property="genre" column="genre"/>
+		<result property="maker" column="maker"/>
+		<result property="sellingPrice" column="sellingPrice"/>
+		<result property="productDetail" column="productDetail"/>
+	</resultMap>
+	
+	<select id="getAllProducts" resultType="product" resultMap="result">
+		SELECT * FROM t_ProductInfo
+	</select>
+	
+	<insert id="insertProduct" parameterType="product" keyProperty="productId" useGeneratedKeys="true">
+		INSERT INTO t_ProductInfo(productName, genre, maker, sellingPrice, productDetail) 
+		VALUES(#{productName},#{genre},#{maker},#{sellingPrice},#{productDetail})
+	</insert>
+	
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM t_ProductInfo WHERE productId=#{productId}
+	</delete>
+	
+	<select id="findById" parameterType="int" resultType="product" resultMap="result">
+		SELECT * FROM t_ProductInfo WHERE productId=#{productId}
+	</select>
+	
+	<update id="updateProduct" parameterType="product">
+		UPDATE t_ProductInfo SET productName=#{productName}, genre=#{genre}, maker=#{maker}, sellingPrice=#{sellingPrice}, productDetail=#{productDetail} 
+		WHERE productId=#{productId}
+	</update>
+</mapper>
