@@ -21,10 +21,7 @@
 			<div class="form-input-box">
 				<label for="genre">ジャンル：</label>
 				<select name="genre" id="genre">
-					<!-- <div th:each="genre : ${Genre.values()}">
-						<option th:value="${genre.value}" <c:if test="${product.genre == genre.value}">selected</c:if>>${genre.key}</option>
-					</div> -->
-					<option th:value="${product.genre}" th:text="${product.genre}">
+					<option th:each="genre : ${genreList}" th:selected="${product.genre == genre.value}" th:value="${genre.value}" th:text="${genre.key}" />
 				</select>
 			</div>
 			<div class="form-input-box">

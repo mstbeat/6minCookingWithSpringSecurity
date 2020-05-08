@@ -14,12 +14,7 @@
 			<div class="form-input-box">
 				<label for="genre">ジャンル：</label>
 				<select name="genre" id="genre">
-					<option th:value="0" th:text="指定なし">
-					<option th:value="1" th:text="家電">
-					<option th:value="2" th:text="家具">
-					<option th:value="3" th:text="食品">
-					<option th:value="4" th:text="ファッション">
-					<option th:value="5" th:text="書籍">
+					<option th:each="genre : ${genreList}" th:value="${genre.value}" th:text="${genre.key}" />
 				</select>
 			</div>
 			<div class="form-input-box">
