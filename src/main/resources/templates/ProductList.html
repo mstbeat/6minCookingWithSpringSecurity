@@ -12,6 +12,7 @@
 	<div class="list-count">商品情報件数 <nobr th:text="${listproducts.size()}" /> 件</div>
 	<table border="1">
 		<tr>
+			<th bgcolor="#BAD3FF">イメージ</th>
 			<th bgcolor="#BAD3FF">商品ID</th>
 			<th bgcolor="#BAD3FF">ジャンル</th>
 			<th bgcolor="#BAD3FF">メーカー</th>
@@ -20,7 +21,11 @@
 			<th bgcolor="#BAD3FF">更新</th>
 		</tr>
 		<tr th:each="product : ${listproducts}">
-			<td align="right" th:text="${product.productId}" /></td>
+			<td align="center">
+				<img class="img" width="100" height="100" th:src="'data:image/png;base64,' + ${product.base64Img}">
+				<input type="hidden" name="productImg" th:value="${product.base64Img}" />
+			</td>
+			<td align="right" th:text="${product.productID}" /></td>
 			<div th:switch="${product.genre}">
 	 			<td th:case="0" th:text="指定なし" /></td>
 	 			<td th:case="1" th:text="家電" /></td>
@@ -34,7 +39,7 @@
 			<td align="right" th:text="${product.sellingPrice}" />
 			<td align="center">
 				<form th:action="@{/product-edit}" method="post" th:object="${product}">
-					<input type="hidden" name="productId" th:value="${product.productId}">
+					<input type="hidden" name="productID" th:value="${product.productID}">
 					<input class="update-btn" type="submit" value="更新">
 				</form>
 			</td>

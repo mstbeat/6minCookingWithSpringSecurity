@@ -33,7 +33,7 @@ table th, table td {
 /* 登録ボタン */
 .submit-btn {
   display: block;
-  margin: 10px 0 20px 90%;
+  margin: 10px 0 20px 80%;
   border-radius: 5%;
   font-size: 20px;
   padding: 5px 20px;
@@ -55,7 +55,7 @@ table th, table td {
 /* 商品情報更新ページの更新ボタン */
 .btn-update-btn {
   display: block;
-  margin: 10px 0 20px 80%;
+  margin: 10px 0 20px 72%;
   border-radius: 5%;
   font-size: 20px;
   padding: 5px 20px;
@@ -66,6 +66,20 @@ table th, table td {
 
 /* 商品情報更新ページの削除ボタン */
 .btn-delete-btn {
+  position: absolute;
+  top: 154px;
+  left: 79%;
+  margin: 10px 0 20px 10px;
+  border-radius: 5%;
+  font-size: 20px;
+  padding: 5px 20px;
+  border-style: none;
+  border: 1px solid #000;
+  background-color: #808080;
+}
+
+/* 商品情報更新ページの戻るボタン */
+.btn-goback-btn {
   position: absolute;
   top: 154px;
   left: 87%;
@@ -131,4 +145,8 @@ table th, table td {
   font-size: 100%;
   vertical-align: top;
   border: 1px solid #000;
+}
+
+.form-file-img{
+  margin: 10px 0 0 110px;
 }

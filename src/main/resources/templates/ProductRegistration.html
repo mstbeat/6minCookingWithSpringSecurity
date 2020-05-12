@@ -8,8 +8,14 @@
 <body>
 	<h3>商品情報管理システム</h3>
 	<h2>商品情報登録</h2>
-	<form th:action="@{/createProduct}" method="post" th:object="${product}">
-		<input class="submit-btn" type="submit" value="登録">
+	<form th:action="@{/createProduct}" method="post" th:object="${product}" enctype="multipart/form-data">
+		<ul th:if="${#fields.hasAnyErrors()}">
+		  <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+		</ul>
+		<div class="btn">
+			<input class="submit-btn" type="submit" value="登録">
+			<button type="button" class="btn-goback-btn" onclick="window.location.href='product-list'">戻る</button>
+		</div>
 		<div class="form-input">
 			<div class="form-input-box">
 				<label for="genre">ジャンル：</label>
@@ -19,7 +25,7 @@
 			</div>
 			<div class="form-input-box">
 				<label for="maker">メーカー：</label>
-				<input type="text" name="maker" id="maker">
+				<input type="text" name="maker" id="maker" th:value="${product.maker}">
 			</div>
 			<div class="form-input-box">
 				<label for="productName">　商品名：</label>
@@ -32,6 +38,10 @@
 			<div class="form-input-box">
 				<label for="productDetail">商品説明：</label>
 				<textarea name="productDetail" id="productDetail"></textarea>
+			</div>
+			<div class="form-file">
+				<label for="productImg">商品画像：</label>
+				<input type="file" name=multipartFile id="productImg">
 			</div>
 		</div>
 	</form>

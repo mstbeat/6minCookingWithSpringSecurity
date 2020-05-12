@@ -26,9 +26,9 @@ public class ProductMapper {
 		session.close();
 	}
 	
-	public Product findById(int productId) {
+	public Product findById(int productID) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		Product product = (Product)session.selectOne("findById", productId);
+		Product product = (Product)session.selectOne("findById", productID);
 		session.commit();
 		session.close();
 		return product;
@@ -41,9 +41,9 @@ public class ProductMapper {
 		session.close();
 	}
 	
-	public void deleteProduct(int productId) {
+	public void deleteProduct(int productID) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.delete("deleteProduct", productId);
+		session.delete("deleteProduct", productID);
 		session.commit();
 		session.close();
 	}
