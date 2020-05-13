@@ -8,7 +8,15 @@
 <body>
 	<h3>商品情報管理システム</h3>
 	<h2>商品情報更新</h2>
-	<form th:action="@{/createProduct}" method="post" th:object="${product}" enctype="multipart/form-data">
+	<form th:action="@{/product-update}" method="post" th:object="${product}" enctype="multipart/form-data">
+		<div class="error-message">
+			<ul th:if="${#fields.hasAnyErrors()}">
+			  <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+			</ul>
+			<div th:if="${message != null}">
+				<p th:text="${message}">
+			</div>
+		</div>
 		<div class="btn">
 			<input type="hidden" name="productID" th:value="${product.productID}">
 			<input class="btn-update-btn" type="submit" value="更新" onclick="return confirm('更新してよろしいですか？');">
@@ -44,8 +52,10 @@
 			<div class="form-file">
 				<label for="productImg">商品画像：</label>
 				<input type="file" name="multipartFile" id="productImg">
-				<input type="hidden" name="productImg" th:value="${product.base64Img}"><br>
-				<img class="form-file-img" width="100" height="100" th:src="'data:image/png;base64,' + ${product.base64Img}">
+				<div th:if="${product.productImg}">
+					<input type="hidden" name="productImg" th:value="${product.base64Img}"><br>
+					<img class="form-file-img" width="100" height="100" th:src="'data:image/png;base64,' + ${product.base64Img}">
+				</div>
 			</div>
 		</div>
 	</form>
@@ -53,6 +63,11 @@
 		<div class="btn">
 			<input type="hidden" name="productID" th:value="${product.productID}">
 			<input class="btn-delete-btn" type="submit" value="削除" onclick="return confirm('削除してよろしいですか？');">
+		</div>
+	</form>
+	<form th:action="@{/product-list}" method="get">
+		<div class="btn">
+			<input type="submit" value="戻る" class="btn-goback-btn" onclick="return confirm('入力内容は保存されません。前画面に戻りますか？');">
 		</div>
 	</form>
 </body>

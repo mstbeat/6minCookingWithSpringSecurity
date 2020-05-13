@@ -2,7 +2,6 @@ package cooking.entity;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.Base64;
 
@@ -13,6 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -38,14 +40,19 @@ public class Product {
 	private String genre;
 	
 	@Column(name="Maker")
-//	@NotNull(message="メーカー名の入力は必須です。")
-//	@Size(max=20, message="商品名は20桁以下の範囲で入力してください。")
+	@NotNull(message="メーカー名の入力は必須です。")
+	@Size(max=20, message="商品名は20桁以下の範囲で入力してください。")
 	private String maker;
 	
 	@Column(name="SellingPrice")
+	@NotNull(message="販売価格の入力は必須です。")
+	@Digits(integer=11, fraction=2, message="販売価格は半角数字以外入力できません。")
+	@DecimalMin(value="1", message="販売価格は1以上の範囲で入力してください。")
+	@DecimalMax(value="100000000", message="販売価格は100000000以下の範囲で入力してください。")
 	private BigDecimal sellingPrice;
 	
 	@Column(name="ProductDetail")
+	@Size(max=200, message="商品説明は200桁以下の範囲で入力してください。")
 	private String productDetail;
 	
 	@Column(name="ProductImg")
@@ -120,7 +127,7 @@ public class Product {
 	}
 	
 	public BigDecimal getSellingPrice() {
-		return sellingPrice.setScale(0, RoundingMode.HALF_UP);
+		return sellingPrice;
 	}
 	
 	public void setSellingPrice(BigDecimal sellingPrice) {

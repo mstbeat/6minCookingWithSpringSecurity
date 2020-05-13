@@ -16,7 +16,7 @@ table {
   border-collapse: collapse;
   margin: auto;
   table-layout: fixed;
-  width: 65%;
+  width: 80%;
 }
 
 /* テーブルのヘッダーとデータのフォント指定 */
@@ -32,8 +32,10 @@ table th, table td {
 
 /* 登録ボタン */
 .submit-btn {
-  display: block;
-  margin: 10px 0 20px 80%;
+  position: absolute;
+  top: 154px;
+  left: 79%;
+  margin: 10px 0 20px 20px;
   border-radius: 5%;
   font-size: 20px;
   padding: 5px 20px;
@@ -54,8 +56,10 @@ table th, table td {
 
 /* 商品情報更新ページの更新ボタン */
 .btn-update-btn {
-  display: block;
-  margin: 10px 0 20px 72%;
+  position: absolute;
+  top: 154px;
+  left: 70%;
+  margin: 10px 0 20px 20px;
   border-radius: 5%;
   font-size: 20px;
   padding: 5px 20px;
@@ -94,7 +98,24 @@ table th, table td {
 
 /* 商品情報一覧ページの商品情報件数 */
 .list-count {
-  margin: 70px 0 10px 70% ;
+  margin: 110px 0 10px 70% ;
+}
+
+/* 登録・更新・削除メッセージのマージン設定 */
+.messages {
+  margin-left: 10%;
+}
+
+/* エラーメッセージのマージン設定 */
+.error-message {
+  margin: 0 30% 15px;
+  color: red;
+   height: 100px;
+}
+
+/* エラーメッセージのリスト */
+.error-message li{
+   list-style: none;
 }
 
 /* フォームのマージン設定 */

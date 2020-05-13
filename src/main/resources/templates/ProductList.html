@@ -8,6 +8,11 @@
 <body>
 	<h3>商品情報管理システム</h3>
 	<h2>商品情報一覧</h2>
+	<div class="messages">
+		<div th:if="${message != null}">
+			<p th:text="${message}">
+		</div>
+	</div>
 	<button type="button" class="submit-btn" onclick="window.location.href='product-registration'">登録</button>
 	<div class="list-count">商品情報件数 <nobr th:text="${listproducts.size()}" /> 件</div>
 	<table border="1">
@@ -22,8 +27,13 @@
 		</tr>
 		<tr th:each="product : ${listproducts}">
 			<td align="center">
-				<img class="img" width="100" height="100" th:src="'data:image/png;base64,' + ${product.base64Img}">
-				<input type="hidden" name="productImg" th:value="${product.base64Img}" />
+				<div th:if="${product.productImg}">
+					<img class="img" width="100" height="100" th:src="'data:image/png;base64,' + ${product.base64Img}">
+					<input type="hidden" name="productImg" th:value="${product.base64Img}" />
+				</div>
+				<div th:unless="${product.productImg}">
+					no_image.png
+				</div>
 			</td>
 			<td align="right" th:text="${product.productID}" /></td>
 			<div th:switch="${product.genre}">
@@ -38,7 +48,7 @@
 			<td th:text="${product.productName}" />
 			<td align="right" th:text="${product.sellingPrice}" />
 			<td align="center">
-				<form th:action="@{/product-edit}" method="post" th:object="${product}">
+				<form th:action="@{/product-update}" method="get" th:object="${product}">
 					<input type="hidden" name="productID" th:value="${product.productID}">
 					<input class="update-btn" type="submit" value="更新">
 				</form>
