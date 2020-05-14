@@ -17,7 +17,7 @@
 		<result property="updateDate" column="UpdateDate"/>
 	</resultMap>
 	
-	<select id="getAllProducts" resultType="product" resultMap="result">
+	<select id="getProductInfoList" resultType="product" resultMap="result">
 		SELECT 
 			ProductID, 
 			Genre, 
@@ -33,7 +33,7 @@
 			ProductID ASC
 	</select>
 	
-	<insert id="insertProduct" parameterType="product" keyProperty="productID" 
+	<insert id="insertProductInfo" parameterType="product" keyProperty="productID" 
 					useGeneratedKeys="true">
 		INSERT INTO ProductInfo (
 			ProductName, 
@@ -56,7 +56,7 @@
 		)
 	</insert>
 	
-	<update id="deleteProduct" parameterType="int">
+	<update id="deleteProductInfo" parameterType="int">
 		UPDATE 
 			ProductInfo 
 		SET 
@@ -66,7 +66,7 @@
 			ProductID = #{productID} 
 	</update>
 	
-	<select id="findById" parameterType="int" resultType="product" resultMap="result">
+	<select id="getProductInfo" parameterType="int" resultType="product" resultMap="result">
 		SELECT 
 			ProductID, 
 			ProductName, 
@@ -83,7 +83,7 @@
 			AND DeleteFlg = '0' 
 	</select>
 	
-	<update id="updateProduct" parameterType="product">
+	<update id="updateProductInfo" parameterType="product">
 		UPDATE 
 			ProductInfo 
 		SET 

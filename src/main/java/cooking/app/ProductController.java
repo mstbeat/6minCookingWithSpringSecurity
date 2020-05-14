@@ -27,7 +27,7 @@ public class ProductController {
 	
 	@Autowired
 	ProductMapper mapper;
-	
+
 	@GetMapping("/product-list")
 	public ModelAndView index(Model model) {
 		String msg = (String) model.asMap().get("message");
@@ -54,47 +54,41 @@ public class ProductController {
 			@RequestParam("productImg") Optional<String> productImg, 
 			RedirectAttributes redirectAttributes) throws IOException {
 		
-		if (product.getProductID() == 0){
-			if (bindingResult.hasErrors()) {
-				if (!(multipartFile.isEmpty())) {
-					product.setProductImg(product.getMultipartFile().getBytes());
-				}
-				if (productImg.isPresent()) {
-					String img = productImg.get();
-					product.setProductImg(DatatypeConverter.parseBase64Binary(img));
-					model.addAttribute("productImg", product.getBase64Img());
-				}
-				model.addAttribute("product", product);
-				model.addAttribute("genreList", GenreEnum.values());
-				return "ProductRegistration";
+		if (!(multipartFile.isEmpty())) {
+			if (!(multipartFile.getContentType().toLowerCase().equals("image/jpg") || 
+					multipartFile.getContentType().toLowerCase().equals("image/jpeg") || 
+					multipartFile.getContentType().toLowerCase().equals("image/png"))) {
+				bindingResult.rejectValue("multipartFile", null, "ファイル形式が「JPEG」、「PNG」以外の画像は登録できません。");
+			}
+			if (multipartFile.getOriginalFilename().length() >= 15 ){
+				bindingResult.rejectValue("multipartFile", null, "ファイル名(拡張子含む)が15桁を超える画像は登録できません。");
+			}
+			if (multipartFile.getSize() > 500000) {
+				bindingResult.rejectValue("multipartFile", null, "ファイルサイズが500KBを超える画像は登録できません。");
+			}
+		}
+		
+		if (bindingResult.hasErrors()) {
+			if (!(multipartFile.isEmpty())) {
+				product.setProductImg(product.getMultipartFile().getBytes());
 			}
 			if (productImg.isPresent()) {
 				String img = productImg.get();
 				product.setProductImg(DatatypeConverter.parseBase64Binary(img));
+				model.addAttribute("productImg", product.getBase64Img());
 			}
-			
-			redirectAttributes.addFlashAttribute("message", "商品情報を登録しました。");
-			mapper.createProduct(product);
-		} else {
-			if (multipartFile.isEmpty()) {
-				if (productImg.isPresent()) {
-					String img = productImg.get();
-					product.setProductImg(DatatypeConverter.parseBase64Binary(img));
-				}
-			} else {
-				product.setProductImg(product.getMultipartFile().getBytes());
-			}
-			if (bindingResult.hasErrors()) {
-				if (productImg.isPresent()) {
-					model.addAttribute("productImg", product.getBase64Img());
-				}
-				model.addAttribute("product", product);
-				model.addAttribute("genreList", GenreEnum.values());
-				return "ProductUpdate";
-			}
-			redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");
-			mapper.updateProduct(product);
+			model.addAttribute("product", product);
+			model.addAttribute("genreList", GenreEnum.values());
+			return "ProductRegistration";
 		}
+		if (productImg.isPresent()) {
+			String img = productImg.get();
+			product.setProductImg(DatatypeConverter.parseBase64Binary(img));
+		}
+		
+		redirectAttributes.addFlashAttribute("message", "商品情報を登録しました。");
+		mapper.createProduct(product);
+		
 		model.addAttribute("product", product);
 		return "redirect:/product-list";
 	}
@@ -126,12 +120,24 @@ public class ProductController {
 		
 		Product beforeProduct = mapper.findById(product.getProductID());
 		
+		
 		if (multipartFile.isEmpty()) {
 			if (productImg.isPresent()) {
 				String img = productImg.get();
 				product.setProductImg(DatatypeConverter.parseBase64Binary(img));
 			}
 		} else {
+			if (!(multipartFile.getContentType().toLowerCase().equals("image/jpg") || 
+					multipartFile.getContentType().toLowerCase().equals("image/jpeg") || 
+					multipartFile.getContentType().toLowerCase().equals("image/png"))) {
+				bindingResult.rejectValue("multipartFile", null, "ファイル形式が「JPEG」、「PNG」以外の画像は登録できません。");
+			}
+			if (multipartFile.getOriginalFilename().length() >= 15 ){
+				bindingResult.rejectValue("multipartFile", null, "ファイル名(拡張子含む)が15桁を超える画像は登録できません。");
+			}
+			if (multipartFile.getSize() > 500000) {
+				bindingResult.rejectValue("multipartFile", null, "ファイルサイズが500KBを超える画像は登録できません。");
+			}
 			product.setProductImg(product.getMultipartFile().getBytes());
 		}
 		if (bindingResult.hasErrors()) {
@@ -151,37 +157,43 @@ public class ProductController {
 					redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
 					redirectAttributes.addAttribute("productID", product.getProductID());
 					return "redirect:/product-update";
-				} else if (product.getProductImg() == null || beforeProduct.getProductImg() == null){
+				}
+				if (product.getProductImg() == null || beforeProduct.getProductImg() == null){
 					redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");
 					mapper.updateProduct(product);
 					model.addAttribute("product", product);
 					return "redirect:/product-list";
-				} else if (product.getBase64Img().equals(beforeProduct.getBase64Img())) {
-					redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
-					redirectAttributes.addAttribute("productID", product.getProductID());
-					return "redirect:/product-update";
-				} else {
-					
 				}
-			} else if (product.getProductDetail().equals(beforeProduct.getProductDetail())) {
-				if (product.getProductImg() == null && beforeProduct.getProductImg() == null) {
+				if (product.getBase64Img().equals(beforeProduct.getBase64Img())) {
 					redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
 					redirectAttributes.addAttribute("productID", product.getProductID());
 					return "redirect:/product-update";
-				} else if (product.getProductImg() == null || beforeProduct.getProductImg() == null){
-					redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");
-					mapper.updateProduct(product);
-					model.addAttribute("product", product);
-					return "redirect:/product-list";
-				} else if (product.getBase64Img().equals(beforeProduct.getBase64Img())) {
-					redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
-					redirectAttributes.addAttribute("productID", product.getProductID());
-					return "redirect:/product-update";
-				} else {
-					
 				}
+			}
+			if (product.getProductDetail() == null || beforeProduct.getProductDetail() == null) {
+				redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");
+				mapper.updateProduct(product);
+				model.addAttribute("product", product);
+				return "redirect:/product-list";
 			} else {
-
+				if (product.getProductDetail().equals(beforeProduct.getProductDetail())) {
+					if (product.getProductImg() == null && beforeProduct.getProductImg() == null) {
+						redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
+						redirectAttributes.addAttribute("productID", product.getProductID());
+						return "redirect:/product-update";
+					}
+					if (product.getProductImg() == null || beforeProduct.getProductImg() == null){
+						redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");
+						mapper.updateProduct(product);
+						model.addAttribute("product", product);
+						return "redirect:/product-list";
+					}
+					if (product.getBase64Img().equals(beforeProduct.getBase64Img())) {
+						redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
+						redirectAttributes.addAttribute("productID", product.getProductID());
+						return "redirect:/product-update";
+					}
+				}
 			}
 		}
 		redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");

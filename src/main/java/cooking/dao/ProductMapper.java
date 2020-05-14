@@ -13,7 +13,7 @@ public class ProductMapper {
 
 	public List<Product> getAllProducts(){
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		List<Product> productList = session.selectList("getAllProducts");
+		List<Product> productList = session.selectList("getProductInfoList");
 		session.commit();
 		session.close();
 		return productList;
@@ -21,14 +21,14 @@ public class ProductMapper {
 	
 	public void createProduct(Product product) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.insert("insertProduct", product);
+		session.insert("insertProductInfo", product);
 		session.commit();
 		session.close();
 	}
 	
 	public Product findById(int productID) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		Product product = (Product)session.selectOne("findById", productID);
+		Product product = (Product)session.selectOne("getProductInfo", productID);
 		session.commit();
 		session.close();
 		return product;
@@ -36,14 +36,14 @@ public class ProductMapper {
 	
 	public void updateProduct(Product product) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.update("updateProduct", product);
+		session.update("updateProductInfo", product);
 		session.commit();
 		session.close();
 	}
 	
 	public void deleteProduct(int productID) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.delete("deleteProduct", productID);
+		session.delete("deleteProductInfo", productID);
 		session.commit();
 		session.close();
 	}

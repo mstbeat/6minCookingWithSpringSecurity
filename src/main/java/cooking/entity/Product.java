@@ -2,6 +2,7 @@ package cooking.entity;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.Base64;
 
@@ -14,7 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -46,7 +46,6 @@ public class Product {
 	
 	@Column(name="SellingPrice")
 	@NotNull(message="販売価格の入力は必須です。")
-	@Digits(integer=11, fraction=2, message="販売価格は半角数字以外入力できません。")
 	@DecimalMin(value="1", message="販売価格は1以上の範囲で入力してください。")
 	@DecimalMax(value="100000000", message="販売価格は100000000以下の範囲で入力してください。")
 	private BigDecimal sellingPrice;
@@ -131,7 +130,10 @@ public class Product {
 	}
 	
 	public void setSellingPrice(BigDecimal sellingPrice) {
-		this.sellingPrice = sellingPrice;
+		if (sellingPrice != null) {
+			this.sellingPrice = sellingPrice.setScale(0, RoundingMode.HALF_UP);
+			
+		}
 	}
 	
 	public String getProductDetail() {
