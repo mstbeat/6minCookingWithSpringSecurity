@@ -14,16 +14,16 @@
     </div>
   </div>
   <button type="button" class="submit-btn" onclick="window.location.href='product-registration'">登録</button>
-  <div class="list-count">商品情報件数 <nobr th:text="${listproducts.size()}" /> 件</div>
+  <div class="list-count">商品情報件数 <nobr th:text="${listproducts.size()}"></nobr> 件</div>
   <table border="1">
     <tr>
-      <th class="table-header">イメージ</th>
-      <th class="table-header">商品ID</th>
-      <th class="table-header">ジャンル</th>
-      <th class="table-header">メーカー</th>
-      <th class="table-header">商品名</th>
-      <th class="table-header">販売価格</th>
-      <th class="table-header">更新</th>
+      <th class="table-header table-header-img">イメージ</th>
+      <th class="table-header table-header-id">商品ID</th>
+      <th class="table-header table-header-genre">ジャンル</th>
+      <th class="table-header table-header-maker">メーカー</th>
+      <th class="table-header table-header-name">商品名</th>
+      <th class="table-header table-header-price">販売価格</th>
+      <th class="table-header table-header-btn">更新</th>
     </tr>
     <tr th:each="product : ${listproducts}">
       <td class="table-center">
@@ -32,20 +32,13 @@
           <input type="hidden" name="productImg" th:value="${product.base64Img}" />
         </div>
         <div th:unless="${product.productImg}">
-          no_image.png
+          <span>no_image.png</span>
         </div>
       </td>
-      <td class="table-right" th:text="${product.productID}" /></td>
-      <div th:switch="${product.genre}">
-        <td th:case="0" th:text="指定なし" /></td>
-        <td th:case="1" th:text="家電" /></td>
-        <td th:case="2" th:text="家具" /></td>
-        <td th:case="3" th:text="食品" /></td>
-        <td th:case="4" th:text="ファッション" /></td>
-        <td th:case="5" th:text="書籍" /></td>
-      </div>
-      <td th:text="${product.maker}" />
-      <td th:text="${product.productName}" />
+      <td class="table-right" th:text="${product.productID}" />
+      <td class="table-left" th:text="${T(cooking.entity.GenreEnum).getKeyByValue(product.genre)}" />
+      <td class="table-left" th:text="${product.maker}" />
+      <td class="table-left" th:text="${product.productName}" />
       <td class="table-right" th:text="${product.sellingPrice}" />
       <td class="table-center">
         <form th:action="@{/product-update}" method="get" th:object="${product}">
