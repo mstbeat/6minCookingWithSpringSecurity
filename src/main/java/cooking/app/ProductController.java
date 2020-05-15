@@ -12,6 +12,7 @@
 package cooking.app;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -291,9 +292,10 @@ public class ProductController {
 	 * @return 遷移先
 	 */
 	@PostMapping("/product-delete")
-	public String deleteProduct(@ModelAttribute("productID") int productID, Model model,
+	public String deleteProduct(@ModelAttribute("productID") int productID,
+			@ModelAttribute("updateDate") Timestamp updateDate, Model model,
 			RedirectAttributes redirectAttributes, Locale locale) {
-		mapper.deleteProduct(productID);
+		mapper.deleteProduct(productID, updateDate);
 		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG203", null, locale));
 		return "redirect:/product-list";
 	}

@@ -11,8 +11,12 @@
 
 package cooking.dao;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -77,9 +81,12 @@ public class ProductMapper {
 	 * 商品情報を削除するメソッド
 	 * @param productID 商品ID
 	 */
-	public void deleteProduct(int productID) {
+	public void deleteProduct(@Param("productId") int productID, @Param("updateDate") Timestamp updateDate) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.delete("deleteProductInfo", productID);
+		Map<String, Object> param = new HashMap<>();
+		param.put("productID", productID);
+		param.put("updateDate", updateDate);
+		session.delete("deleteProductInfo", param);
 		session.commit();
 		session.close();
 	}

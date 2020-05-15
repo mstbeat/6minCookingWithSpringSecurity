@@ -56,7 +56,7 @@
 		)
 	</insert>
 	
-	<update id="deleteProductInfo" parameterType="int">
+	<update id="deleteProductInfo">
 		UPDATE 
 			ProductInfo 
 		SET 
@@ -64,9 +64,10 @@
 			UpdateDate = CURRENT_TIMESTAMP()
 		WHERE 
 			ProductID = #{productID} 
+			AND UpdateDate <![CDATA[ = ]]> #{updateDate}
 	</update>
 	
-	<select id="getProductInfo" parameterType="int" resultType="product" resultMap="result">
+	<select id="getProductInfo" resultType="product" resultMap="result">
 		SELECT 
 			ProductID, 
 			ProductName, 
@@ -95,6 +96,7 @@
 			ProductImg = #{productImg}, 
 			UpdateDate = CURRENT_TIMESTAMP()
 		WHERE 
-			ProductID = #{productID}
+			ProductID = #{productID} 
+			AND UpdateDate <![CDATA[ = ]]> #{updateDate}
 	</update>
 </mapper>
