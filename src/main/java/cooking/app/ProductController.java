@@ -1,15 +1,19 @@
 package cooking.app;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.validation.Valid;
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +31,20 @@ public class ProductController {
 	
 	@Autowired
 	ProductMapper mapper;
+	
+	@Autowired
+	private MessageSource messageSource;
+	
+	@Bean
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
+        localValidatorFactoryBean.setValidationMessageSource(messageSource);
+        return localValidatorFactoryBean;
+    }
+
+    public org.springframework.validation.Validator getValidator() {
+        return validator();
+    }
 
 	@GetMapping("/product-list")
 	public ModelAndView index(Model model) {
@@ -52,19 +70,22 @@ public class ProductController {
 			Model model, 
 			@RequestParam("multipartFile") MultipartFile multipartFile,
 			@RequestParam("productImg") Optional<String> productImg, 
-			RedirectAttributes redirectAttributes) throws IOException {
+			RedirectAttributes redirectAttributes, 
+			Locale locale) throws IOException {
+		
+		;
 		
 		if (!(multipartFile.isEmpty())) {
 			if (!(multipartFile.getContentType().toLowerCase().equals("image/jpg") || 
 					multipartFile.getContentType().toLowerCase().equals("image/jpeg") || 
 					multipartFile.getContentType().toLowerCase().equals("image/png"))) {
-				bindingResult.rejectValue("multipartFile", null, "ファイル形式が「JPEG」、「PNG」以外の画像は登録できません。");
+				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG102", null, locale));
 			}
 			if (multipartFile.getOriginalFilename().length() >= 15 ){
-				bindingResult.rejectValue("multipartFile", null, "ファイル名(拡張子含む)が15桁を超える画像は登録できません。");
+				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG101", null, locale));
 			}
 			if (multipartFile.getSize() > 500000) {
-				bindingResult.rejectValue("multipartFile", null, "ファイルサイズが500KBを超える画像は登録できません。");
+				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG103", null, locale));
 			}
 		}
 		
@@ -86,7 +107,7 @@ public class ProductController {
 			product.setProductImg(DatatypeConverter.parseBase64Binary(img));
 		}
 		
-		redirectAttributes.addFlashAttribute("message", "商品情報を登録しました。");
+		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG201", null, locale));
 		mapper.createProduct(product);
 		
 		model.addAttribute("product", product);
@@ -94,12 +115,12 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product-update")
-	public  String editProduct(@ModelAttribute("productID") int productID, Model model, RedirectAttributes redirectAttributes) {
+	public  String editProduct(@ModelAttribute("productID") int productID, Model model, RedirectAttributes redirectAttributes, Locale locale) {
 		String msg = (String) model.asMap().get("message");
 		model.addAttribute("message", msg);
 		Product product = mapper.findById(productID);
 		if (product == null) {
-			redirectAttributes.addFlashAttribute("message","選択された情報は既に他ユーザーにより削除されています。");
+			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("EMSG202", null, locale));
 			return "redirect:/product-list";
 		}
 		if (!(product.getProductImg() == null)) {
@@ -116,7 +137,8 @@ public class ProductController {
 			Model model, 
 			@RequestParam("multipartFile") MultipartFile multipartFile,
 			@RequestParam("productImg") Optional<String> productImg, 
-			RedirectAttributes redirectAttributes) throws IOException {
+			RedirectAttributes redirectAttributes, 
+			Locale locale) throws IOException {
 		
 		Product beforeProduct = mapper.findById(product.getProductID());
 		
@@ -130,13 +152,13 @@ public class ProductController {
 			if (!(multipartFile.getContentType().toLowerCase().equals("image/jpg") || 
 					multipartFile.getContentType().toLowerCase().equals("image/jpeg") || 
 					multipartFile.getContentType().toLowerCase().equals("image/png"))) {
-				bindingResult.rejectValue("multipartFile", null, "ファイル形式が「JPEG」、「PNG」以外の画像は登録できません。");
+				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG102", null, locale));
 			}
 			if (multipartFile.getOriginalFilename().length() >= 15 ){
-				bindingResult.rejectValue("multipartFile", null, "ファイル名(拡張子含む)が15桁を超える画像は登録できません。");
+				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG101", null, locale));
 			}
 			if (multipartFile.getSize() > 500000) {
-				bindingResult.rejectValue("multipartFile", null, "ファイルサイズが500KBを超える画像は登録できません。");
+				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG103", null, locale));
 			}
 			product.setProductImg(product.getMultipartFile().getBytes());
 		}
@@ -154,49 +176,49 @@ public class ProductController {
 				product.getSellingPrice().equals(beforeProduct.getSellingPrice())) {
 			if (product.getProductDetail() == null && beforeProduct.getProductDetail() == null) {
 				if (product.getProductImg() == null && beforeProduct.getProductImg() == null) {
-					redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
+					redirectAttributes.addFlashAttribute("message", messageSource.getMessage("EMSG201", null, locale));
 					redirectAttributes.addAttribute("productID", product.getProductID());
 					return "redirect:/product-update";
 				}
 				if (product.getProductImg() == null || beforeProduct.getProductImg() == null){
-					redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");
+					redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG202", null, locale));
 					mapper.updateProduct(product);
 					model.addAttribute("product", product);
 					return "redirect:/product-list";
 				}
 				if (product.getBase64Img().equals(beforeProduct.getBase64Img())) {
-					redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
+					redirectAttributes.addFlashAttribute("message", messageSource.getMessage("EMSG201", null, locale));
 					redirectAttributes.addAttribute("productID", product.getProductID());
 					return "redirect:/product-update";
 				}
 			}
 			if (product.getProductDetail() == null || beforeProduct.getProductDetail() == null) {
-				redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");
+				redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG202", null, locale));
 				mapper.updateProduct(product);
 				model.addAttribute("product", product);
 				return "redirect:/product-list";
 			} else {
 				if (product.getProductDetail().equals(beforeProduct.getProductDetail())) {
 					if (product.getProductImg() == null && beforeProduct.getProductImg() == null) {
-						redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
+						redirectAttributes.addFlashAttribute("message", messageSource.getMessage("EMSG201", null, locale));
 						redirectAttributes.addAttribute("productID", product.getProductID());
 						return "redirect:/product-update";
 					}
 					if (product.getProductImg() == null || beforeProduct.getProductImg() == null){
-						redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");
+						redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG202", null, locale));
 						mapper.updateProduct(product);
 						model.addAttribute("product", product);
 						return "redirect:/product-list";
 					}
 					if (product.getBase64Img().equals(beforeProduct.getBase64Img())) {
-						redirectAttributes.addFlashAttribute("message", "選択された情報は既に他ユーザーにより更新されています。");
+						redirectAttributes.addFlashAttribute("message", messageSource.getMessage("EMSG201", null, locale));
 						redirectAttributes.addAttribute("productID", product.getProductID());
 						return "redirect:/product-update";
 					}
 				}
 			}
 		}
-		redirectAttributes.addFlashAttribute("message", "商品情報を更新しました。");
+		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG202", null, locale));
 		mapper.updateProduct(product);
 
 		model.addAttribute("product", product);
@@ -204,9 +226,9 @@ public class ProductController {
 	}
 	
 	@PostMapping("/product-delete")
-	public String deleteProduct(@ModelAttribute("productID") int productID, Model model, RedirectAttributes redirectAttributes) {
+	public String deleteProduct(@ModelAttribute("productID") int productID, Model model, RedirectAttributes redirectAttributes, Locale locale) {
 		mapper.deleteProduct(productID);
-		redirectAttributes.addFlashAttribute("message", "商品情報を削除しました。");
+		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG203", null, locale));
 		return "redirect:/product-list";
 	}
 	

@@ -13,8 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,26 +32,26 @@ public class Product {
 	private int productID;
 	
 	@Column(name="ProductName")
-	@NotNull(message="商品名の入力は必須です。")
-	@Size(max=25, message="商品名は25桁以下の範囲で入力してください。")
+	@NotNull(message="{EMSG001}")
+	@Size(max=25, message="{EMSG002}")
 	private String productName;
 	
 	@Column(name="Genre")
 	private String genre;
 	
 	@Column(name="Maker")
-	@NotNull(message="メーカー名の入力は必須です。")
-	@Size(max=20, message="商品名は20桁以下の範囲で入力してください。")
+	@NotNull(message="{EMSG001}")
+	@Size(max=20, message="{EMSG002}")
 	private String maker;
 	
 	@Column(name="SellingPrice")
-	@NotNull(message="販売価格の入力は必須です。")
-	@DecimalMin(value="1", message="販売価格は1以上の範囲で入力してください。")
-	@DecimalMax(value="100000000", message="販売価格は100000000以下の範囲で入力してください。")
+	@NotNull(message="{EMSG001}")
+	@Min(value=1, message="{EMSG004}")
+	@Max(value=100000000, message="{EMSG005}")
 	private BigDecimal sellingPrice;
 	
 	@Column(name="ProductDetail")
-	@Size(max=200, message="商品説明は200桁以下の範囲で入力してください。")
+	@Size(max=200, message="{EMSG002}")
 	private String productDetail;
 	
 	@Column(name="ProductImg")
