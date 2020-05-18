@@ -25,7 +25,7 @@ public class WebMvcControllerAdvice {
 
 	/**
 	 * 送信された空文字をnullに変換処理
-	 * @param dataBinder WebDataBinder
+	 * @param dataBinder データバインディング
 	 */
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {

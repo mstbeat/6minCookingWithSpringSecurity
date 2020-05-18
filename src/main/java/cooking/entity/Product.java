@@ -65,7 +65,7 @@ public class Product {
 	@Column(name = "SellingPrice")
 	@NotNull(message = "{EMSG001}")
 	@Min(value = 1, message = "{EMSG004}")
-	@Max(value = 100000000, message = "{EMSG005}")
+	@Max(value = 99999999, message = "{EMSG005}")
 	private BigDecimal sellingPrice;
 
 	/** 商品説明 */

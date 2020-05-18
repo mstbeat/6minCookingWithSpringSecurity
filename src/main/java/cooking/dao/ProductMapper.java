@@ -80,14 +80,17 @@ public class ProductMapper {
 	/**
 	 * 商品情報を削除するメソッド
 	 * @param productID 商品ID
+	 * @param updateDate 更新日時
+	 * @return 商品削除件数
 	 */
-	public void deleteProduct(@Param("productId") int productID, @Param("updateDate") Timestamp updateDate) {
+	public int deleteProduct(@Param("productId") int productID, @Param("updateDate") Timestamp updateDate) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		Map<String, Object> param = new HashMap<>();
 		param.put("productID", productID);
 		param.put("updateDate", updateDate);
-		session.delete("deleteProductInfo", param);
+		Integer count = session.delete("deleteProductInfo", param);
 		session.commit();
 		session.close();
+		return count;
 	}
 }

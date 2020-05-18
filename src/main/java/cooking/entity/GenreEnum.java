@@ -41,9 +41,9 @@ public enum GenreEnum {
 	 * @param value ジャンルの値
 	 * @param key ジャンルのキー
 	 */
-	private GenreEnum(String value , String key){
-    	this.value = value;
-    	this.key = key;
+	private GenreEnum(String value, String key) {
+		this.value = value;
+		this.key = key;
 	}
 
 	/**
@@ -61,22 +61,19 @@ public enum GenreEnum {
 	public String getKey() {
 		return key;
 	}
-	
+
 	/**
 	 * 値からキーを得るメソッド.
 	 * @param value ジャンルの値
 	 * @return ジャンルのキー
 	 */
-	public static String getKeyByValue(String value)
-    {
-        for(GenreEnum genre : values())
-        {
-            if(genre.getValue().equals(value))
-            {
-                return genre.getKey();
-            }
-        }
-        throw new IllegalArgumentException(value);
-    }
-	
+	public static String getKeyByValue(String value) {
+		for (GenreEnum genre : values()) {
+			if (genre.getValue().equals(value)) {
+				return genre.getKey();
+			}
+		}
+		throw new IllegalArgumentException(value);
+	}
+
 }

@@ -54,8 +54,8 @@ public class ProductController {
 	private MessageSource messageSource;
 
 	/**
-	 * バリデーションメッセージをメッセージソースにに上書きするメソッド
-	 * @return localValidatorFactoryBean
+	 * バリデーションメッセージをメッセージソースに上書きするメソッド
+	 * @return localValidatorFactoryBean メッセージソースに上書きしたバリデーター
 	 */
 	@Bean
 	public LocalValidatorFactoryBean validator() {
@@ -64,14 +64,10 @@ public class ProductController {
 		return localValidatorFactoryBean;
 	}
 
-	//    public org.springframework.validation.Validator getValidator() {
-	//        return validator();
-	//    }
-
 	/**
 	 * 商品情報一覧表示処理
 	 * @param model モデル
-	 * @return 遷移先
+	 * @return 商品情報一覧画面
 	 */
 	@GetMapping("/product-list")
 	public ModelAndView index(Model model) {
@@ -84,7 +80,7 @@ public class ProductController {
 
 	/**
 	 * 商品情報登録画面表示処理
-	 * @return 遷移先
+	 * @return 商品情報登録画面
 	 */
 	@GetMapping("/product-registration")
 	public ModelAndView showForm() {
@@ -97,14 +93,14 @@ public class ProductController {
 	/**
 	 * 商品情報登録処理
 	 * @param product 商品情報
-	 * @param bindingResult BindingResult
+	 * @param bindingResult バインド結果
 	 * @param model モデル
 	 * @param multipartFile 商品画像のMultipartFile型
 	 * @param productImg 商品画像のbyte型
-	 * @param redirectAttributes RedirectAttibutes
-	 * @param locale Locale
+	 * @param redirectAttributes リダイレクト時の情報受け渡し
+	 * @param locale 実行環境のロケール
 	 * @throws IOException 入出力例外が発生した場合
-	 * @return 遷移先
+	 * @return 商品情報一覧
 	 */
 	@PostMapping("/product-registration")
 	public String createProduct(@Valid @ModelAttribute("product") Product product,
@@ -124,7 +120,7 @@ public class ProductController {
 			if (multipartFile.getOriginalFilename().length() >= 15) {
 				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG101", null, locale));
 			}
-			if (multipartFile.getSize() > 500000) {
+			if (multipartFile.getSize() > 512000) {
 				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG103", null, locale));
 			}
 		}
@@ -155,9 +151,9 @@ public class ProductController {
 	 * 商品情報更新画面表示処理
 	 * @param productID 商品ID
 	 * @param model モデル
-	 * @param redirectAttributes RedirectAttributes
-	 * @param locale Locale
-	 * @return 遷移先
+	 * @param redirectAttributes リダイレクト時の情報受け渡し
+	 * @param locale 実行環境のロケール
+	 * @return 商品情報更新画面
 	 */
 	@GetMapping("/product-update")
 	public String editProduct(@ModelAttribute("productID") int productID, Model model,
@@ -180,14 +176,14 @@ public class ProductController {
 	/**
 	 * 商品情報更新処理
 	 * @param product 商品情報
-	 * @param bindingResult BindingResult
+	 * @param bindingResult バインド結果
 	 * @param model モデル
 	 * @param multipartFile 商品画像のMultipartFile型
 	 * @param productImg 商品画像のbyte型
-	 * @param redirectAttributes RedirectAttibutes
-	 * @param locale Locale
+	 * @param redirectAttributes リダイレクト時の情報受け渡し
+	 * @param locale 実行環境のロケール
 	 * @throws IOException 入出力例外が発生した場合
-	 * @return 遷移先
+	 * @return 商品情報一覧
 	 */
 	@PostMapping("/product-update")
 	public String updateProduct(@Valid @ModelAttribute("product") Product product,
@@ -213,7 +209,7 @@ public class ProductController {
 			if (multipartFile.getOriginalFilename().length() >= 15) {
 				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG101", null, locale));
 			}
-			if (multipartFile.getSize() > 500000) {
+			if (multipartFile.getSize() > 512000) {
 				bindingResult.rejectValue("multipartFile", null, messageSource.getMessage("EMSG103", null, locale));
 			}
 			product.setProductImg(product.getMultipartFile().getBytes());
@@ -286,16 +282,20 @@ public class ProductController {
 	/**
 	 * 商品情報削除処理
 	 * @param productID 商品ID
+	 * @param updateDate 更新日時
 	 * @param model モデル
-	 * @param redirectAttributes RedirectAttributes
-	 * @param locale Locale
-	 * @return 遷移先
+	 * @param redirectAttributes リダイレクト時の情報受け渡し
+	 * @param locale 実行環境のロケール
+	 * @return 商品情報一覧
 	 */
 	@PostMapping("/product-delete")
 	public String deleteProduct(@ModelAttribute("productID") int productID,
 			@ModelAttribute("updateDate") Timestamp updateDate, Model model,
 			RedirectAttributes redirectAttributes, Locale locale) {
-		mapper.deleteProduct(productID, updateDate);
+		Integer count = mapper.deleteProduct(productID, updateDate);
+		if (count == 0) {
+			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("EMSG201", null, locale));
+		}
 		redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG203", null, locale));
 		return "redirect:/product-list";
 	}

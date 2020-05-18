@@ -31,7 +31,8 @@
       <div class="form-input-box">
         <label for="genre">ジャンル：</label>
         <select name="genre" id="genre">
-          <option th:each="genre : ${genreList}" th:selected="${product.genre == genre.value}" th:value="${genre.value}" th:text="${genre.key}" />
+          <option th:each="genre : ${genreList}" th:selected="${product.genre == genre.value}"
+            th:value="${genre.value}" th:text="${genre.key}" />
         </select>
       </div>
       <div class="form-input-box">
@@ -44,7 +45,8 @@
       </div>
       <div class="form-input-box">
         <label for="sellingPrice">販売価格：</label>
-        <input type="text" name="sellingPrice" class="form-input-box-price" th:value="${product.sellingPrice}" id="sellingPrice">
+        <input type="text" name="sellingPrice" class="form-input-box-price" th:value="${product.sellingPrice}"
+          id="sellingPrice">
       </div>
       <div class="form-input-box">
         <label for="productDetail">商品説明：</label>
@@ -69,7 +71,8 @@
   </form>
   <form th:action="@{/product-list}" method="get">
     <div class="btn">
-      <input type="submit" value="戻る" class="btn-goback-btn" onclick="return confirm('入力内容は保存されません。前画面に戻りますか？');">
+      <input type="submit" value="戻る" class="btn-goback-btn"
+        onclick="return confirm('入力内容は保存されません。前画面に戻りますか？');">
     </div>
   </form>
 </body>
