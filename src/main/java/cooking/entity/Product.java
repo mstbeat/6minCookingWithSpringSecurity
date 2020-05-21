@@ -31,6 +31,10 @@ import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import cooking.validator.FileName;
+import cooking.validator.FileSize;
+import cooking.validator.FileType;
+
 /**
  * 商品情報モデルを定義するクラス.
  * @author Masato Yasuda
@@ -95,6 +99,9 @@ public class Product {
 
 	/** 商品画像のMultipartFile型 */
 	@Transient
+	@FileName(message = "{EMSG101}")
+	@FileType(message = "{EMSG102}")
+	@FileSize(message = "{EMSG103}")
 	private MultipartFile multipartFile;
 
 	/**

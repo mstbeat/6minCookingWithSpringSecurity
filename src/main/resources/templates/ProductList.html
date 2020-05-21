@@ -32,7 +32,7 @@
           <input type="hidden" name="productImg" th:value="${product.base64Img}" />
         </div>
         <div th:unless="${product.productImg}">
-          <span>no_image.png</span>
+          <img class="table-center-img" th:src="@{/images/no_image.png}">
         </div>
       </td>
       <td class="table-right" th:text="${product.productID}" />
