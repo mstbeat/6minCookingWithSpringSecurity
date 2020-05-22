@@ -12,6 +12,7 @@
 package cooking.entity;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
@@ -41,7 +42,10 @@ import cooking.validator.FileType;
  */
 @Entity
 @Table(name = "ProductInfo")
-public class Product {
+public class Product implements Serializable {
+
+	/** serialVersionUID */
+	private static final long serialVersionUID = 8789002951968301653L;
 
 	/** 商品ID */
 	@Id

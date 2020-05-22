@@ -62,7 +62,7 @@ public class ProductListController {
 		model.addAttribute("message", msg);
 		ModelAndView mav = new ModelAndView("ProductList");
 		List<Product> list = productService.findAll();
-		mav.addObject("listproducts", list );
+		mav.addObject("listproducts", list);
 		return mav;
 	}
 

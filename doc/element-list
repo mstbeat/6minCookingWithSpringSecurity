@@ -3,4 +3,6 @@ cooking.app
 cooking.config
 cooking.dao
 cooking.entity
-cooking.util
+cooking.repository
+cooking.service
+cooking.validator

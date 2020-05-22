@@ -132,7 +132,10 @@ public class ProductUpdateController {
 
 		Integer count = productService.update(product);
 		if (count == 0) {
-			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("EMSG201", null, locale));
+			model.addAttribute("message", messageSource.getMessage("EMSG201", null, locale));
+			model.addAttribute("product", product);
+			model.addAttribute("genreList", GenreEnum.values());
+			return "ProductUpdate";
 		} else {
 			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG202", null, locale));
 			model.addAttribute("product", product);
@@ -144,18 +147,29 @@ public class ProductUpdateController {
 	 * 商品情報削除処理
 	 * @param productID 商品ID
 	 * @param updateDate 更新日時
+	 * @param product 商品情報
 	 * @param model モデル
+	 * @param bindingResult バインド結果
 	 * @param redirectAttributes リダイレクト時の情報受け渡し
 	 * @param locale 実行環境のロケール
 	 * @return 商品情報一覧
 	 */
 	@PostMapping("/product-delete")
 	public String deleteProduct(@ModelAttribute("productID") int productID,
-			@ModelAttribute("updateDate") Timestamp updateDate, Model model,
+			@ModelAttribute("updateDate") Timestamp updateDate,
+			@ModelAttribute("product") Product product,
+			Model model,
+			BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, Locale locale) {
 		Integer count = productService.delete(productID, updateDate);
+		if (bindingResult.hasErrors()) {
+
+		}
 		if (count == 0) {
-			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("EMSG201", null, locale));
+			model.addAttribute("message", messageSource.getMessage("EMSG202", null, locale));
+			model.addAttribute("product", product);
+			model.addAttribute("genreList", GenreEnum.values());
+			return "ProductUpdate";
 		} else {
 			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG203", null, locale));
 		}
