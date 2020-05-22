@@ -20,7 +20,7 @@
     <div class="btn">
       <input type="hidden" name="productID" th:value="${product.productID}">
       <input type="hidden" name="updateDate" th:value="${product.updateDate}">
-      <input class="btn-update-btn" type="submit" value="更新" onclick="return confirm('更新してよろしいですか？');">
+      <input class="btn-update-btn" type="submit" value="更新" onclick="return confirm('商品情報を更新しますか？');">
       <button type="button" class="btn-goback-btn" onclick="window.location.href='product-list'">戻る</button>
     </div>
     <div class="form-input">
@@ -66,7 +66,7 @@
     <div class="btn">
       <input type="hidden" name="productID" th:value="${product.productID}">
       <input type="hidden" name="updateDate" th:value="${product.updateDate}">
-      <input class="btn-delete-btn" type="submit" value="削除" onclick="return confirm('削除してよろしいですか？');">
+      <input class="btn-delete-btn" type="submit" value="削除" onclick="return confirm('商品情報を削除しますか？');">
     </div>
   </form>
   <form th:action="@{/product-list}" method="get">
