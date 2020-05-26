@@ -23,6 +23,7 @@ table {
 table th, table td {
   font-weight: normal;
   border: solid 1px #000;
+  word-wrap: break-word;
 }
 
 /* テーブルヘッダーの背景色 */
@@ -68,11 +69,6 @@ table th, table td {
 /* テーブルデータのセンター寄せ */
 .table-center {
   text-align: center;
-}
-
-/* no_image.png */
-.table-center span {
-  font-size: 14px;
 }
 
 /* 商品情報一覧の画像 */
@@ -179,7 +175,7 @@ table th, table td {
   margin: 0 30% 15px;
   font-size: 16px;
   color: red;
-  height: 100px;
+  height: 120px;
 }
 
 /* エラーメッセージのリスト */
