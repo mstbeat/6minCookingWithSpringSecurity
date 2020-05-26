@@ -4,7 +4,11 @@ import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.io.FileInputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.Before;
@@ -19,7 +23,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import cooking.entity.Product;
@@ -57,14 +60,25 @@ class ProductControllerTest {
 	@Test
 	@DisplayName("商品情報登録のエラー")
 	public void getRegistrationErrors() throws Exception {
-		FileInputStream fis = new FileInputStream("/Users/masato/Desktop/24KB.png");
-		MockMultipartFile file = new MockMultipartFile("multipartFile",fis);
-		mockMvc.perform(MockMvcRequestBuilders.multipart("/product-registration")
-				.file(file)
-				.param("productName", "テスト商品")
-				.param("maker", "パナソニック")
-				.param("sellingPrice", "49800"))
-		.andExpect(model().hasNoErrors());	
+		Path path = Paths.get("/Users/masato/Desktop/no_image.png");
+		String name ="no_image.png";
+		String originalFileName="no_image.png";
+		String contentType = "image/png";
+		byte[] content = null;
+		try {
+			content = Files.readAllBytes(path);
+		} catch (final IOException e) {
+			
+		}
+		MockMultipartFile result = new MockMultipartFile(name, originalFileName, contentType, content);
+//		MockMultipartFile multipartFile = new MockMultipartFile("file", file.getBytes());
+		BigDecimal price = new BigDecimal(49800);
+		Product product = new Product();
+		product.setProductName("テスト商品");
+		product.setMaker("パナソニック");
+		product.setSellingPrice(price);
+		mockMvc.perform((post("/product-registration")).flashAttr("product", product).flashAttr("multipartFile", result))
+			.andExpect(model().hasNoErrors());
 		
 	}
 	

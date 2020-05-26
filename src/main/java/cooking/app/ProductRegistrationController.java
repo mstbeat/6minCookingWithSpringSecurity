@@ -84,7 +84,7 @@ public class ProductRegistrationController {
 	 * @param productImg 商品画像のbyte型
 	 * @param redirectAttributes リダイレクト時の情報受け渡し
 	 * @param locale 実行環境のロケール
-	 * @throws IOException 入出力例外が発生した場合
+	 * @throws IOException 入出力時に起こりえる例外
 	 * @return 商品情報一覧
 	 */
 	@PostMapping("/product-registration")
