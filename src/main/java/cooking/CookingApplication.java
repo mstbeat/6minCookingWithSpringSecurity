@@ -11,8 +11,12 @@
 
 package cooking;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
  * メインメソッドを定義するクラス.
@@ -20,6 +24,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class CookingApplication {
+
+	/** メッセージソース */
+	@Autowired
+	private MessageSource messageSource;
 
 	/**
 	 * メインメソッド
@@ -29,4 +37,14 @@ public class CookingApplication {
 		SpringApplication.run(CookingApplication.class, args);
 	}
 
+	/**
+	 * バリデーションメッセージをメッセージソースに上書きするメソッド
+	 * @return localValidatorFactoryBean メッセージソースに上書きしたバリデーター
+	 */
+	@Bean
+	public LocalValidatorFactoryBean validator() {
+		LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
+		localValidatorFactoryBean.setValidationMessageSource(messageSource);
+		return localValidatorFactoryBean;
+	}
 }

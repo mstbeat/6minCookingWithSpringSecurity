@@ -9,12 +9,10 @@
   <h3>商品情報管理システム</h3>
   <h2>商品情報一覧</h2>
   <div class="messages">
-    <div th:if="${message != null}">
-      <p th:text="${message}">
-    </div>
+    <p th:text="${message}">
   </div>
   <button type="button" class="submit-btn" onclick="window.location.href='product-registration'">登録</button>
-  <div class="list-count">商品情報件数 <nobr th:text="${listproducts.size()}"></nobr> 件</div>
+  <div class="list-count">商品情報件数 <span th:text="${listProducts.size()}"></span> 件</div>
   <table border="1">
     <tr>
       <th class="table-header table-header-img">イメージ</th>
@@ -25,23 +23,22 @@
       <th class="table-header table-header-price">販売価格</th>
       <th class="table-header table-header-btn">更新</th>
     </tr>
-    <tr th:each="product : ${listproducts}">
+    <tr th:each="product : ${listProducts}">
       <td class="table-center">
         <div th:if="${product.productImg}">
           <img class="table-center-img" th:src="'data:image/png;base64,' + ${product.base64Img}">
-          <input type="hidden" name="productImg" th:value="${product.base64Img}" />
         </div>
         <div th:unless="${product.productImg}">
           <img class="table-center-img" th:src="@{/images/no_image.png}">
         </div>
       </td>
       <td class="table-right" th:text="${product.productID}" />
-      <td class="table-left" th:text="${T(cooking.entity.GenreEnum).getKeyByValue(product.genre)}" />
+      <td class="table-left" th:text="${T(cooking.enums.GenreEnum).getValueByKey(product.genre)}" />
       <td class="table-left" th:text="${product.maker}" />
       <td class="table-left" th:text="${product.productName}" />
       <td class="table-right" th:text="${product.sellingPrice}" />
       <td class="table-center">
-        <form th:action="@{/product-update}" method="get" th:object="${product}">
+        <form th:action="@{/product-update}" th:method="post">
           <input type="hidden" name="productID" th:value="${product.productID}">
           <input class="update-btn" type="submit" value="更新">
         </form>

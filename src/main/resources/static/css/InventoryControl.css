@@ -163,6 +163,7 @@ table th, table td {
 /* 商品情報一覧ページの商品情報件数 */
 .list-count {
   margin: 110px 0 10px 77%;
+  white-space: nowrap;
 }
 
 /* 登録・更新・削除メッセージのマージン設定 */
@@ -175,7 +176,8 @@ table th, table td {
   margin: 0 30% 15px;
   font-size: 16px;
   color: red;
-  height: 120px;
+  min-height: 120px;
+  height: auto;
 }
 
 /* エラーメッセージのリスト */
@@ -201,6 +203,11 @@ table th, table td {
 /* 商品情報登録ページのテキストボックス */
 .form-input-box {
   margin: 10px 0;
+}
+
+/* 商品情報登録ページの商品ID・商品名のインデント */
+.form-input-box-left {
+  padding-left: 19px;
 }
 
 /* 商品情報登録ページの販売価格のテキストボックス */

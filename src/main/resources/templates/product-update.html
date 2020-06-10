@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/InventoryControl.css}">
+<script type="text/javascript" th:src="@{/js/script.js}"></script>
+<title>商品情報更新</title>
+</head>
+<body>
+  <h3>商品情報管理システム</h3>
+  <h2>商品情報更新</h2>
+  <form th:action="@{/product-update}" th:method="put" th:object="${product}" enctype="multipart/form-data">
+    <div class="error-message">
+      <ul th:if="${#fields.hasAnyErrors()}">
+        <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+      </ul>
+      <p th:text="${message}">
+    </div>
+    <div class="btn">
+      <input type="hidden" name="productID" th:value="${product.productID}">
+      <input type="hidden" name="updateDate" th:value="${product.updateDate}">
+      <input class="btn-update-btn" type="submit" value="更新" onclick="return confirm('商品情報を更新しますか？');">
+    </div>
+    <div class="form-input">
+      <div class="form-item">
+        <div class="form-input-box-left">商品ID：</div>
+        <div class="form-item-id" th:text="${product.productID}"></div>
+      </div>
+      <div class="form-input-box">
+        <label>ジャンル：</label>
+        <select name="genre">
+          <option th:each="genre : ${genreList}" th:selected="${product.genre == genre.key}"
+            th:value="${genre.key}" th:text="${genre.value}"></option>
+        </select>
+      </div>
+      <div class="form-input-box">
+        <label>メーカー：</label>
+        <input type="text" th:field="${product.maker}">
+      </div>
+      <div class="form-input-box">
+        <label class="form-input-box-left">商品名：</label>
+        <input type="text" th:field="${product.productName}">
+      </div>
+      <div class="form-input-box">
+        <label>販売価格：</label>
+        <input type="text" class="form-input-box-price" th:field="${product.sellingPrice}">
+      </div>
+      <div class="form-input-box">
+        <label>商品説明：</label>
+        <textarea th:field="${product.productDetail}"></textarea>
+      </div>
+      <div>
+        <label>商品画像：</label>
+        <input type="file" name="multipartFile">
+        <div th:if="${product.productImg}">
+          <img class="form-file-img" th:src="'data:image/png;base64,' + ${product.base64Img}">
+        </div>
+      </div>
+    </div>
+  </form>
+  <form th:action="@{/product-delete}" th:method="delete" th:object="${product}">
+    <div class="btn">
+      <input type="hidden" name="productID" th:value="${product.productID}">
+      <input type="hidden" name="updateDate" th:value="${product.updateDate}">
+      <input class="btn-delete-btn" type="submit" value="削除" onclick="return confirm('商品情報を削除しますか？');">
+    </div>
+  </form>
+  <button type="button" onclick="returnConfirm()" class="btn-goback-btn">戻る</button>
+</body>
+</html>

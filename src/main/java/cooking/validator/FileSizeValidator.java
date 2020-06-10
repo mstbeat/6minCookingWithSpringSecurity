@@ -22,12 +22,16 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class FileSizeValidator implements ConstraintValidator<FileSize, MultipartFile> {
 
+	/** 最大サイズ */
+	private int max;
+	
 	/**
 	 * 初期化処理
 	 * @param annotation アノテーション
 	 */
 	@Override
 	public void initialize(FileSize annotation) {
+		max = annotation.max();
 	}
 
 	/**
@@ -38,7 +42,7 @@ public class FileSizeValidator implements ConstraintValidator<FileSize, Multipar
 	 */
 	@Override
 	public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
-		if (multipartFile.getSize() >= 512000) {
+		if (!(multipartFile.isEmpty()) && multipartFile.getSize() >= max) {
 			return false;
 		}
 		return true;

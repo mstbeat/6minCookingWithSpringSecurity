@@ -11,11 +11,9 @@
 
 package cooking.repository;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import cooking.entity.Product;
 
@@ -36,27 +34,26 @@ public interface ProductMapper {
 	 * 商品情報を登録するメソッド
 	 * @param product 商品情報
 	 */
-	void createProduct(Product product);
+	void insertProductInfo(Product product);
 
 	/**
 	 * 商品IDで商品情報を取得するメソッド
 	 * @param productID 商品ID
 	 * @return 商品情報
 	 */
-	Product findById(int productID);
+	Product getProductInfo(int productID);
 
 	/**
 	 * 商品情報を更新するメソッド
 	 * @param product 商品情報
 	 * @return 商品更新件数
 	 */
-	int updateProduct(Product product);
+	int updateProductInfo(Product product);
 
 	/**
 	 * 商品情報を削除するメソッド
-	 * @param productID 商品ID
-	 * @param updateDate 更新日時
+	 * @param product 商品情報
 	 * @return 商品削除件数
 	 */
-	int deleteProduct(@Param("productID") int productID, @Param("updateDate") Timestamp updateDate);
+	int deleteProductInfo(Product product);
 }
