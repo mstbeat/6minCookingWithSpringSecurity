@@ -7,89 +7,86 @@
 	<select id="getProductInfoList"
 		resultType="cooking.entity.Product">
 		SELECT
-		ProductID,
-		Genre,
-		Maker,
-		ProductName,
-		SellingPrice,
-		ProductImg
+			ProductID,
+			Genre,
+			Maker,
+			ProductName,
+			SellingPrice,
+			ProductImg
 		FROM
-		ProductInfo
+			ProductInfo
 		WHERE
-		DeleteFlg = '0'
+			DeleteFlg = '0'
 		ORDER BY
-		ProductID ASC
+			ProductID ASC
 	</select>
 
-	<insert id="createProduct"
-		parameterType="cooking.entity.Product" keyProperty="productID"
-		useGeneratedKeys="true">
+	<insert id="insertProductInfo"
+		parameterType="cooking.entity.Product">
 		INSERT INTO ProductInfo (
-		ProductName,
-		Genre,
-		Maker,
-		SellingPrice,
-		ProductDetail,
-		ProductImg,
-		InsertDate,
-		UpdateDate
+			ProductName,
+			Genre,
+			Maker,
+			SellingPrice,
+			ProductDetail,
+			ProductImg,
+			InsertDate,
+			UpdateDate
 		) VALUES (
-		#{productName},
-		#{genre},
-		#{maker},
-		#{sellingPrice},
-		#{productDetail},
-		#{productImg},
-		CURRENT_TIMESTAMP(),
-		CURRENT_TIMESTAMP()
+			#{productName},
+			#{genre},
+			#{maker},
+			#{sellingPrice},
+			#{productDetail},
+			#{productImg},
+			CURRENT_TIMESTAMP(),
+			CURRENT_TIMESTAMP()
 		)
 	</insert>
 
-	<update id="deleteProduct">
+	<update id="deleteProductInfo" parameterType="cooking.entity.Product">
 		UPDATE
-		ProductInfo
+			ProductInfo
 		SET
-		DeleteFlg = '1',
-		UpdateDate = CURRENT_TIMESTAMP()
+			DeleteFlg = '1',
+			UpdateDate = CURRENT_TIMESTAMP()
 		WHERE
-		ProductID = #{productID}
-		AND UpdateDate <![CDATA[ = ]]>
-		#{updateDate}
+			ProductID = #{productID}
+			AND UpdateDate <![CDATA[ = ]]> #{updateDate}
 	</update>
 
-	<select id="findById" parameterType="int"
+	<select id="getProductInfo" parameterType="int"
 		resultType="cooking.entity.Product">
 		SELECT
-		ProductID,
-		ProductName,
-		Genre,
-		Maker,
-		SellingPrice,
-		ProductDetail,
-		ProductImg,
-		UpdateDate
+			ProductID,
+			ProductName,
+			Genre,
+			Maker,
+			SellingPrice,
+			ProductDetail,
+			ProductImg,
+			UpdateDate
 		FROM
-		ProductInfo
+			ProductInfo
 		WHERE
-		ProductID = #{productID}
-		AND DeleteFlg = '0'
+			ProductID = #{productID}
+			AND DeleteFlg = '0'
 	</select>
 
-	<update id="updateProduct"
+	<update id="updateProductInfo"
 		parameterType="cooking.entity.Product">
 		UPDATE
-		ProductInfo
+			ProductInfo
 		SET
-		ProductName = #{productName},
-		Genre = #{genre},
-		Maker = #{maker},
-		SellingPrice = #{sellingPrice},
-		ProductDetail = #{productDetail},
-		ProductImg = #{productImg},
-		UpdateDate = CURRENT_TIMESTAMP()
+			ProductName = #{productName},
+			Genre = #{genre},
+			Maker = #{maker},
+			SellingPrice = #{sellingPrice},
+			ProductDetail = #{productDetail},
+			ProductImg = #{productImg},
+			UpdateDate = CURRENT_TIMESTAMP()
 		WHERE
-		ProductID = #{productID}
-		AND UpdateDate <![CDATA[ = ]]>
-		#{updateDate}
+			ProductID = #{productID}
+			AND UpdateDate <![CDATA[ = ]]> #{updateDate}
 	</update>
 </mapper>

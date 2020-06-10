@@ -16,19 +16,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
-import java.util.Base64;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,72 +34,56 @@ import cooking.validator.FileType;
  * 商品情報モデルを定義するクラス.
  * @author Masato Yasuda
  */
-@Entity
-@Table(name = "ProductInfo")
 public class Product implements Serializable {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 8789002951968301653L;
 
 	/** 商品ID */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ProductID")
 	private int productID;
 
 	/** 商品名 */
-	@Column(name = "ProductName")
-	@NotNull(message = "{EMSG001}")
+	@NotBlank(message = "{EMSG001}")
 	@Size(max = 25, message = "{EMSG002}")
 	private String productName;
 
 	/** ジャンル */
-	@Column(name = "Genre")
 	private String genre;
 
 	/** メーカー */
-	@Column(name = "Maker")
-	@NotNull(message = "{EMSG001}")
+	@NotBlank(message = "{EMSG001}")
 	@Size(max = 20, message = "{EMSG002}")
 	private String maker;
 
 	/** 販売価格 */
-	@Column(name = "SellingPrice")
 	@NotNull(message = "{EMSG001}")
 	@Min(value = 1, message = "{EMSG004}")
 	@Max(value = 99999999, message = "{EMSG005}")
 	private BigDecimal sellingPrice;
 
 	/** 商品説明 */
-	@Column(name = "ProductDetail")
 	@Size(max = 200, message = "{EMSG002}")
 	private String productDetail;
 
 	/** 商品画像のbyte型 */
-	@Column(name = "ProductImg")
 	private byte[] productImg;
 
 	/** 削除フラグ */
-	@Column(name = "DeleteFlg")
 	private String deleteFlg;
 
 	/** 登録日時 */
-	@Column(name = "InsertDate")
 	private Timestamp insertDate;
 
 	/** 更新日時 */
-	@Column(name = "UpdateDate")
 	private Timestamp updateDate;
 
 	/** 商品画像のString型 */
-	@Transient
 	private String base64Img;
 
 	/** 商品画像のMultipartFile型 */
-	@Transient
-	@FileName(message = "{EMSG101}")
-	@FileType(message = "{EMSG102}")
-	@FileSize(message = "{EMSG103}")
+	@FileName(max = 15)
+	@FileType
+	@FileSize(max = 512000)
 	private MultipartFile multipartFile;
 
 	/**
@@ -113,34 +91,6 @@ public class Product implements Serializable {
 	 */
 	public Product() {
 
-	}
-
-	/**
-	 * 引数ありコンストラクタ
-	 * @param productID 商品ID
-	 * @param productName 商品名
-	 * @param genre ジャンル
-	 * @param maker メーカー
-	 * @param sellingPrice 販売価格
-	 * @param productDetail 商品説明
-	 * @param productImg 商品画像のbyte型
-	 * @param deleteFlg 削除フラグ
-	 * @param insertDate 登録日時
-	 * @param updateDate 更新日時
-	 */
-	public Product(int productID, String productName, String genre, String maker, BigDecimal sellingPrice,
-			String productDetail, byte[] productImg, String deleteFlg, Timestamp insertDate,
-			Timestamp updateDate) {
-		this.productID = productID;
-		this.productName = productName;
-		this.genre = genre;
-		this.maker = maker;
-		this.sellingPrice = sellingPrice;
-		this.productDetail = productDetail;
-		this.productImg = productImg;
-		this.deleteFlg = deleteFlg;
-		this.insertDate = insertDate;
-		this.updateDate = updateDate;
 	}
 
 	/**
@@ -327,7 +277,7 @@ public class Product implements Serializable {
 	 * @return 商品画像のString型
 	 */
 	public String getBase64Img() {
-		base64Img = Base64.getEncoder().encodeToString(this.productImg);
+		base64Img = DatatypeConverter.printBase64Binary(this.productImg);
 		return base64Img;
 	}
 
@@ -337,17 +287,6 @@ public class Product implements Serializable {
 	 */
 	public void setBase64Img(String base64Img) {
 		this.base64Img = base64Img;
-	}
-
-	/**
-	 * 商品情報のtoStringメソッド.
-	 */
-	@Override
-	public String toString() {
-		return "Product [productID=" + productID + ", productName=" + productName + ", genre=" + genre + ", maker="
-				+ maker + ", sellingPrice=" + sellingPrice + ", productDetail=" + productDetail + ", productImg="
-				+ productImg + ", deleteFlg=" + deleteFlg + ", insertDate=" + insertDate + ", updateDate=" + updateDate
-				+ "]";
 	}
 
 }

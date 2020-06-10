@@ -8,6 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 
+import cooking.enums.GenreEnum;
+
 @DisplayName("GenreEnumの単体テスト")
 class GenreEnumUnitTest {
 	
@@ -17,7 +19,7 @@ class GenreEnumUnitTest {
 	@Test
 	@DisplayName("GetKeyByValueの成功")
 	void GenreGetKeyByValueTest() {
-		String genre = GenreEnum.getKeyByValue("0");
+		String genre = GenreEnum.getValueByKey("0");
 		assertEquals(genre, "指定なし");
 		
 	}
@@ -27,7 +29,7 @@ class GenreEnumUnitTest {
 	void GenreGetKeyByValueFailTest() {
 		IllegalArgumentException thrown = assertThrows(
 				IllegalArgumentException.class,
-				() -> GenreEnum.getKeyByValue("6"));
+				() -> GenreEnum.getValueByKey("6"));
 		assertEquals("6", thrown.getMessage());
 	}
 	

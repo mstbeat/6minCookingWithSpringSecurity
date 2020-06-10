@@ -9,7 +9,7 @@
  * CLAIM, DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING
  * OR DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES. */
 
-package cooking.entity;
+package cooking.enums;
 
 /**
  * ジャンルを列挙型で扱い、値とキーを戻すenum.
@@ -41,7 +41,7 @@ public enum GenreEnum {
 	 * @param value ジャンルの値
 	 * @param key ジャンルのキー
 	 */
-	private GenreEnum(String value, String key) {
+	private GenreEnum(String key, String value) {
 		this.value = value;
 		this.key = key;
 	}
@@ -64,16 +64,16 @@ public enum GenreEnum {
 
 	/**
 	 * 値からキーを得るメソッド.
-	 * @param value ジャンルの値
-	 * @return ジャンルのキー
+	 * @param key ジャンルのキー
+	 * @return ジャンルの値
 	 */
-	public static String getKeyByValue(String value) {
+	public static String getValueByKey(String key) {
 		for (GenreEnum genre : values()) {
-			if (genre.getValue().equals(value)) {
-				return genre.getKey();
+			if (genre.getKey().equals(key)) {
+				return genre.getValue();
 			}
 		}
-		throw new IllegalArgumentException(value);
+		return null;
 	}
 
 }

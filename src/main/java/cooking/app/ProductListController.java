@@ -14,13 +14,9 @@ package cooking.app;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import cooking.entity.Product;
 import cooking.service.ProductService;
@@ -36,34 +32,16 @@ public class ProductListController {
 	@Autowired
 	ProductService productService;
 
-	/** メッセージソース */
-	@Autowired
-	private MessageSource messageSource;
-
-	/**
-	 * バリデーションメッセージをメッセージソースに上書きするメソッド
-	 * @return localValidatorFactoryBean メッセージソースに上書きしたバリデーター
-	 */
-	@Bean
-	public LocalValidatorFactoryBean validator() {
-		LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
-		localValidatorFactoryBean.setValidationMessageSource(messageSource);
-		return localValidatorFactoryBean;
-	}
-
 	/**
 	 * 商品情報一覧表示処理
 	 * @param model モデル
 	 * @return 商品情報一覧画面
 	 */
 	@GetMapping("/product-list")
-	public ModelAndView index(Model model) {
-		String msg = (String) model.asMap().get("message");
-		model.addAttribute("message", msg);
-		ModelAndView mav = new ModelAndView("ProductList");
+	public String index(Model model) {
 		List<Product> list = productService.findAll();
-		mav.addObject("listproducts", list);
-		return mav;
+		model.addAttribute("listProducts", list);
+		return "product-list";
 	}
 
 }

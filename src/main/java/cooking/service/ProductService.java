@@ -11,7 +11,6 @@
 
 package cooking.service;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,6 @@ public class ProductService {
 	 * 全ての商品情報を取得するメソッド
 	 * @return 全ての商品情報
 	 */
-	@Transactional
 	public List<Product> findAll() {
 		return productMapper.getProductInfoList();
 	}
@@ -47,7 +45,7 @@ public class ProductService {
 	 */
 	@Transactional
 	public void save(Product product) {
-		productMapper.createProduct(product);
+		productMapper.insertProductInfo(product);
 	}
 
 	/**
@@ -55,9 +53,8 @@ public class ProductService {
 	 * @param productID 商品ID
 	 * @return 商品情報
 	 */
-	@Transactional
 	public Product findOne(int productID) {
-		return productMapper.findById(productID);
+		return productMapper.getProductInfo(productID);
 	}
 
 	/**
@@ -67,19 +64,16 @@ public class ProductService {
 	 */
 	@Transactional
 	public int update(Product product) {
-		Integer count = productMapper.updateProduct(product);
-		return count;
+		return productMapper.updateProductInfo(product);
 	}
 
 	/**
 	 * 商品情報を削除するメソッド
-	 * @param productID 商品ID
-	 * @param updateDate 更新日時
+	 * @param product 商品情報
 	 * @return 商品削除件数
 	 */
 	@Transactional
-	public int delete(int productID, Timestamp updateDate) {
-		Integer count = productMapper.deleteProduct(productID, updateDate);
-		return count;
+	public int delete(Product product) {
+		return productMapper.deleteProductInfo(product);
 	}
 }

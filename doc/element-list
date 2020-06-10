@@ -1,8 +1,8 @@
 cooking
 cooking.app
-cooking.config
 cooking.dao
 cooking.entity
+cooking.enums
 cooking.repository
 cooking.service
 cooking.validator

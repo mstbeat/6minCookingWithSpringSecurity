@@ -24,15 +24,16 @@ import javax.validation.Payload;
  * 画像ファイル名桁数のバリデーションのアノテーション設定.
  * @author Masato Yasuda
  */
-@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR,
-		ElementType.PARAMETER })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FileNameValidator.class)
 @Documented
 public @interface FileName {
-	String message();
+	String message() default "{EMSG101}";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
+	
+	int max();
 }

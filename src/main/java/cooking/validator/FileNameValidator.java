@@ -22,12 +22,16 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class FileNameValidator implements ConstraintValidator<FileName, MultipartFile> {
 
+	/** 最大桁数 */
+	private int max;
+	
 	/**
 	 * 初期化処理
 	 * @param annotation アノテーション
 	 */
 	@Override
 	public void initialize(FileName annotation) {
+		max = annotation.max();
 	}
 
 	/**
@@ -38,7 +42,7 @@ public class FileNameValidator implements ConstraintValidator<FileName, Multipar
 	 */
 	@Override
 	public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
-		if (multipartFile.getOriginalFilename().length() >= 15) {
+		if (!(multipartFile.isEmpty()) && multipartFile.getOriginalFilename().length() >= max) {
 			return false;
 		}
 		return true;

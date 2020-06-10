@@ -24,13 +24,12 @@ import javax.validation.Payload;
  * 画像ファイルタイプのバリデーションのアノテーション設定.
  * @author Masato Yasuda
  */
-@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR,
-		ElementType.PARAMETER })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FileTypeValidator.class)
 @Documented
 public @interface FileType {
-	String message();
+	String message() default "{EMSG102}";
 
 	Class<?>[] groups() default {};
 

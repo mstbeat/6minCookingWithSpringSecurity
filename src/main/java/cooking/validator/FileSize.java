@@ -24,15 +24,16 @@ import javax.validation.Payload;
  * 画像ファイルサイズのバリデーションのアノテーション設定.
  * @author Masato Yasuda
  */
-@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR,
-		ElementType.PARAMETER })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FileSizeValidator.class)
 @Documented
 public @interface FileSize {
-	String message();
+	String message() default "{EMSG103}";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
+	
+	int max();
 }
