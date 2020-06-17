@@ -16,31 +16,32 @@
       </ul>
     </div>
     <div class="btn">
-      <input class="submit-btn" type="submit" value="登録" onclick="return confirm('商品情報を登録しますか？');">
+      <input class="submit-btn" type="submit" value="登録" onclick="return returnConfirm(0)">
     </div>
     <div class="form-input">
       <div class="form-input-box">
         <label>ジャンル：</label>
         <select name="genre">
-          <option th:each="genre : ${genreList}" th:selected="${product.genre == genre.value}" 
-            th:value="${genre.key}" th:text="${genre.value}"></option>
+          <option th:each="genre : ${T(cooking.enums.GenreEnum).values()}" th:selected="${product.genre == genre.key}" 
+            th:value="${genre.key}" th:text="${genre.value}">
+          </option>
         </select>
       </div>
       <div class="form-input-box">
         <label>メーカー：</label>
-        <input type="text" th:field="${product.maker}">
+        <input type="text" th:field="*{maker}">
       </div>
       <div class="form-input-box">
         <label class="form-input-box-left">商品名：</label>
-        <input type="text" th:field="${product.productName}">
+        <input type="text" th:field="*{productName}">
       </div>
       <div class="form-input-box">
         <label>販売価格：</label>
-        <input type="text" class="form-input-box-price" th:field="${product.sellingPrice}">
+        <input type="text" class="form-input-box-price" th:field="*{sellingPrice}">
       </div>
       <div class="form-input-box">
         <label>商品説明：</label>
-        <textarea th:field="${product.productDetail}"></textarea>
+        <textarea th:field="*{productDetail}"></textarea>
       </div>
       <div>
         <label>商品画像：</label>
@@ -48,6 +49,6 @@
       </div>
     </div>
   </form>
-  <button type="button" onclick="returnConfirm()" class="btn-goback-btn">戻る</button>
+  <button type="button" onclick="returnConfirm(3)" class="btn-goback-btn">戻る</button>
 </body>
 </html>

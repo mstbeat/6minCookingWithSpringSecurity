@@ -43,26 +43,26 @@ public class Product implements Serializable {
 	private int productID;
 
 	/** 商品名 */
-	@NotBlank(message = "{EMSG001}")
-	@Size(max = 25, message = "{EMSG002}")
+	@NotBlank
+	@Size(max = 25)
 	private String productName;
 
 	/** ジャンル */
 	private String genre;
 
 	/** メーカー */
-	@NotBlank(message = "{EMSG001}")
-	@Size(max = 20, message = "{EMSG002}")
+	@NotBlank
+	@Size(max = 20)
 	private String maker;
 
 	/** 販売価格 */
-	@NotNull(message = "{EMSG001}")
-	@Min(value = 1, message = "{EMSG004}")
-	@Max(value = 99999999, message = "{EMSG005}")
+	@NotNull
+	@Min(value = 1)
+	@Max(value = 99999999)
 	private BigDecimal sellingPrice;
 
 	/** 商品説明 */
-	@Size(max = 200, message = "{EMSG002}")
+	@Size(max = 200)
 	private String productDetail;
 
 	/** 商品画像のbyte型 */
@@ -78,7 +78,7 @@ public class Product implements Serializable {
 	private Timestamp updateDate;
 
 	/** 商品画像のString型 */
-	private String base64Img;
+	private String stringImg;
 
 	/** 商品画像のMultipartFile型 */
 	@FileName(max = 15)
@@ -276,17 +276,17 @@ public class Product implements Serializable {
 	 * 商品画像のString型を得るメソッド.
 	 * @return 商品画像のString型
 	 */
-	public String getBase64Img() {
-		base64Img = DatatypeConverter.printBase64Binary(this.productImg);
-		return base64Img;
+	public String getStringImg() {
+		stringImg = DatatypeConverter.printBase64Binary(this.productImg);
+		return stringImg;
 	}
 
 	/**
 	 * 商品画像のString型のセッターメソッド.
-	 * @param base64Img 商品画像のString型
+	 * @param stringImg 商品画像のString型
 	 */
-	public void setBase64Img(String base64Img) {
-		this.base64Img = base64Img;
+	public void setStringImg(String stringImg) {
+		this.stringImg = stringImg;
 	}
 
 }

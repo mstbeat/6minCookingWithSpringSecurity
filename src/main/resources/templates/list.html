@@ -26,7 +26,7 @@
     <tr th:each="product : ${listProducts}">
       <td class="table-center">
         <div th:if="${product.productImg}">
-          <img class="table-center-img" th:src="'data:image/png;base64,' + ${product.base64Img}">
+          <img class="table-center-img" th:src="'data:image/png;base64,' + ${product.stringImg}">
         </div>
         <div th:unless="${product.productImg}">
           <img class="table-center-img" th:src="@{/images/no_image.png}">
