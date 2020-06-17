@@ -24,7 +24,7 @@ import javax.validation.Payload;
  * 画像ファイル名桁数のバリデーションのアノテーション設定.
  * @author Masato Yasuda
  */
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FileNameValidator.class)
 @Documented
@@ -34,6 +34,6 @@ public @interface FileName {
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-	
+
 	int max();
 }

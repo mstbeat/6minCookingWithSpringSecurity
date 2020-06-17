@@ -12,7 +12,6 @@
 package cooking.app;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -30,7 +29,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cooking.entity.Product;
-import cooking.enums.GenreEnum;
 import cooking.service.ProductService;
 
 /**
@@ -67,8 +65,7 @@ public class ProductUpdateController {
 		}
 
 		model.addAttribute("product", product);
-		model.addAttribute("genreList", GenreEnum.values());
-		return "product-update";
+		return "update";
 	}
 
 	/**
@@ -92,24 +89,22 @@ public class ProductUpdateController {
 
 		if (bindingResult.hasErrors()) {
 			if (dbProduct.getProductImg() != null) {
-				product.setProductImg(DatatypeConverter.parseBase64Binary(dbProduct.getBase64Img()));
+				product.setProductImg(DatatypeConverter.parseBase64Binary(dbProduct.getStringImg()));
 			}
-			model.addAttribute("genreList", GenreEnum.values());
-			return "product-update";
+			return "update";
 		}
 
 		if (!product.getMultipartFile().isEmpty()) {
 			product.setProductImg(product.getMultipartFile().getBytes());
-			model.addAttribute("productImg", product.getBase64Img());
+			model.addAttribute("productImg", product.getStringImg());
 		} else if (dbProduct.getProductImg() != null) {
-			product.setProductImg(DatatypeConverter.parseBase64Binary(dbProduct.getBase64Img()));
+			product.setProductImg(DatatypeConverter.parseBase64Binary(dbProduct.getStringImg()));
 		}
 
 		Integer count = productService.update(product);
 		if (count == 0) {
 			model.addAttribute("message", messageSource.getMessage("EMSG201", null, locale));
-			model.addAttribute("genreList", GenreEnum.values());
-			return "product-update";
+			return "update";
 		} else {
 			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG202", null, locale));
 		}
@@ -118,8 +113,6 @@ public class ProductUpdateController {
 
 	/**
 	 * 商品情報削除処理
-	 * @param productID 商品ID
-	 * @param updateDate 更新日時
 	 * @param product 商品情報
 	 * @param model モデル
 	 * @param redirectAttributes リダイレクト時の情報受け渡し
@@ -127,9 +120,7 @@ public class ProductUpdateController {
 	 * @return 商品情報一覧画面
 	 */
 	@DeleteMapping("/product-delete")
-	public String deleteProduct(@ModelAttribute("productID") int productID,
-			@ModelAttribute("updateDate") Timestamp updateDate,
-			@ModelAttribute("product") Product product,
+	public String deleteProduct(@ModelAttribute("product") Product product,
 			Model model,
 			RedirectAttributes redirectAttributes, Locale locale) {
 
@@ -137,8 +128,7 @@ public class ProductUpdateController {
 		if (count == 0) {
 			model.addAttribute("message", messageSource.getMessage("EMSG202", null, locale));
 			model.addAttribute("product", product);
-			model.addAttribute("genreList", GenreEnum.values());
-			return "product-update";
+			return "update";
 		} else {
 			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG203", null, locale));
 		}

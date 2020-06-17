@@ -39,8 +39,8 @@ public class FileTypeValidator implements ConstraintValidator<FileType, Multipar
 	@Override
 	public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
 		if (!(multipartFile.isEmpty())) {
-			if (multipartFile.getContentType().toLowerCase().equals("image/jpeg") ||
-					multipartFile.getContentType().toLowerCase().equals("image/png")) {
+			if (multipartFile.getContentType().equals("image/jpeg") ||
+					multipartFile.getContentType().equals("image/png")) {
 				return true;
 			} else {
 				return false;

@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cooking.entity.Product;
-import cooking.enums.GenreEnum;
 import cooking.service.ProductService;
 
 /**
@@ -53,8 +52,7 @@ public class ProductRegistrationController {
 	@GetMapping("/product-registration")
 	public String showForm(Model model) {
 		model.addAttribute("product", new Product());
-		model.addAttribute("genreList", GenreEnum.values());
-		return "product-registration";
+		return "registration";
 	}
 
 	/**
@@ -75,8 +73,7 @@ public class ProductRegistrationController {
 			Locale locale) throws IOException {
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("genreList", GenreEnum.values());
-			return "product-registration";
+			return "registration";
 		}
 		if (!product.getMultipartFile().isEmpty()) {
 			product.setProductImg(product.getMultipartFile().getBytes());

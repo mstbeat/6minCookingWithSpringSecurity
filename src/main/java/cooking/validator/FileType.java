@@ -24,7 +24,7 @@ import javax.validation.Payload;
  * 画像ファイルタイプのバリデーションのアノテーション設定.
  * @author Masato Yasuda
  */
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FileTypeValidator.class)
 @Documented

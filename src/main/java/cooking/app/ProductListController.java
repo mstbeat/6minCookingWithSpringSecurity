@@ -41,7 +41,7 @@ public class ProductListController {
 	public String index(Model model) {
 		List<Product> list = productService.findAll();
 		model.addAttribute("listProducts", list);
-		return "product-list";
+		return "list";
 	}
 
 }

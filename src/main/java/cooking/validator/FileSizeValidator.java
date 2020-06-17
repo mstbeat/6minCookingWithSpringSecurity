@@ -24,7 +24,7 @@ public class FileSizeValidator implements ConstraintValidator<FileSize, Multipar
 
 	/** 最大サイズ */
 	private int max;
-	
+
 	/**
 	 * 初期化処理
 	 * @param annotation アノテーション
@@ -42,7 +42,7 @@ public class FileSizeValidator implements ConstraintValidator<FileSize, Multipar
 	 */
 	@Override
 	public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
-		if (!(multipartFile.isEmpty()) && multipartFile.getSize() >= max) {
+		if (!(multipartFile.isEmpty()) && multipartFile.getSize() > max) {
 			return false;
 		}
 		return true;

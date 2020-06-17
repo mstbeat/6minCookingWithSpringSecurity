@@ -208,6 +208,7 @@ table th, table td {
 /* 商品情報登録ページの商品ID・商品名のインデント */
 .form-input-box-left {
   padding-left: 19px;
+  white-space: nowrap;
 }
 
 /* 商品情報登録ページの販売価格のテキストボックス */

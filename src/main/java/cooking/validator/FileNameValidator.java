@@ -24,7 +24,7 @@ public class FileNameValidator implements ConstraintValidator<FileName, Multipar
 
 	/** 最大桁数 */
 	private int max;
-	
+
 	/**
 	 * 初期化処理
 	 * @param annotation アノテーション
@@ -42,7 +42,7 @@ public class FileNameValidator implements ConstraintValidator<FileName, Multipar
 	 */
 	@Override
 	public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
-		if (!(multipartFile.isEmpty()) && multipartFile.getOriginalFilename().length() >= max) {
+		if (!(multipartFile.isEmpty()) && multipartFile.getOriginalFilename().length() > max) {
 			return false;
 		}
 		return true;
