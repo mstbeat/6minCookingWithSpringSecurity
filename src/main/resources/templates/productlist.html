@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" th:href="@{/css/InventoryControl.css}">
+<link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
 <title>商品情報一覧</title>
 </head>
 <body>
@@ -29,7 +29,7 @@
           <img class="table-center-img" th:src="'data:image/png;base64,' + ${product.stringImg}">
         </div>
         <div th:unless="${product.productImg}">
-          <img class="table-center-img" th:src="@{/images/no_image.png}">
+          <img class="no-img" th:src="@{/images/no_image.png}">
         </div>
       </td>
       <td class="table-right" th:text="${product.productID}" />

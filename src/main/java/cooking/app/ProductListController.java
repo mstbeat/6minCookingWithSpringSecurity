@@ -22,7 +22,7 @@ import cooking.entity.Product;
 import cooking.service.ProductService;
 
 /**
- * 商品情報のコントローラ.
+ * 商品情報一覧のコントローラ.
  * @author Masato Yasuda
  */
 @Controller
@@ -41,7 +41,7 @@ public class ProductListController {
 	public String index(Model model) {
 		List<Product> list = productService.findAll();
 		model.addAttribute("listProducts", list);
-		return "list";
+		return "productlist";
 	}
 
 }

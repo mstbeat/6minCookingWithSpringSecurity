@@ -78,6 +78,11 @@ table th, table td {
   vertical-align: middle;
 }
 
+/* 商品情報一覧のno_image.png画像 */
+.no-img {
+  vertical-align: middle;
+}
+
 /* テーブルデータの右寄せ */
 .table-right {
   text-align: right;
@@ -246,4 +251,9 @@ table th, table td {
   margin: 10px 0 0 110px;
   width: 100px;
   height: 100px;
+}
+
+/* 商品情報登録ページのno_image.png画像 */
+.form-file-no-img {
+  margin: 10px 0 0 110px;
 }

@@ -32,7 +32,7 @@ import cooking.entity.Product;
 import cooking.service.ProductService;
 
 /**
- * 商品情報のコントローラ.
+ * 商品情報更新のコントローラ.
  * @author Masato Yasuda
  */
 @Controller
@@ -52,7 +52,7 @@ public class ProductUpdateController {
 	 * @param model モデル
 	 * @param redirectAttributes リダイレクト時の情報受け渡し
 	 * @param locale 実行環境のロケール
-	 * @return 商品情報更新画面
+	 * @return 該当商品がある場合は商品情報更新画面、該当商品がない場合は商品一覧画面
 	 */
 	@PostMapping("/product-update")
 	public String editProduct(@ModelAttribute("productID") int productID, Model model,
@@ -65,7 +65,7 @@ public class ProductUpdateController {
 		}
 
 		model.addAttribute("product", product);
-		return "update";
+		return "productupdate";
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class ProductUpdateController {
 	 * @param redirectAttributes リダイレクト時の情報受け渡し
 	 * @param locale 実行環境のロケール
 	 * @throws IOException 入出力時に起こりえる例外
-	 * @return 商品情報一覧画面
+	 * @return 更新が完了した場合は商品情報一覧画面、エラーがある場合は商品情報更新画面
 	 */
 	@PutMapping("/product-update")
 	public String updateProduct(@Valid @ModelAttribute("product") Product product,
@@ -91,7 +91,7 @@ public class ProductUpdateController {
 			if (dbProduct.getProductImg() != null) {
 				product.setProductImg(DatatypeConverter.parseBase64Binary(dbProduct.getStringImg()));
 			}
-			return "update";
+			return "productupdate";
 		}
 
 		if (!product.getMultipartFile().isEmpty()) {
@@ -104,7 +104,7 @@ public class ProductUpdateController {
 		Integer count = productService.update(product);
 		if (count == 0) {
 			model.addAttribute("message", messageSource.getMessage("EMSG201", null, locale));
-			return "update";
+			return "productupdate";
 		} else {
 			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG202", null, locale));
 		}
@@ -117,7 +117,7 @@ public class ProductUpdateController {
 	 * @param model モデル
 	 * @param redirectAttributes リダイレクト時の情報受け渡し
 	 * @param locale 実行環境のロケール
-	 * @return 商品情報一覧画面
+	 * @return 削除が完了した場合は商品情報一覧画面、エラーがある場合は商品情報更新画面
 	 */
 	@DeleteMapping("/product-delete")
 	public String deleteProduct(@ModelAttribute("product") Product product,
@@ -128,7 +128,7 @@ public class ProductUpdateController {
 		if (count == 0) {
 			model.addAttribute("message", messageSource.getMessage("EMSG202", null, locale));
 			model.addAttribute("product", product);
-			return "update";
+			return "productupdate";
 		} else {
 			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("IMSG203", null, locale));
 		}
