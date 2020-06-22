@@ -1,3 +1,8 @@
+/**
+ * 画面上のボタンによって表示するダイアログを設定する。
+ * @param {number} btn - クリックしたボタンの番号
+ * @return {boolean} 真偽値を返す。
+ */
 function returnConfirm(btn) {
 	if (btn == 0) {
 		ret = confirm("商品情報を登録しますか？");

@@ -34,6 +34,7 @@ class ProductServiceUnitTest {
 //		MockitoAnnotations.initMocks(this);
 //	}
 	
+	@SuppressWarnings("null")
 	@Test
 	public void testFindAll() {
 		// arrange
@@ -115,6 +116,7 @@ class ProductServiceUnitTest {
 		
 	}
 	
+	@SuppressWarnings("null")
 	@Test
 	public void testFindOne() {
 		// arrange
@@ -166,6 +168,7 @@ class ProductServiceUnitTest {
 		assertEquals(product1.getSellingPrice(), actualProduct1.getSellingPrice());
 	}
 
+	@SuppressWarnings("null")
 	@Test
 	public void testDelete() {
 		// arrange

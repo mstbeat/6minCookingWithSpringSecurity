@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" th:href="@{/css/InventoryControl.css}">
+<link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
 <script type="text/javascript" th:src="@{/js/script.js}"></script>
 <title>商品情報更新</title>
 </head>
@@ -29,8 +29,8 @@
       <div class="form-input-box">
         <label>ジャンル：</label>
         <select name="genre">
-          <option th:each="genre : ${T(cooking.enums.GenreEnum).values()}" th:selected="${product.genre == genre.key}"
-            th:value="${genre.key}" th:text="${genre.value}">
+          <option th:each="genreEnum : ${T(cooking.enums.GenreEnum).values()}" th:selected="${product.genre == genreEnum.key}"
+            th:value="${genreEnum.key}" th:text="${genreEnum.value}">
           </option>
         </select>
       </div>
@@ -57,7 +57,7 @@
           <img class="form-file-img" th:src="'data:image/png;base64,' + ${product.stringImg}">
         </div>
        	<div th:unless="${product.productImg}">
-          <img class="form-file-img" th:src="@{/images/no_image.png}">
+          <img class="form-file-no-img" th:src="@{/images/no_image.png}">
         </div>
       </div>
     </div>
