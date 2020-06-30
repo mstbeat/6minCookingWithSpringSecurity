@@ -53,11 +53,16 @@
       <div>
         <label>商品画像：</label>
         <input type="file" name="multipartFile">
-        <div th:if="${product.productImg}">
-          <img class="form-file-img" th:src="'data:image/png;base64,' + ${product.stringImg}">
-        </div>
-       	<div th:unless="${product.productImg}">
-          <img class="form-file-no-img" th:src="@{/images/no_image.png}">
+        <div th:switch="true">
+          <div th:case="${product.productImg} == null">
+            <img class="form-file-no-img" th:src="@{/images/no_image.png}">
+          </div>
+          <div th:case="${product.stringImg} !=''">
+            <img class="form-file-img" th:src="'data:image/png;base64,' + ${product.stringImg}">
+          </div>
+          <div th:case="${product.stringImg} ==''">
+            <img class="form-file-no-img" th:src="@{/images/no_image.png}">
+          </div>
         </div>
       </div>
     </div>
