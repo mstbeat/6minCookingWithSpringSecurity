@@ -25,11 +25,16 @@
     </tr>
     <tr th:each="product : ${listProducts}">
       <td class="table-center">
-        <div th:if="${product.productImg}">
-          <img class="table-center-img" th:src="'data:image/png;base64,' + ${product.stringImg}">
-        </div>
-        <div th:unless="${product.productImg}">
-          <img class="no-img" th:src="@{/images/no_image.png}">
+        <div th:switch="true">
+          <div th:case="${product.productImg} == null">
+            <img class="no-img" th:src="@{/images/no_image.png}">
+          </div>
+          <div th:case="${product.stringImg} !=''">
+            <img class="table-center-img" th:src="'data:image/png;base64,' + ${product.stringImg}">
+          </div>
+          <div th:case="${product.stringImg} ==''">
+            <img class="no-img" th:src="@{/images/no_image.png}">
+          </div>
         </div>
       </td>
       <td class="table-right" th:text="${product.productID}" />

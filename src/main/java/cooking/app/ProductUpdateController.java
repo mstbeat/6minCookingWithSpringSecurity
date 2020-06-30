@@ -76,7 +76,7 @@ public class ProductUpdateController {
 	 * @param redirectAttributes リダイレクト時の情報受け渡し
 	 * @param locale 実行環境のロケール
 	 * @throws IOException 入出力時に起こりえる例外
-	 * @return 更新が完了した場合は商品情報一覧画面、エラーがある場合は商品情報更新画面
+	 * @return 更新が完了した場合は商品情報一覧画面、入力チェックにてtrueの場合は商品情報更新画面
 	 */
 	@PutMapping("/product-update")
 	public String updateProduct(@Valid @ModelAttribute("product") Product product,
@@ -117,7 +117,7 @@ public class ProductUpdateController {
 	 * @param model モデル
 	 * @param redirectAttributes リダイレクト時の情報受け渡し
 	 * @param locale 実行環境のロケール
-	 * @return 削除が完了した場合は商品情報一覧画面、エラーがある場合は商品情報更新画面
+	 * @return 削除が完了した場合は商品情報一覧画面、削除対象の商品がない場合は商品情報更新画面
 	 */
 	@DeleteMapping("/product-delete")
 	public String deleteProduct(@ModelAttribute("product") Product product,

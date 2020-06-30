@@ -63,7 +63,7 @@ public class ProductRegistrationController {
 	 * @param redirectAttributes リダイレクト時の情報受け渡し
 	 * @param locale 実行環境のロケール
 	 * @throws IOException 入出力時に起こりえる例外
-	 * @return 登録が完了した場合は商品情報一覧画面、エラーがある場合は商品情報登録画面
+	 * @return 登録が完了した場合は商品情報一覧画面、入力チェックにてtrueの場合は商品情報登録画面
 	 */
 	@PostMapping("/product-registration")
 	public String createProduct(@Valid @ModelAttribute("product") Product product,

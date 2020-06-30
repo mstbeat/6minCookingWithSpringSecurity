@@ -1,7 +1,6 @@
 package cooking.entity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import org.junit.Rule;
 import org.junit.jupiter.api.DisplayName;
@@ -17,20 +16,29 @@ class GenreEnumUnitTest {
 	public ExpectedException expectedException = ExpectedException.none();
 
 	@Test
-	@DisplayName("GetKeyByValueの成功")
-	void GenreGetKeyByValueTest() {
+	@DisplayName("GetValueByKey(0)の成功")
+	void GenreGetValueByKeyTest_0() {
 		String genre = GenreEnum.getValueByKey("0");
-		assertEquals(genre, "指定なし");
+		assertEquals("指定なし", genre);
+		
+	}
+	
+	@Test
+	@DisplayName("GetValueByKey(1)の成功")
+	void GenreGetValueByKeyTest_1() {
+		String genre = GenreEnum.getValueByKey("1");
+		assertEquals("家電", genre);
 		
 	}
 
 	@Test
-	@DisplayName("GetKeyByValueの失敗")
-	void GenreGetKeyByValueFailTest() {
-		IllegalArgumentException thrown = assertThrows(
-				IllegalArgumentException.class,
-				() -> GenreEnum.getValueByKey("6"));
-		assertEquals("6", thrown.getMessage());
+	@DisplayName("GetValueByKey(7)の成功")
+	void GenreGetValueByKeyFailTest() {
+//		IllegalArgumentException thrown = assertThrows(
+//				IllegalArgumentException.class,
+//				() -> GenreEnum.getValueByKey("7"));
+		String genre = GenreEnum.getValueByKey("7");
+		assertEquals(null, genre);
 	}
 	
 }
