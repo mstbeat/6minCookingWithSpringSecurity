@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
@@ -22,6 +23,7 @@ import cooking.repository.ProductMapper;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(JUnitPlatform.class)
+@DisplayName("ProductServiceの単体テスト")
 class ProductServiceUnitTest {
 
 	@Mock
@@ -31,42 +33,13 @@ class ProductServiceUnitTest {
 	private ProductService productService;
 
 	@Test
+	@DisplayName("全件取得の場合")
 	public void testFindAll() {
 		// arrange
-		List<Product> productList = new ArrayList<Product>();
-		Product product1 = new Product();
-		product1.setProductID(0);
-		product1.setProductName("テスト商品1");
-		product1.setGenre("1");
-		product1.setMaker("メーカー1");
-		product1.setSellingPrice(new BigDecimal(9800));
-		product1.setDeleteFlg("0");
-		product1.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product1.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		Product product2 = new Product();
-		product2.setProductID(1);
-		product2.setProductName("テスト商品2");
-		product2.setGenre("2");
-		product2.setMaker("メーカー2");
-		product2.setSellingPrice(new BigDecimal(4800));
-		product2.setDeleteFlg("0");
-		product2.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product2.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		Product product3 = new Product();
-		product3.setProductID(2);
-		product3.setProductName("テスト商品3");
-		product3.setGenre("3");
-		product3.setMaker("メーカー3");
-		product3.setSellingPrice(new BigDecimal(3000));
-		product3.setDeleteFlg("0");
-		product3.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product3.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		productList.add(product1);
-		productList.add(product2);
-		productList.add(product3);
+		List<Product> productList = makeProductList();
+		Product product1 = productList.get(0);
+		Product product2 = productList.get(1);
+		Product product3 = productList.get(2);
 
 		when(productMapper.getProductInfoList()).thenReturn(productList);
 
@@ -100,28 +73,12 @@ class ProductServiceUnitTest {
 	}
 
 	@Test
+	@DisplayName("2件登録の場合")
 	public void testSave() {
 		// arrange
-		List<Product> productList = new ArrayList<Product>();
-		Product product1 = new Product();
-		product1.setProductID(0);
-		product1.setProductName("テスト商品1");
-		product1.setGenre("1");
-		product1.setMaker("メーカー1");
-		product1.setSellingPrice(new BigDecimal(9800));
-		product1.setDeleteFlg("0");
-		product1.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product1.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		Product product2 = new Product();
-		product2.setProductID(1);
-		product2.setProductName("テスト商品2");
-		product2.setGenre("2");
-		product2.setMaker("メーカー2");
-		product2.setSellingPrice(new BigDecimal(4800));
-		product2.setDeleteFlg("0");
-		product2.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product2.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+		List<Product> productList = makeProductList();
+		Product product1 = productList.get(0);
+		Product product2 = productList.get(1);
 
 		// act
 		productService.save(product1);
@@ -152,7 +109,7 @@ class ProductServiceUnitTest {
 		assertEquals(expected1.getGenre(), productList.get(0).getGenre());
 		assertEquals(expected1.getMaker(), productList.get(0).getMaker());
 		assertEquals(expected1.getSellingPrice(), productList.get(0).getSellingPrice());
-		
+
 		Product expected2 = new Product();
 		expected2.setProductID(1);
 		expected2.setProductName("テスト商品2");
@@ -171,42 +128,11 @@ class ProductServiceUnitTest {
 	}
 
 	@Test
+	@DisplayName("1件情報取得の場合")
 	public void testFindOne() {
 		// arrange
-		List<Product> productList = new ArrayList<Product>();
-		Product product1 = new Product();
-		product1.setProductID(0);
-		product1.setProductName("テスト商品1");
-		product1.setGenre("1");
-		product1.setMaker("メーカー1");
-		product1.setSellingPrice(new BigDecimal(9800));
-		product1.setDeleteFlg("0");
-		product1.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product1.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		Product product2 = new Product();
-		product2.setProductID(1);
-		product2.setProductName("テスト商品2");
-		product2.setGenre("2");
-		product2.setMaker("メーカー2");
-		product2.setSellingPrice(new BigDecimal(4800));
-		product2.setDeleteFlg("0");
-		product2.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product2.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		Product product3 = new Product();
-		product3.setProductID(2);
-		product3.setProductName("テスト商品3");
-		product3.setGenre("3");
-		product3.setMaker("メーカー3");
-		product3.setSellingPrice(new BigDecimal(3000));
-		product3.setDeleteFlg("0");
-		product3.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product3.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		productList.add(product1);
-		productList.add(product2);
-		productList.add(product3);
+		List<Product> productList = makeProductList();
+		Product product1 = productList.get(0);
 
 		when(productMapper.getProductInfo(0)).thenReturn(product1);
 
@@ -222,42 +148,11 @@ class ProductServiceUnitTest {
 	}
 
 	@Test
+	@DisplayName("1件更新の場合")
 	public void testUpdate() {
 		// arrange
-		List<Product> productList = new ArrayList<Product>();
-		Product product1 = new Product();
-		product1.setProductID(0);
-		product1.setProductName("テスト商品1");
-		product1.setGenre("1");
-		product1.setMaker("メーカー1");
-		product1.setSellingPrice(new BigDecimal(9800));
-		product1.setDeleteFlg("0");
-		product1.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product1.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		Product product2 = new Product();
-		product2.setProductID(1);
-		product2.setProductName("テスト商品2");
-		product2.setGenre("2");
-		product2.setMaker("メーカー2");
-		product2.setSellingPrice(new BigDecimal(4800));
-		product2.setDeleteFlg("0");
-		product2.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product2.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		Product product3 = new Product();
-		product3.setProductID(2);
-		product3.setProductName("テスト商品3");
-		product3.setGenre("3");
-		product3.setMaker("メーカー3");
-		product3.setSellingPrice(new BigDecimal(3000));
-		product3.setDeleteFlg("0");
-		product3.setInsertDate(new Timestamp(System.currentTimeMillis()));
-		product3.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-
-		productList.add(product1);
-		productList.add(product2);
-		productList.add(product3);
+		List<Product> productList = makeProductList();
+		Product product1 = productList.get(0);
 
 		when(productMapper.updateProductInfo(product1)).thenReturn(1);
 
@@ -294,8 +189,22 @@ class ProductServiceUnitTest {
 	}
 
 	@Test
+	@DisplayName("1件削除の場合")
 	public void testDelete() {
 		// arrange
+		List<Product> productList = makeProductList();
+		Product product1 = productList.get(0);
+
+		when(productMapper.deleteProductInfo(product1)).thenReturn(1);
+
+		// act
+		int actualCount = productService.delete(product1);
+
+		// assert
+		assertEquals(1, actualCount);
+	}
+
+	public List<Product> makeProductList() {
 		List<Product> productList = new ArrayList<Product>();
 		Product product1 = new Product();
 		product1.setProductID(0);
@@ -331,12 +240,6 @@ class ProductServiceUnitTest {
 		productList.add(product2);
 		productList.add(product3);
 
-		when(productMapper.deleteProductInfo(product1)).thenReturn(1);
-
-		// act
-		int actualCount = productService.delete(product1);
-
-		// assert
-		assertEquals(1, actualCount);
+		return productList;
 	}
 }
