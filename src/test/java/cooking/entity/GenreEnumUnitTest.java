@@ -11,7 +11,7 @@ import cooking.enums.GenreEnum;
 
 @DisplayName("GenreEnumの単体テスト")
 class GenreEnumUnitTest {
-	
+
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
@@ -20,25 +20,25 @@ class GenreEnumUnitTest {
 	void GenreGetValueByKeyTest_0() {
 		String genre = GenreEnum.getValueByKey("0");
 		assertEquals("指定なし", genre);
-		
+
 	}
-	
+
 	@Test
 	@DisplayName("GetValueByKey(1)の成功")
 	void GenreGetValueByKeyTest_1() {
 		String genre = GenreEnum.getValueByKey("1");
 		assertEquals("家電", genre);
-		
+
 	}
 
 	@Test
 	@DisplayName("GetValueByKey(7)の成功")
 	void GenreGetValueByKeyFailTest() {
-//		IllegalArgumentException thrown = assertThrows(
-//				IllegalArgumentException.class,
-//				() -> GenreEnum.getValueByKey("7"));
+		//		IllegalArgumentException thrown = assertThrows(
+		//				IllegalArgumentException.class,
+		//				() -> GenreEnum.getValueByKey("7"));
 		String genre = GenreEnum.getValueByKey("7");
 		assertEquals(null, genre);
 	}
-	
+
 }
