@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,10 +34,10 @@ class ProductUnitTest {
 	private Product product = new Product();
 	private BindingResult bindingResult = new BindException(product, "Product");
 
-	@Before
-	public void before() {
-		product.setProductID(1);
-	}
+//	@Before
+//	public void before() {
+//		product.setProductID(1);
+//	}
 
 	@Test
 	@DisplayName("エラーなしの場合")
@@ -178,11 +177,12 @@ class ProductUnitTest {
 		// arrange
 		product.setProductName("テスト商品");
 		product.setMaker("パナソニック");
+		product.setMultipartFile(fileSetUp());
 		try {
 			product.setSellingPrice(new BigDecimal("aaaa"));
 		} catch (NumberFormatException e) {
+            assertEquals("{0}は半角数字以外入力できません。", e.getMessage());
 		}
-		product.setMultipartFile(fileSetUp());
 
 		// act
 		validator.validate(product, bindingResult);
@@ -216,7 +216,7 @@ class ProductUnitTest {
 	}
 
 	public MockMultipartFile fileSetUp() throws IOException {
-		FileInputStream inputFile = new FileInputStream("/Users/masato/Desktop/images/no_image.png");
+		FileInputStream inputFile = new FileInputStream("src/main/resources/static/images/no_image.png");
 		MockMultipartFile file = new MockMultipartFile("file", "no_image.png", "image/png", inputFile);
 		return file;
 	}

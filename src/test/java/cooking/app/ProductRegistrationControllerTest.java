@@ -118,6 +118,7 @@ class ProductRegistrationControllerTest {
 				.andExpect(model().hasErrors())
 				.andExpect(model().errorCount(1))
 				.andExpect(model().attributeHasFieldErrors("product", "productName"))
+				.andExpect(model().attributeHasFieldErrorCode("product", "productName", "Size"))
 				.andExpect(view().name("productregistration"));
 
 		// assert
@@ -211,6 +212,31 @@ class ProductRegistrationControllerTest {
 				.andExpect(model().errorCount(1))
 				.andExpect(model().attributeHasFieldErrors("product", "sellingPrice"))
 				.andExpect(view().name("productregistration"));
+
+		// assert
+		verify(productService, times(0)).save(product);
+	}
+	
+	@Test
+	@DisplayName("販売価格が数字でない場合")
+	public void testSellingPriceNotDigitReturnsError() throws Exception {
+		// arrange
+		Product product = new Product();
+		product.setGenre("1");
+		product.setProductName("テスト商品");
+		product.setMaker("パナソニック");
+		product.setMultipartFile(fileSetUp());
+		try {
+			product.setSellingPrice(new BigDecimal("aaa"));
+		} catch (NumberFormatException e) {
+			// act
+			mockMvc.perform((post("/product-registration"))
+					.flashAttr("product", product))
+					.andExpect(model().hasErrors())
+					.andExpect(model().errorCount(2))
+					.andExpect(model().attributeHasFieldErrors("product", "sellingPrice"))
+					.andExpect(view().name("productregistration"));
+		}
 
 		// assert
 		verify(productService, times(0)).save(product);
@@ -320,7 +346,7 @@ class ProductRegistrationControllerTest {
 	}
 
 	public MockMultipartFile fileSetUp() throws IOException {
-		FileInputStream inputFile = new FileInputStream("/Users/masato/Desktop/images/no_image.png");
+		FileInputStream inputFile = new FileInputStream("src/main/resources/static/images/no_image.png");
 		MockMultipartFile file = new MockMultipartFile("file", "no_image.png", "image/png", inputFile);
 		return file;
 	}
