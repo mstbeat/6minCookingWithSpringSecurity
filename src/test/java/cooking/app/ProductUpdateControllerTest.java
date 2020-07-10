@@ -112,6 +112,58 @@ class ProductUpdateControllerTest {
 	}
 
 	@Test
+	@DisplayName("更新時エラーがある場合の商品情報更新")
+	public void testUpdateProductReturnsError() throws Exception {
+		// arrange
+		Product product = getProductId3();
+		product.setProductImg(product.getMultipartFile().getBytes());
+		product.setStringImg(product.getStringImg());
+		product.setProductName("");
+
+		// act
+		when(productService.update(any(Product.class))).thenReturn(0);
+		when(productService.findOne(anyInt())).thenReturn(product);
+
+		mockMvc.perform(put("/product-update").flashAttr("product", product))
+				.andExpect(status().isOk())
+				.andExpect(view().name("productupdate"))
+				.andExpect(model().hasErrors())
+				.andReturn();
+
+		// assert
+		verify(productService, times(1)).findOne(anyInt());
+		verify(productService, times(0)).update(any(Product.class));
+	}
+
+	@Test
+	@DisplayName("画像更新がない場合の商品情報更新")
+	public void testUpdateProductWithoutMultipartFile() throws Exception {
+		// arrange
+		Product product = getProductId3();
+		product.setProductImg(product.getMultipartFile().getBytes());
+		byte[] fileImage = new byte[0];
+		MockMultipartFile file2 = new MockMultipartFile("file", "", "image/png", fileImage);
+		product.setMultipartFile(file2);
+
+		// act
+		when(productService.update(any(Product.class))).thenReturn(1);
+		when(productService.findOne(anyInt())).thenReturn(product);
+
+		mockMvc.perform(put("/product-update").flashAttr("product", product))
+				.andExpect(status().isFound())
+				.andExpect(redirectedUrl("/product-list"))
+				.andExpect(view().name("redirect:/product-list"))
+				.andExpect(model().hasNoErrors())
+				.andExpect(flash().attributeExists("message"))
+				.andExpect(flash().attribute("message", is("商品情報を更新しました。")))
+				.andReturn();
+
+		// assert
+		verify(productService, times(1)).findOne(anyInt());
+		verify(productService, times(1)).update(any(Product.class));
+	}
+
+	@Test
 	@DisplayName("該当商品がない場合の商品情報更新")
 	public void testUpdateNullReturnsError() throws Exception {
 		// arrange
@@ -193,7 +245,7 @@ class ProductUpdateControllerTest {
 	}
 
 	public MockMultipartFile fileSetUp() throws IOException {
-		FileInputStream inputFile = new FileInputStream("/Users/masato/Desktop/images/no_image.png");
+		FileInputStream inputFile = new FileInputStream("src/main/resources/static/images/no_image.png");
 		MockMultipartFile file = new MockMultipartFile("file", "no_image.png", "image/png", inputFile);
 		return file;
 	}
