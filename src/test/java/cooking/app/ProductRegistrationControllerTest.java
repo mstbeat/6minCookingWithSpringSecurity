@@ -1,5 +1,7 @@
 package cooking.app;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -7,8 +9,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,11 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.servlet.ModelAndView;
 
 import cooking.entity.Product;
 import cooking.service.ProductService;
@@ -32,16 +41,15 @@ import cooking.service.ProductService;
 @DisplayName("ProductRegistrationControllerの単体テスト")
 class ProductRegistrationControllerTest {
 
-	@Autowired
 	private MockMvc mockMvc;
 
 	@MockBean
 	ProductService productService;
 
 	@Autowired
-	private ProductListController controller;
+	private ProductRegistrationController controller;
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 	}
@@ -216,7 +224,7 @@ class ProductRegistrationControllerTest {
 		// assert
 		verify(productService, times(0)).save(product);
 	}
-	
+
 	@Test
 	@DisplayName("販売価格が数字でない場合")
 	public void testSellingPriceNotDigitReturnsError() throws Exception {
@@ -226,20 +234,45 @@ class ProductRegistrationControllerTest {
 		product.setProductName("テスト商品");
 		product.setMaker("パナソニック");
 		product.setMultipartFile(fileSetUp());
-		try {
-			product.setSellingPrice(new BigDecimal("aaa"));
-		} catch (NumberFormatException e) {
-			// act
-			mockMvc.perform((post("/product-registration"))
-					.flashAttr("product", product))
-					.andExpect(model().hasErrors())
-					.andExpect(model().errorCount(2))
-					.andExpect(model().attributeHasFieldErrors("product", "sellingPrice"))
-					.andExpect(view().name("productregistration"));
-		}
+
+		// act
+		MvcResult mvcResult = mockMvc.perform((post("/product-registration").param("sellingPrice", "aaa"))
+				.flashAttr("product", product))
+				.andExpect(model().hasErrors())
+				.andExpect(model().errorCount(1))
+				.andExpect(model().attributeHasFieldErrors("product", "sellingPrice"))
+				.andExpect(model().attributeHasFieldErrorCode("product", "sellingPrice", "typeMismatch"))
+				.andExpect(view().name("productregistration"))
+				.andReturn();
 
 		// assert
 		verify(productService, times(0)).save(product);
+
+		ModelAndView mav = mvcResult.getModelAndView();
+		Map<String, Object> model = mav.getModel();
+		Object productObject = model.get("product");
+		assertThat(productObject, is(notNullValue()));
+		assertThat(productObject, is(instanceOf(Product.class)));
+		Product productModel = (Product) productObject;
+		assertThat(productModel.getSellingPrice(), is(nullValue()));
+
+		Object messageObject = mav.getModel().get("org.springframework.validation.BindingResult.product");
+		assertThat(messageObject, is(not(nullValue())));
+		assertThat(messageObject, is(instanceOf(BindingResult.class)));
+		BindingResult bindingResult = (BindingResult) messageObject;
+
+		List<FieldError> list = bindingResult.getFieldErrors("sellingPrice");
+		assertThat(list, is(not(nullValue())));
+		assertThat(list.size(), is(1));
+
+		FieldError fieldError = list.get(0);
+		assertThat(fieldError.getCode(), is("typeMismatch"));
+
+		Object[] args = fieldError.getArguments();
+		assertThat(args.length, is(1));
+		assertThat(args[0], is(instanceOf(DefaultMessageSourceResolvable.class)));
+		DefaultMessageSourceResolvable dmr = (DefaultMessageSourceResolvable) args[0];
+		assertThat(dmr.getCode(), is("sellingPrice"));
 	}
 
 	@Test
