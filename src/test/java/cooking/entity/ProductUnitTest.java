@@ -34,10 +34,10 @@ class ProductUnitTest {
 	private Product product = new Product();
 	private BindingResult bindingResult = new BindException(product, "Product");
 
-//	@Before
-//	public void before() {
-//		product.setProductID(1);
-//	}
+	//	@Before
+	//	public void before() {
+	//		product.setProductID(1);
+	//	}
 
 	@Test
 	@DisplayName("エラーなしの場合")
@@ -169,27 +169,6 @@ class ProductUnitTest {
 		// assert
 		assertThat(bindingResult.getFieldError().getField(), is("sellingPrice"));
 		assertThat(bindingResult.getFieldError().getDefaultMessage(), is("{0}は{1}以下の範囲で入力してください。"));
-	}
-
-	@Test
-	@DisplayName("販売価格が数字でない場合")
-	public void sellingPriceIsNotDecimal() throws IOException {
-		// arrange
-		product.setProductName("テスト商品");
-		product.setMaker("パナソニック");
-		product.setMultipartFile(fileSetUp());
-		try {
-			product.setSellingPrice(new BigDecimal("aaaa"));
-		} catch (NumberFormatException e) {
-            assertEquals("{0}は半角数字以外入力できません。", e.getMessage());
-		}
-
-		// act
-		validator.validate(product, bindingResult);
-
-		// assert
-		assertThat(bindingResult.getFieldError().getField(), is("sellingPrice"));
-		assertThat(bindingResult.getFieldError().getDefaultMessage(), is("{0}は半角数字以外入力できません。"));
 	}
 
 	@Test

@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +33,6 @@ import cooking.service.ProductService;
 @DisplayName("ProductListControllerの単体テスト")
 class ProductListControllerTest {
 
-	@Autowired
 	private MockMvc mockMvc;
 
 	@MockBean
@@ -42,7 +41,7 @@ class ProductListControllerTest {
 	@Autowired
 	private ProductListController controller;
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();

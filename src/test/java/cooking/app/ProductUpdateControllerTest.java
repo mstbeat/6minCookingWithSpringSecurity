@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -37,16 +37,15 @@ import cooking.service.ProductService;
 @DisplayName("ProductUpdateControllerの単体テスト")
 class ProductUpdateControllerTest {
 
-	@Autowired
 	private MockMvc mockMvc;
 
 	@MockBean
 	ProductService productService;
 
 	@Autowired
-	private ProductListController controller;
+	private ProductUpdateController controller;
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
