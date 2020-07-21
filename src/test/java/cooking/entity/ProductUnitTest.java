@@ -34,11 +34,6 @@ class ProductUnitTest {
 	private Product product = new Product();
 	private BindingResult bindingResult = new BindException(product, "Product");
 
-	//	@Before
-	//	public void before() {
-	//		product.setProductID(1);
-	//	}
-
 	@Test
 	@DisplayName("エラーなしの場合")
 	public void noError() throws IOException {
