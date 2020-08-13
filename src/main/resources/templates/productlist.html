@@ -11,6 +11,7 @@
   <div class="messages">
     <p th:text="${message}">
   </div>
+  <button type="button" class="sheet-btn" onclick="window.location.href='../reports/product-list'">帳票</button>
   <button type="button" class="submit-btn" onclick="window.location.href='product-registration'">登録</button>
   <div class="list-count">商品情報件数 <span th:text="${listProducts.size()}"></span> 件</div>
   <table border="1">

@@ -126,9 +126,10 @@ FROM ProductInfo]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="489" splitType="Stretch">
+		<band height="156" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<componentElement>
-				<reportElement x="40" y="-30" width="480" height="470" uuid="3f788f38-ad8b-4333-b3ac-7d77b51a0f4d">
+				<reportElement x="30" y="0" width="480" height="120" uuid="3f788f38-ad8b-4333-b3ac-7d77b51a0f4d">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -266,7 +267,9 @@ FROM ProductInfo]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="167" splitType="Stretch"/>
+		<band height="500" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>

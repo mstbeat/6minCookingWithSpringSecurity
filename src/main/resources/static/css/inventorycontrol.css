@@ -99,6 +99,20 @@ table th, table td {
   display: flex;
 }
 
+/* 帳票ボタン */
+.sheet-btn {
+  position: absolute;
+  top: 154px;
+  right: 79%;
+  margin: 10px 0 20px 20px;
+  border-radius: 5%;
+  font-size: 20px;
+  padding: 5px 20px;
+  border-style: none;
+  border: 1px solid #000;
+  background-color: #808080;
+}
+
 /* 登録ボタン */
 .submit-btn {
   position: absolute;
