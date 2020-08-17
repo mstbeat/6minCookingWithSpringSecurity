@@ -74,6 +74,10 @@
       <input class="btn-delete-btn" type="submit" value="削除" onclick="return returnConfirm(2)">
     </div>
   </form>
+  <form th:action="@{/update-sheet}" th:method="post">
+    <input type="hidden" name="productID" th:value="${product.productID}">
+    <input class="sheet-btn" type="submit" value="帳票">
+  </form>
   <button type="button" onclick="returnConfirm(3)" class="btn-goback-btn">戻る</button>
 </body>
 </html>

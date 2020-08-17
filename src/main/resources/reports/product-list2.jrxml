@@ -9,6 +9,8 @@
 		</queryString>
 	</subDataset>
 	<parameter name="title" class="java.lang.String"/>
+	<parameter name="count" class="java.lang.Integer"/>
+	<parameter name="no_image" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -17,6 +19,7 @@
 	<field name="maker" class="java.lang.String"/>
 	<field name="productName" class="java.lang.String"/>
 	<field name="sellingPrice" class="java.math.BigDecimal"/>
+	<field name="stringImg" class="java.lang.String"/>
 	<field name="productImg" class="java.lang.Object"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -24,16 +27,40 @@
 	<title>
 		<band height="79" splitType="Stretch">
 			<textField>
-				<reportElement x="230" y="30" width="100" height="30" uuid="e7cfa3cf-1dfc-4eb1-bae5-ca9d94740089"/>
+				<reportElement x="210" y="30" width="140" height="30" uuid="e7cfa3cf-1dfc-4eb1-bae5-ca9d94740089">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="IPAexg" size="16"/>
+					<font fontName="IPAexg" size="20"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="55" splitType="Stretch">
+			<textField>
+				<reportElement x="490" y="12" width="30" height="30" uuid="85fea606-1034-46bb-a12b-4c299cd73d46"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{count}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="422" y="12" width="68" height="30" uuid="7e52c595-41d3-44e4-a11a-f731e00c9c2c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[商品情報件数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="521" y="12" width="29" height="30" uuid="a5c86d0f-a315-4fc4-9c25-65209bf5c3d7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[件]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="33" splitType="Stretch">
@@ -141,11 +168,13 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<imageExpression><![CDATA[$F{productImg}]]></imageExpression>
+				<imageExpression><![CDATA["../static/images/no_image.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="80" y="0" width="70" height="30" uuid="bf3bee67-ba5b-45e2-a851-7026cdf74cd2">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -153,12 +182,15 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="3"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{productID}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="450" y="0" width="100" height="30" uuid="a09bea44-2299-4aee-9ad9-d098491c30a6">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -166,12 +198,15 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="3"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{sellingPrice}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="150" y="0" width="100" height="30" uuid="d5da88ec-0d87-496e-af5e-d96dc4884e1e">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -181,6 +216,7 @@
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="IPAexg"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{genre}.equals("0") ? "指定なし" :
 								($F{genre}.equals("1")) ? "家電" :
@@ -192,6 +228,7 @@
 			<textField>
 				<reportElement x="350" y="0" width="100" height="30" uuid="678689ff-7dd4-41ee-b78b-726d46ec67f7">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -201,12 +238,14 @@
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="IPAexg"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="250" y="0" width="100" height="30" uuid="710c6d85-c3c1-45b7-9d01-bf4c7fe6ebb6">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -216,16 +255,24 @@
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="IPAexg"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{maker}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="490" y="10" width="29" height="30" uuid="b0957045-f354-4dbe-bce5-1d5349f8131c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " / "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="520" y="10" width="28" height="30" uuid="fe695f2f-228a-490c-b703-a29f120d671b"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>

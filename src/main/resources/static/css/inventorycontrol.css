@@ -103,7 +103,7 @@ table th, table td {
 .sheet-btn {
   position: absolute;
   top: 154px;
-  right: 79%;
+  left: 61%;
   margin: 10px 0 20px 20px;
   border-radius: 5%;
   font-size: 20px;
