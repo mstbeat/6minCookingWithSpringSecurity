@@ -11,7 +11,7 @@
   <div class="messages">
     <p th:text="${message}">
   </div>
-  <form th:action="@{/list-sheet}" th:method="get">
+  <form th:action="@{/list-sheet}" th:method="post">
     <input class="sheet-btn" type="submit" value="帳票">
   </form>
   <button type="button" class="submit-btn" onclick="window.location.href='product-registration'">登録</button>

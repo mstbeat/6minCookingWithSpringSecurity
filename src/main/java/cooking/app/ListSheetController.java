@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -37,7 +36,7 @@ public class ListSheetController {
 	@Autowired
 	ProductService productService;
 	
-	@GetMapping("/list-sheet")
+	@PostMapping("/list-sheet")
 	public String createListSheet(HttpServletResponse response) {
 		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
         //ヘッダーデータ作成
@@ -48,6 +47,12 @@ public class ListSheetController {
         //フィールドデータ作成
         List<Product> fields = productService.findAll();
         params.put("count", fields.size());
+        for (Product field : fields) {
+        	if (field.getProductImg() != null) {
+        		String image = field.getStringImg();
+        		params.put("image", image);
+        	}
+        };
 
         /**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
         /**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　帳票出力部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
@@ -87,6 +92,12 @@ public class ListSheetController {
         //フィールドデータ作成
         List<Product> fields = new ArrayList<Product>();
         fields.add(productService.findOne(productID));
+        for (Product field : fields) {
+        	if (field.getProductImg() != null) {
+        		String image = field.getStringImg();
+        		params.put("image", image);
+        	}
+        };
 
         /**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
         /**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　帳票出力部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
@@ -125,7 +136,7 @@ public class ListSheetController {
 		InputStream input;
 		try {
 			//帳票ファイルを取得
-			input = new FileInputStream(resource.getResource("classpath:reports/product-list2.jrxml").getFile());
+			input = new FileInputStream(resource.getResource("classpath:reports/product-list.jrxml").getFile());
 			//リストをフィールドのデータソースに
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data);
 			//帳票をコンパイル

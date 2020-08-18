@@ -1,281 +1,297 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="product-list" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9a4f0703-7828-40d6-ac80-e70f931279f3">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src/main/resources/DataAdapter.xml"/>
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<subDataset name="product-list-dataset" uuid="b975450b-3057-4e6a-a528-4067867470fa">
-		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src/main/resources/DataAdapter.xml"/>
-		<queryString language="SQL">
-			<![CDATA[SELECT ProductId, Genre, Maker, ProductName, SellingPrice, ProductImg
-FROM ProductInfo
-WHERE DeleteFlg = '0'
-ORDER BY ProductId ASC]]>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="product-list2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8374ec7-f6b0-4c86-a324-a15b74662d3b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="Dataset1" uuid="d314057e-43dd-494b-ba19-3dc58516ca47">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
 		</queryString>
-		<field name="ProductImg" class="java.lang.Object">
-			<property name="com.jaspersoft.studio.field.label" value="ProductImg"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-		</field>
-		<field name="ProductId" class="java.lang.Integer">
-			<property name="com.jaspersoft.studio.field.label" value="ProductId"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-		</field>
-		<field name="Genre" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.label" value="Genre"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-		</field>
-		<field name="Maker" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.label" value="Maker"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-		</field>
-		<field name="ProductName" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.label" value="ProductName"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-		</field>
-		<field name="SellingPrice" class="java.math.BigDecimal">
-			<property name="com.jaspersoft.studio.field.label" value="SellingPrice"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-		</field>
 	</subDataset>
+	<parameter name="title" class="java.lang.String"/>
+	<parameter name="count" class="java.lang.Integer"/>
+	<parameter name="no_image" class="java.lang.String"/>
+	<parameter name="image" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT *
-FROM ProductInfo]]>
+		<![CDATA[]]>
 	</queryString>
-	<field name="ProductId" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="ProductId"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
-	<field name="ProductName" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="ProductName"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
-	<field name="Genre" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="Genre"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
-	<field name="Maker" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="Maker"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
-	<field name="SellingPrice" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="SellingPrice"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
-	<field name="ProductDetail" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="ProductDetail"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
-	<field name="ProductImg" class="java.lang.Object">
-		<property name="com.jaspersoft.studio.field.label" value="ProductImg"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
-	<field name="DeleteFlg" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="DeleteFlg"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
-	<field name="InsertDate" class="java.sql.Timestamp">
-		<property name="com.jaspersoft.studio.field.label" value="InsertDate"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
-	<field name="UpdateDate" class="java.sql.Timestamp">
-		<property name="com.jaspersoft.studio.field.label" value="UpdateDate"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
-	</field>
+	<field name="productID" class="java.lang.Integer"/>
+	<field name="genre" class="java.lang.String"/>
+	<field name="maker" class="java.lang.String"/>
+	<field name="productName" class="java.lang.String"/>
+	<field name="sellingPrice" class="java.math.BigDecimal"/>
+	<field name="productImg" class="java.lang.Object"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="20" splitType="Stretch"/>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="210" y="30" width="140" height="30" uuid="e7cfa3cf-1dfc-4eb1-bae5-ca9d94740089">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="130" height="30" uuid="d318e151-e837-49d2-98e7-a06fa687f517"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg" size="12"/>
+				</textElement>
+				<text><![CDATA[商品情報管理システム]]></text>
+			</staticText>
+		</band>
 	</title>
 	<pageHeader>
-		<band height="47" splitType="Stretch">
-			<staticText>
-				<reportElement x="230" y="-21" width="100" height="23" uuid="926785b7-eb3f-4aaa-bf13-be425c22ee49"/>
-				<textElement textAlignment="Center">
-					<font size="16"/>
+		<band height="55" splitType="Stretch">
+			<textField>
+				<reportElement x="490" y="12" width="30" height="30" uuid="85fea606-1034-46bb-a12b-4c299cd73d46"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
 				</textElement>
-				<text><![CDATA[商品情報一覧]]></text>
+				<textFieldExpression><![CDATA[$P{count}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="422" y="12" width="68" height="30" uuid="7e52c595-41d3-44e4-a11a-f731e00c9c2c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[商品情報件数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="521" y="12" width="29" height="30" uuid="a5c86d0f-a315-4fc4-9c25-65209bf5c3d7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[件]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="156" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<componentElement>
-				<reportElement x="30" y="0" width="480" height="120" uuid="3f788f38-ad8b-4333-b3ac-7d77b51a0f4d">
-					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
-					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
-					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="70" height="33" uuid="55bb6505-61c8-4a3d-82ac-ad8ee3401517">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="product-list-dataset" uuid="50e8155a-6f35-476f-9d36-4b0b64ecbff6">
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					</datasetRun>
-					<jr:column width="80" uuid="42bf5ec0-4944-42d6-8a00-138c253399c5">
-						<jr:columnHeader style="Table_CH" height="30">
-							<staticText>
-								<reportElement x="0" y="0" width="80" height="30" uuid="d4152f9b-3cff-491f-9b34-349daaf49688"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[イメージ]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<image hAlign="Center" vAlign="Middle">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="30" uuid="d331cfb5-285a-4ee4-963d-d80fe1856bc1">
-									<property name="com.jaspersoft.studio.unit.width" value="px"/>
-									<property name="com.jaspersoft.studio.unit.height" value="px"/>
-								</reportElement>
-								<imageExpression><![CDATA[$F{ProductImg}]]></imageExpression>
-							</image>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="40" uuid="920a7a8e-ee61-4caa-9d45-fcf94e5e02fe">
-						<jr:columnHeader style="Table_CH" height="30">
-							<staticText>
-								<reportElement x="0" y="0" width="40" height="30" uuid="7a017f6d-84f4-4b5e-971e-1b068f918b63"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[商品ID]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="40" height="30" uuid="5f4eb869-65ba-40c9-8efb-2aa6e6c23a34">
-									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
-								</reportElement>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
-									<paragraph rightIndent="3"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{ProductId}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="80" uuid="9134ea4a-141a-4428-92c8-39fa7e1d9676">
-						<jr:columnHeader style="Table_CH" height="30">
-							<staticText>
-								<reportElement x="0" y="0" width="80" height="30" uuid="f5844bf1-9c66-4ec9-83a4-571cdbae2e0d"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[ジャンル]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="80" height="30" uuid="b53ee3eb-78a1-4f62-bc09-06a3a228aecf">
-									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-								</reportElement>
-								<textElement verticalAlignment="Middle">
-									<paragraph leftIndent="3"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{Genre}.equals("0") ? "指定なし" :
-								($F{Genre}.equals("1")) ? "家電" :
-								($F{Genre}.equals("2")) ? "家具" :
-								($F{Genre}.equals("3")) ? "食品" :
-								($F{Genre}.equals("4")) ? "ファッション" :
-								($F{Genre}.equals("5")) ? "書籍" : ""]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="110" uuid="1402ac00-4190-4a94-971d-bd3f41e660bc">
-						<jr:columnHeader style="Table_CH" height="30">
-							<staticText>
-								<reportElement x="0" y="0" width="110" height="30" uuid="4a6d98a2-60fc-4a6d-87ce-94ddd97a781a"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[メーカー]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="110" height="30" uuid="a7a698f8-cf23-4a59-8e6c-0dfef5c17b35">
-									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-								</reportElement>
-								<textElement verticalAlignment="Middle">
-									<paragraph leftIndent="3"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{Maker}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="110" uuid="dec5413c-afcc-4379-9a32-b85101fbd4ed">
-						<jr:columnHeader style="Table_CH" height="30">
-							<staticText>
-								<reportElement x="0" y="0" width="110" height="30" uuid="0670697a-1a81-48bb-a9e6-e441f6ffd2df"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[商品名]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="110" height="30" uuid="23fbda13-a27c-4651-bb35-792c34bdab8c">
-									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-								</reportElement>
-								<textElement verticalAlignment="Middle">
-									<paragraph leftIndent="3"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{ProductName}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="60" uuid="5251844c-467b-4881-bb81-e6eb077167ea">
-						<jr:columnHeader style="Table_CH" height="30">
-							<staticText>
-								<reportElement x="0" y="0" width="60" height="30" uuid="46c5c64c-1842-4829-9d15-a0db2dcb60e6"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[販売価格]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="60" height="30" uuid="5e6f9a61-9416-4098-98e2-01be5db3a106">
-									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
-								</reportElement>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
-									<paragraph rightIndent="3"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{SellingPrice}.setScale(0, BigDecimal.ROUND_HALF_UP)]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[商品ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="100" height="33" uuid="d4974403-1158-4839-ad92-08bc903a55cd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[ジャンル]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="100" height="33" uuid="9e5811c8-58d8-4e35-9f0a-16faa9d4af9c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[メーカー]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="100" height="33" uuid="b23d8b47-8ab3-41cf-8c01-d2b20a1e4abc">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[商品名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="0" width="100" height="33" uuid="2d05c409-d158-424a-bc54-a6bbe7e4cb03">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[販売価格]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="0" width="70" height="33" uuid="51de4de2-eeb2-4e3a-82f6-5419d691640b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[イメージ]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="500" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement stretchType="RelativeToBandHeight" x="12" y="2" width="66" height="26" uuid="d331cfb5-285a-4ee4-963d-d80fe1856bc1">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$F{productImg} != null ? new java.io.ByteArrayInputStream(javax.xml.bind.DatatypeConverter.parseBase64Binary((String)$P{image})) : "src/main/resources/static/images/no_image.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="80" y="0" width="70" height="30" uuid="bf3bee67-ba5b-45e2-a851-7026cdf74cd2">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="100" height="30" uuid="a09bea44-2299-4aee-9ad9-d098491c30a6">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sellingPrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="100" height="30" uuid="d5da88ec-0d87-496e-af5e-d96dc4884e1e">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{genre}.equals("0") ? "指定なし" :
+								($F{genre}.equals("1")) ? "家電" :
+								($F{genre}.equals("2")) ? "家具" :
+								($F{genre}.equals("3")) ? "食品" :
+								($F{genre}.equals("4")) ? "ファッション" :
+								($F{genre}.equals("5")) ? "書籍" : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="0" width="100" height="30" uuid="678689ff-7dd4-41ee-b78b-726d46ec67f7">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="10" y="0" width="70" height="30" uuid="3575b808-674d-41fc-a1a4-eb9c3c9be2bd"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</frame>
+			<textField>
+				<reportElement x="250" y="0" width="100" height="30" uuid="710c6d85-c3c1-45b7-9d01-bf4c7fe6ebb6">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{maker}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="490" y="10" width="29" height="30" uuid="b0957045-f354-4dbe-bce5-1d5349f8131c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " / "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="520" y="10" width="28" height="30" uuid="fe695f2f-228a-490c-b703-a29f120d671b"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
