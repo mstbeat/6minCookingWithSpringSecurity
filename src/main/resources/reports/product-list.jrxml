@@ -72,7 +72,7 @@
 	<columnHeader>
 		<band height="33" splitType="Stretch">
 			<staticText>
-				<reportElement x="80" y="0" width="70" height="33" uuid="55bb6505-61c8-4a3d-82ac-ad8ee3401517">
+				<reportElement x="90" y="0" width="60" height="33" uuid="55bb6505-61c8-4a3d-82ac-ad8ee3401517">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -87,7 +87,7 @@
 				<text><![CDATA[商品ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="150" y="0" width="100" height="33" uuid="d4974403-1158-4839-ad92-08bc903a55cd">
+				<reportElement x="150" y="0" width="90" height="33" uuid="d4974403-1158-4839-ad92-08bc903a55cd">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -102,7 +102,7 @@
 				<text><![CDATA[ジャンル]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="250" y="0" width="100" height="33" uuid="9e5811c8-58d8-4e35-9f0a-16faa9d4af9c">
+				<reportElement x="240" y="0" width="110" height="33" uuid="9e5811c8-58d8-4e35-9f0a-16faa9d4af9c">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -117,7 +117,7 @@
 				<text><![CDATA[メーカー]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="0" width="100" height="33" uuid="b23d8b47-8ab3-41cf-8c01-d2b20a1e4abc">
+				<reportElement x="350" y="0" width="130" height="33" uuid="b23d8b47-8ab3-41cf-8c01-d2b20a1e4abc">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -132,7 +132,7 @@
 				<text><![CDATA[商品名]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="450" y="0" width="100" height="33" uuid="2d05c409-d158-424a-bc54-a6bbe7e4cb03">
+				<reportElement x="480" y="0" width="70" height="33" uuid="2d05c409-d158-424a-bc54-a6bbe7e4cb03">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -147,7 +147,7 @@
 				<text><![CDATA[販売価格]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="0" width="70" height="33" uuid="51de4de2-eeb2-4e3a-82f6-5419d691640b">
+				<reportElement x="10" y="0" width="80" height="33" uuid="51de4de2-eeb2-4e3a-82f6-5419d691640b">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -166,22 +166,31 @@
 	<detail>
 		<band height="30" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement stretchType="RelativeToBandHeight" x="12" y="2" width="66" height="26" uuid="d331cfb5-285a-4ee4-963d-d80fe1856bc1">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
+			<frame>
+				<reportElement x="10" y="0" width="80" height="30" uuid="3575b808-674d-41fc-a1a4-eb9c3c9be2bd"/>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<imageExpression><![CDATA[$F{productImg} != null ? new java.io.ByteArrayInputStream(javax.xml.bind.DatatypeConverter.parseBase64Binary((String)$P{image})) : "src/main/resources/static/images/no_image.png"]]></imageExpression>
-			</image>
+				<image hAlign="Center" vAlign="Middle">
+					<reportElement stretchType="RelativeToBandHeight" x="8" y="2" width="66" height="26" uuid="d331cfb5-285a-4ee4-963d-d80fe1856bc1">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<imageExpression><![CDATA[$F{productImg} != null ? $F{productImg} : "src/main/resources/static/images/no_image.png"]]></imageExpression>
+				</image>
+			</frame>
 			<textField>
-				<reportElement x="80" y="0" width="70" height="30" uuid="bf3bee67-ba5b-45e2-a851-7026cdf74cd2">
+				<reportElement x="90" y="0" width="60" height="30" uuid="bf3bee67-ba5b-45e2-a851-7026cdf74cd2">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -198,7 +207,7 @@
 				<textFieldExpression><![CDATA[$F{productID}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="450" y="0" width="100" height="30" uuid="a09bea44-2299-4aee-9ad9-d098491c30a6">
+				<reportElement x="480" y="0" width="70" height="30" uuid="a09bea44-2299-4aee-9ad9-d098491c30a6">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
@@ -214,7 +223,7 @@
 				<textFieldExpression><![CDATA[$F{sellingPrice}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="150" y="0" width="100" height="30" uuid="d5da88ec-0d87-496e-af5e-d96dc4884e1e">
+				<reportElement x="150" y="0" width="90" height="30" uuid="d5da88ec-0d87-496e-af5e-d96dc4884e1e">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -236,7 +245,7 @@
 								($F{genre}.equals("5")) ? "書籍" : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="0" width="100" height="30" uuid="678689ff-7dd4-41ee-b78b-726d46ec67f7">
+				<reportElement x="350" y="0" width="130" height="30" uuid="678689ff-7dd4-41ee-b78b-726d46ec67f7">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -252,17 +261,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
 			</textField>
-			<frame>
-				<reportElement x="10" y="0" width="70" height="30" uuid="3575b808-674d-41fc-a1a4-eb9c3c9be2bd"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-			</frame>
 			<textField>
-				<reportElement x="250" y="0" width="100" height="30" uuid="710c6d85-c3c1-45b7-9d01-bf4c7fe6ebb6">
+				<reportElement x="240" y="0" width="110" height="30" uuid="710c6d85-c3c1-45b7-9d01-bf4c7fe6ebb6">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>

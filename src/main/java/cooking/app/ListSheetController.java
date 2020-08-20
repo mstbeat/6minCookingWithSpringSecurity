@@ -1,5 +1,7 @@
 package cooking.app;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,14 +10,24 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import cooking.entity.Product;
 import cooking.service.ProductService;
@@ -31,101 +43,105 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class ListSheetController {
 
 	@Autowired
-    ResourceLoader resource;
-	
+	ResourceLoader resource;
+
 	@Autowired
 	ProductService productService;
-	
+
 	@PostMapping("/list-sheet")
 	public String createListSheet(HttpServletResponse response) {
 		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
-        //ヘッダーデータ作成
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("title", "商品情報一覧");
-        params.put("no_image", "../resources/static/images/no_image.png");
+		//ヘッダーデータ作成
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("title", "商品情報一覧");
+		params.put("no_image", "../resources/static/images/no_image.png");
 
-        //フィールドデータ作成
-        List<Product> fields = productService.findAll();
-        params.put("count", fields.size());
-        for (Product field : fields) {
-        	if (field.getProductImg() != null) {
-        		String image = field.getStringImg();
-        		params.put("image", image);
-        	}
-        };
+		//フィールドデータ作成
+		List<Product> fields = productService.findAll();
+		params.put("count", fields.size());
+		for (Product field : fields) {
+			if (field.getProductImg() != null) {
+				String image = field.getStringImg();
+				params.put("image", image);
+			}
+		}
 
-        /**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
-        /**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　帳票出力部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
-        //データを検索し帳票を出力
-        byte[] output  = orderListReport(params, fields);
-        /**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
+		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
+		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　帳票出力部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
+		//データを検索し帳票を出力
+		byte[] output = orderListReport(params, fields);
+		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
 
-        /**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成データダウンロード部 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=" + "product-list.pdf");
-        response.setContentLength(output.length);
+		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成データダウンロード部 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + "product-list.pdf");
+		response.setContentLength(output.length);
 
-        OutputStream os = null;
-        try {
-            os = response.getOutputStream();
-            os.write(output);
-            os.flush();
+		OutputStream os = null;
+		try {
+			os = response.getOutputStream();
+			os.write(output);
+			os.flush();
 
-            os.close();
-        } catch (IOException e) {
-            e.getStackTrace();
-        }
-        /**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
+			os.close();
+		} catch (IOException e) {
+			e.getStackTrace();
+		}
+		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
 
+		return null;
+	}
 
-        return null;
-    }
-	
 	@PostMapping("/update-sheet")
-	public String createUpdateSheet(HttpServletResponse response, @ModelAttribute("productID") int productID) {
+	public String createUpdateSheet(HttpServletResponse response, @ModelAttribute("productID") int productID,
+			Model model) {
 		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
-        //ヘッダーデータ作成
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("title", "商品情報更新");
-        params.put("no_image", "/cooking/src/main/resources/static/images/no_image.png");
+		//ヘッダーデータ作成
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("title", "商品情報更新");
+		params.put("no_image", "/cooking/src/main/resources/static/images/no_image.png");
 
-        //フィールドデータ作成
-        List<Product> fields = new ArrayList<Product>();
-        fields.add(productService.findOne(productID));
-        for (Product field : fields) {
-        	if (field.getProductImg() != null) {
-        		String image = field.getStringImg();
-        		params.put("image", image);
-        	}
-        };
+		//フィールドデータ作成
+		List<Product> fields = new ArrayList<Product>();
+		fields.add(productService.findOne(productID));
+		model.addAttribute("product", productService.findOne(productID));
+		for (Product field : fields) {
+			if (field.getProductImg() != null) {
+				String image = field.getStringImg();
+				params.put("image", image);
+			} else {
+				field.setStringImg(field.getStringImg());
+			}
+			BufferedImage qrcode = barcode(productID, field.getProductName());
+			params.put("qrcode", qrcode);
+		}
 
-        /**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
-        /**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　帳票出力部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
-        //データを検索し帳票を出力
-        byte[] output  = orderUpdateReport(params, fields);
-        /**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
+		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
+		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　帳票出力部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
+		//データを検索し帳票を出力
+		byte[] output = orderUpdateReport(params, fields);
+		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
 
-        /**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成データダウンロード部 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=" + "product-update.pdf");
-        response.setContentLength(output.length);
+		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成データダウンロード部 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + "product-update.pdf");
+		response.setContentLength(output.length);
 
-        OutputStream os = null;
-        try {
-            os = response.getOutputStream();
-            os.write(output);
-            os.flush();
+		OutputStream os = null;
+		try {
+			os = response.getOutputStream();
+			os.write(output);
+			os.flush();
 
-            os.close();
-        } catch (IOException e) {
-            e.getStackTrace();
-        }
-        /**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
+			os.close();
+		} catch (IOException e) {
+			e.getStackTrace();
+		}
+		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
 
+		return null;
+	}
 
-        return null;
-    }
-	
 	/**
 	 * ジャスパーレポートコンパイル。バイナリファイルを返却する。
 	 * @param data
@@ -164,7 +180,7 @@ public class ListSheetController {
 		return null;
 
 	}
-	
+
 	/**
 	 * ジャスパーレポートコンパイル。バイナリファイルを返却する。
 	 * @param data
@@ -203,4 +219,43 @@ public class ListSheetController {
 		return null;
 
 	}
+
+	public BufferedImage barcode(int productID, String productName) {
+		String productId = String.valueOf(productID);
+		String content = productId + " / " + productName;
+		int width = 200;
+		int height = 200;
+		String output = "qrcode.png";
+		String encoding = "UTF-8";
+		ConcurrentHashMap<EncodeHintType, String> hints = new ConcurrentHashMap<EncodeHintType, String>();
+		hints.put(EncodeHintType.CHARACTER_SET, encoding);
+
+		try {
+			QRCodeWriter qrWriter = new QRCodeWriter();
+
+			//QRCodeWriter#encode()には以下の情報を渡す
+			// (1)エンコード対象の文字列、バーコードに埋め込みたい情報
+			// (2)出力するバーコードの書式
+			// (3)イメージの幅
+			// (4)イメージの高さ
+			BitMatrix bitMatrix = qrWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);
+
+			BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix);
+
+			//エンコードで得られたイメージを画像ファイルに出力する
+			ImageIO.write(image, "png", new File(output));
+			return image;
+
+		} catch (WriterException e) {
+			System.err.println("[" + content + "] をエンコードするときに例外が発生.");
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			System.err.println("[" + output + "] を出力するときに例外が発生.");
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
 }
