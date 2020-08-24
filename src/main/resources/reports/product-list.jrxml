@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="product-list2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8374ec7-f6b0-4c86-a324-a15b74662d3b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="product-list" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8374ec7-f6b0-4c86-a324-a15b74662d3b">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<subDataset name="Dataset1" uuid="d314057e-43dd-494b-ba19-3dc58516ca47">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 		<queryString>
@@ -13,28 +14,41 @@
 	<parameter name="no_image" class="java.lang.String"/>
 	<parameter name="image" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[SELECT * FROM ProductInfo WHERE DeleteFlg=0]]>
 	</queryString>
-	<field name="productID" class="java.lang.Integer"/>
-	<field name="genre" class="java.lang.String"/>
-	<field name="maker" class="java.lang.String"/>
-	<field name="productName" class="java.lang.String"/>
-	<field name="sellingPrice" class="java.math.BigDecimal"/>
-	<field name="productImg" class="java.lang.Object"/>
+	<field name="productID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ProductId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="productName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ProductName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="genre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Genre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="maker" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Maker"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="sellingPrice" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="SellingPrice"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="productDetail" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ProductDetail"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="productImg" class="java.io.InputStream">
+		<property name="com.jaspersoft.studio.field.label" value="ProductImg"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="79" splitType="Stretch">
-			<textField>
-				<reportElement x="210" y="30" width="140" height="30" uuid="e7cfa3cf-1dfc-4eb1-bae5-ca9d94740089">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="IPAexg" size="20"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="0" y="0" width="130" height="30" uuid="d318e151-e837-49d2-98e7-a06fa687f517"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -42,16 +56,23 @@
 				</textElement>
 				<text><![CDATA[商品情報管理システム]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="210" y="40" width="140" height="30" uuid="3a36116e-c74c-420f-9227-96577cdeeec0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg" size="20"/>
+				</textElement>
+				<text><![CDATA[商品情報一覧]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="55" splitType="Stretch">
-			<textField>
+			<textField evaluationTime="Report">
 				<reportElement x="490" y="12" width="30" height="30" uuid="85fea606-1034-46bb-a12b-4c299cd73d46"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="IPAexg"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{count}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="422" y="12" width="68" height="30" uuid="7e52c595-41d3-44e4-a11a-f731e00c9c2c"/>
@@ -220,7 +241,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sellingPrice}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{sellingPrice}.setScale(0, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="150" y="0" width="90" height="30" uuid="d5da88ec-0d87-496e-af5e-d96dc4884e1e">

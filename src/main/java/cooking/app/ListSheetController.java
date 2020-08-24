@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,48 +51,103 @@ public class ListSheetController {
 	ProductService productService;
 
 	@PostMapping("/list-sheet")
-	public String createListSheet(HttpServletResponse response) {
-		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
-		//ヘッダーデータ作成
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("title", "商品情報一覧");
-		params.put("no_image", "../resources/static/images/no_image.png");
-
-		//フィールドデータ作成
-		List<Product> fields = productService.findAll();
-		params.put("count", fields.size());
-		for (Product field : fields) {
-			if (field.getProductImg() != null) {
-				String image = field.getStringImg();
-				params.put("image", image);
-			}
-		}
-
-		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
-		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　帳票出力部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
-		//データを検索し帳票を出力
-		byte[] output = orderListReport(params, fields);
-		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
-
-		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成データダウンロード部 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
-		response.setContentType("application/octet-stream");
-		response.setHeader("Content-Disposition", "attachment; filename=" + "product-list.pdf");
-		response.setContentLength(output.length);
-
-		OutputStream os = null;
+	public String createSheet(HttpServletResponse response) {
+		InputStream input;
 		try {
-			os = response.getOutputStream();
-			os.write(output);
-			os.flush();
+			// PDFフォーマットファイルを指定する
+			input = new FileInputStream(resource.getResource("classpath:reports/product-list.jrxml").getFile());
 
-			os.close();
-		} catch (IOException e) {
-			e.getStackTrace();
+			if (input != null) {
+				//コネクション取得
+				Connection m_con = null;
+				//ここは各自の環境設定
+				String url = "jdbc:mysql://localhost:3306/wbr_inventory_control";
+				String user = "testuser";
+				String password = "testuser";
+
+				//jdbcドライバをクラスパスに追加しておくこと
+				Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+				m_con = DriverManager.getConnection(url, user, password);
+
+				//PDFに埋め込まれた変数に値を設定するためのパラメータ
+				HashMap<String, Object> params = new HashMap<String, Object>();
+
+				// jrxmlをコンパイルする
+				JasperReport jasperReport = JasperCompileManager.compileReport(input);
+
+				// データソースとパラメータをコンパイルされた帳票に設定
+				JasperPrint pdf = JasperFillManager.fillReport(jasperReport, params, m_con);
+
+				// 帳票の出力
+				byte[] output = JasperExportManager.exportReportToPdf(pdf);
+
+				response.setContentType("application/octet-stream");
+				response.setHeader("Content-Disposition", "attachment; filename=" + "product-list.pdf");
+				response.setContentLength(output.length);
+
+				OutputStream os = null;
+				try {
+					os = response.getOutputStream();
+					os.write(output);
+					os.flush();
+
+					os.close();
+				} catch (IOException e) {
+					e.getStackTrace();
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
-
 		return null;
+
 	}
+
+	//	@PostMapping("/list-sheet")
+	//	public String createListSheet(HttpServletResponse response) {
+	//		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
+	//		//ヘッダーデータ作成
+	//		HashMap<String, Object> params = new HashMap<String, Object>();
+	//		params.put("title", "商品情報一覧");
+	//		params.put("no_image", "../resources/static/images/no_image.png");
+	//
+	//		//フィールドデータ作成
+	//		List<Product> fields = productService.findAll();
+	//		params.put("count", fields.size());
+	//		for (Product field : fields) {
+	//			if (field.getProductImg() != null) {
+	//				String image = field.getStringImg();
+	//				params.put("image", image);
+	//			}
+	//		}
+	//
+	//		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
+	//		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　帳票出力部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
+	//		//データを検索し帳票を出力
+	//		byte[] output = orderListReport(params, fields);
+	//		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
+	//
+	//		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成データダウンロード部 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
+	//		response.setContentType("application/octet-stream");
+	//		response.setHeader("Content-Disposition", "attachment; filename=" + "product-list.pdf");
+	//		response.setContentLength(output.length);
+	//
+	//		OutputStream os = null;
+	//		try {
+	//			os = response.getOutputStream();
+	//			os.write(output);
+	//			os.flush();
+	//
+	//			os.close();
+	//		} catch (IOException e) {
+	//			e.getStackTrace();
+	//		}
+	//		/**▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲　データ作成部　▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲**/
+	//
+	//		return null;
+	//	}
 
 	@PostMapping("/update-sheet")
 	public String createUpdateSheet(HttpServletResponse response, @ModelAttribute("productID") int productID,
@@ -98,8 +155,8 @@ public class ListSheetController {
 		/**▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼　データ作成部　▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼**/
 		//ヘッダーデータ作成
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("title", "商品情報更新");
-		params.put("no_image", "/cooking/src/main/resources/static/images/no_image.png");
+		//		params.put("title", "商品情報更新");
+		//		params.put("no_image", "/cooking/src/main/resources/static/images/no_image.png");
 
 		//フィールドデータ作成
 		List<Product> fields = new ArrayList<Product>();
@@ -109,8 +166,6 @@ public class ListSheetController {
 			if (field.getProductImg() != null) {
 				String image = field.getStringImg();
 				params.put("image", image);
-			} else {
-				field.setStringImg(field.getStringImg());
 			}
 			BufferedImage qrcode = barcode(productID, field.getProductName());
 			params.put("qrcode", qrcode);
@@ -142,44 +197,44 @@ public class ListSheetController {
 		return null;
 	}
 
-	/**
-	 * ジャスパーレポートコンパイル。バイナリファイルを返却する。
-	 * @param data
-	 * @param response
-	 * @return
-	 */
-	private byte[] orderListReport(HashMap<String, Object> param, List<Product> data) {
-		InputStream input;
-		try {
-			//帳票ファイルを取得
-			input = new FileInputStream(resource.getResource("classpath:reports/product-list.jrxml").getFile());
-			//リストをフィールドのデータソースに
-			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data);
-			//帳票をコンパイル
-			JasperReport jasperReport = JasperCompileManager.compileReport(input);
-
-			JasperPrint jasperPrint;
-			//パラメーターとフィールドデータを注入
-			jasperPrint = JasperFillManager.fillReport(jasperReport, param, dataSource);
-			//帳票をByte形式で出力
-			return JasperExportManager.exportReportToPdf(jasperPrint);
-
-		} catch (FileNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (JRException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-
-	}
+	//	/**
+	//	 * ジャスパーレポートコンパイル。バイナリファイルを返却する。
+	//	 * @param data
+	//	 * @param response
+	//	 * @return
+	//	 */
+	//	private byte[] orderListReport(HashMap<String, Object> param, List<Product> data) {
+	//		InputStream input;
+	//		try {
+	//			//帳票ファイルを取得
+	//			input = new FileInputStream(resource.getResource("classpath:reports/product-list2.jrxml").getFile());
+	//			//リストをフィールドのデータソースに
+	//			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data);
+	//			//帳票をコンパイル
+	//			JasperReport jasperReport = JasperCompileManager.compileReport(input);
+	//
+	//			JasperPrint jasperPrint;
+	//			//パラメーターとフィールドデータを注入
+	//			jasperPrint = JasperFillManager.fillReport(jasperReport, param, dataSource);
+	//			//帳票をByte形式で出力
+	//			return JasperExportManager.exportReportToPdf(jasperPrint);
+	//
+	//		} catch (FileNotFoundException e) {
+	//			// TODO 自動生成された catch ブロック
+	//			e.printStackTrace();
+	//		} catch (IOException e) {
+	//			// TODO 自動生成された catch ブロック
+	//			e.printStackTrace();
+	//		} catch (JRException e) {
+	//			// TODO 自動生成された catch ブロック
+	//			e.printStackTrace();
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//		}
+	//
+	//		return null;
+	//
+	//	}
 
 	/**
 	 * ジャスパーレポートコンパイル。バイナリファイルを返却する。

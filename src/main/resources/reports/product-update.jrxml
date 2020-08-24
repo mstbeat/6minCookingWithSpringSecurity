@@ -16,27 +16,24 @@
 	<field name="sellingPrice" class="java.math.BigDecimal"/>
 	<field name="productDetail" class="java.lang.String"/>
 	<field name="productImg" class="java.lang.Object"/>
-	<field name="stringImg" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="79" splitType="Stretch">
-			<textField>
-				<reportElement x="210" y="30" width="140" height="30" uuid="d3fdadc2-8b06-43c4-a452-014cb4b0a63c">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="IPAexg" size="20"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="0" y="0" width="130" height="30" uuid="22676381-31a1-4fb3-ba2c-6489bed2f426"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="IPAexg" size="12"/>
 				</textElement>
 				<text><![CDATA[商品情報管理システム]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="40" width="140" height="30" uuid="f4008be5-a237-4e60-9d40-762f25d8e090"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg" size="20"/>
+				</textElement>
+				<text><![CDATA[商品情報更新]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -295,7 +292,7 @@
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<imageExpression><![CDATA[$F{productImg} != null ? new java.io.ByteArrayInputStream(javax.xml.bind.DatatypeConverter.parseBase64Binary((String)$F{stringImg})) : "src/main/resources/static/images/no_image.png"]]></imageExpression>
+					<imageExpression><![CDATA[$F{productImg} != null ? new java.io.ByteArrayInputStream(javax.xml.bind.DatatypeConverter.parseBase64Binary((String)($P{image}))) : "src/main/resources/static/images/no_image.png"]]></imageExpression>
 				</image>
 			</frame>
 		</band>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="product-list2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8a72d2c0-ba08-4833-bb0c-137468924648">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString language="SQL">
+		<![CDATA[select * from ProductInfo]]>
+	</queryString>
+	<field name="productID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ProductId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="productName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ProductName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="genre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Genre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="maker" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Maker"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="sellingPrice" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="SellingPrice"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="productDetail" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ProductDetail"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<field name="productImg" class="java.io.InputStream">
+		<property name="com.jaspersoft.studio.field.label" value="ProductImg"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productinfo"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement x="260" y="30" width="50" height="50" uuid="fe66c4b1-cc14-46bf-9f75-26a45362ac61"/>
+				<imageExpression><![CDATA[$F{productImg}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
