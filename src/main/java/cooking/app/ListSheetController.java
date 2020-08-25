@@ -90,19 +90,15 @@ public class ListSheetController {
 					os = response.getOutputStream();
 					os.write(output);
 					os.flush();
-
 					os.close();
 				} catch (IOException e) {
 					e.getStackTrace();
 				}
-
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
 	//	@PostMapping("/list-sheet")
@@ -139,7 +135,6 @@ public class ListSheetController {
 	//			os = response.getOutputStream();
 	//			os.write(output);
 	//			os.flush();
-	//
 	//			os.close();
 	//		} catch (IOException e) {
 	//			e.getStackTrace();
@@ -187,7 +182,6 @@ public class ListSheetController {
 			os = response.getOutputStream();
 			os.write(output);
 			os.flush();
-
 			os.close();
 		} catch (IOException e) {
 			e.getStackTrace();
@@ -310,7 +304,5 @@ public class ListSheetController {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
-
 }
