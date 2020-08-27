@@ -241,7 +241,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sellingPrice}.setScale(0, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new DecimalFormat("###,###").format($F{sellingPrice})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="150" y="0" width="90" height="30" uuid="d5da88ec-0d87-496e-af5e-d96dc4884e1e">

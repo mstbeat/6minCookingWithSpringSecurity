@@ -161,7 +161,7 @@
 					<font size="14"/>
 					<paragraph rightIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sellingPrice}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new DecimalFormat("###,###").format($F{sellingPrice})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="140" y="150" width="380" height="150" uuid="d3905145-e6df-43de-9817-520a951d1794">
