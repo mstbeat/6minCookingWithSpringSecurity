@@ -188,7 +188,7 @@
 		<band height="30" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<frame>
-				<reportElement x="10" y="0" width="80" height="30" uuid="3575b808-674d-41fc-a1a4-eb9c3c9be2bd"/>
+				<reportElement stretchType="RelativeToTallestObject" x="10" y="0" width="80" height="30" uuid="3575b808-674d-41fc-a1a4-eb9c3c9be2bd"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -211,7 +211,7 @@
 				</image>
 			</frame>
 			<textField>
-				<reportElement x="90" y="0" width="60" height="30" uuid="bf3bee67-ba5b-45e2-a851-7026cdf74cd2">
+				<reportElement stretchType="RelativeToTallestObject" x="90" y="0" width="60" height="30" uuid="bf3bee67-ba5b-45e2-a851-7026cdf74cd2">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -228,7 +228,7 @@
 				<textFieldExpression><![CDATA[$F{productID}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="0" width="70" height="30" uuid="a09bea44-2299-4aee-9ad9-d098491c30a6">
+				<reportElement stretchType="RelativeToTallestObject" x="480" y="0" width="70" height="30" uuid="a09bea44-2299-4aee-9ad9-d098491c30a6">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
@@ -244,7 +244,7 @@
 				<textFieldExpression><![CDATA[new DecimalFormat("###,###").format($F{sellingPrice})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="150" y="0" width="90" height="30" uuid="d5da88ec-0d87-496e-af5e-d96dc4884e1e">
+				<reportElement stretchType="RelativeToTallestObject" x="150" y="0" width="90" height="30" uuid="d5da88ec-0d87-496e-af5e-d96dc4884e1e">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -265,8 +265,8 @@
 								($F{genre}.equals("4")) ? "ファッション" :
 								($F{genre}.equals("5")) ? "書籍" : ""]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="350" y="0" width="130" height="30" uuid="678689ff-7dd4-41ee-b78b-726d46ec67f7">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="350" y="0" width="130" height="30" uuid="678689ff-7dd4-41ee-b78b-726d46ec67f7">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -282,12 +282,14 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="240" y="0" width="110" height="30" uuid="710c6d85-c3c1-45b7-9d01-bf4c7fe6ebb6">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="240" y="0" width="110" height="30" uuid="710c6d85-c3c1-45b7-9d01-bf4c7fe6ebb6">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
 				</reportElement>
-				<box>
+				<box topPadding="0" bottomPadding="3">
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -295,7 +297,7 @@
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="IPAexg"/>
-					<paragraph leftIndent="3"/>
+					<paragraph lineSpacing="Single" leftIndent="3" spacingBefore="3" spacingAfter="0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{maker}]]></textFieldExpression>
 			</textField>

@@ -130,7 +130,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{maker}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField textAdjust="StretchHeight">
 				<reportElement x="140" y="90" width="380" height="30" uuid="8ff22e4b-241f-4381-bac0-4e12c8bd973b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70f9d83d-223d-4ace-9a5a-b0958a0513c1"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -163,7 +163,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[new DecimalFormat("###,###").format($F{sellingPrice})]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField textAdjust="StretchHeight">
 				<reportElement stretchType="RelativeToTallestObject" x="140" y="150" width="380" height="150" uuid="d3905145-e6df-43de-9817-520a951d1794">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
