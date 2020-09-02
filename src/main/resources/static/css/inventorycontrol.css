@@ -271,3 +271,13 @@ table th, table td {
 .form-file-no-img {
   margin: 10px 0 0 110px;
 }
+
+.form-center {
+  text-align: center;
+}
+
+.login-error {
+  text-align: center;
+  font-size: 16px;
+  color: red;
+}

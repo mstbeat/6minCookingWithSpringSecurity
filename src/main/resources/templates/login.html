@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
+<title>ログイン</title>
+</head>
+<body>
+  <h3>商品情報管理システム</h3>
+  <h2>ログイン</h2>
+  <div th:if="${param.error}">
+    <p class="login-error">ユーザー名またはパスワードが違います</p>
+  </div>
+  <form th:action="@{/authenticateTheUser}" th:method="post">
+    <p class="form-center">ユーザー名: <input type="text" name="username" /></p>
+    <p class="form-center">パスワード: <input type="password" name="password" /></p>
+    <div class="form-center"><input type="submit" value="ログイン" /></div>
+  </form>
+</body>
+</html>
