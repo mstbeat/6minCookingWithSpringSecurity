@@ -11,6 +11,9 @@
   <div th:if="${param.error}">
     <p class="login-error">ユーザー名またはパスワードが違います</p>
   </div>
+  <div th:if="${param.logout}">
+    <p class="login-error">ログアウトしました</p>
+  </div>
   <form th:action="@{/authenticateTheUser}" th:method="post">
     <p class="form-center">ユーザー名: <input type="text" name="username" /></p>
     <p class="form-center">パスワード: <input type="password" name="password" /></p>

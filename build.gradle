@@ -48,5 +48,5 @@ dependencies {
   compile group: 'com.google.zxing', name: 'core', version: '3.4.0'
   compile group: 'commons-codec', name: 'commons-codec', version: '1.14'
   implementation 'org.springframework.boot:spring-boot-starter-security'
-  compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+  implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
@@ -50,5 +51,32 @@
     </div>
   </form>
   <button type="button" onclick="returnConfirm(3)" class="btn-goback-btn">戻る</button>
+  <div>
+    <p>ユーザーID：<span sec:authentication="principal.userId"></span>
+    <p>ユーザー名：<span sec:authentication="principal.username"></span>
+    <p>権限：<span sec:authentication="principal.authorities"></span>
+    <p th:each="authority : ${#authentication.getAuthorities()}"
+       th:if="${authority.getAuthority().startsWith('ROLE_')}"
+       th:text="${authority.getAuthority().replaceFirst('ROLE_', '')}">
+    </p>
+  </div>
+  <div sec:authorize="hasRole('ADMIN')">
+    <p>
+      今は<b>ADMIN</b>権限でログインしています。
+    </p>
+  </div>
+  <div sec:authorize="hasRole('MANAGER')">
+    <p>
+      今は<b>MANAGER</b>権限でログインしています。
+    </p>
+  </div>
+  <div sec:authorize="hasRole('EMPLOYEE')">
+    <p>
+      今は<b>EMPLOYEE</b>権限でログインしています。
+    </p>
+  </div>
+  <form th:action="@{/logout}" method="post">
+    <input class="btn-logout-btn" type="submit" value="ログアウト">
+  </form>  
 </body>
 </html>

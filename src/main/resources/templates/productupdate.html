@@ -79,5 +79,8 @@
     <input class="sheet-btn" type="submit" value="帳票">
   </form>
   <button type="button" onclick="returnConfirm(3)" class="btn-goback-btn">戻る</button>
+  <form th:action="@{/logout}" method="post">
+    <input class="btn-logout-btn" type="submit" value="ログアウト">
+  </form> 
 </body>
 </html>
