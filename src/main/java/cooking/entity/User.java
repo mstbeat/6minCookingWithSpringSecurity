@@ -1,7 +1,8 @@
 package cooking.entity;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -39,8 +42,18 @@ public class User implements UserDetails {
 	@Column(name = "enabled", nullable = false)
 	private int enbaled;
 
-	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    protected List<Authority> authorities;
+	@ManyToMany(targetEntity = Authority.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "Users_Authorities",
+			joinColumns = {
+					@JoinColumn(name = "userid", referencedColumnName = "userid",
+							nullable = false, updatable = false)},
+			inverseJoinColumns = {
+					@JoinColumn(name = "roleid", referencedColumnName = "roleid",
+							nullable = false, updatable = false)})
+	private Set<Authority> authorities = new HashSet<>();;
+	
+//	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    protected List<Authority> authorities;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

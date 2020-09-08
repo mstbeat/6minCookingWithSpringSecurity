@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
@@ -79,6 +80,15 @@
     <input class="sheet-btn" type="submit" value="帳票">
   </form>
   <button type="button" onclick="returnConfirm(3)" class="btn-goback-btn">戻る</button>
+  <div class="user-info">
+    <p>更新者：<span sec:authentication="principal.username"></span>
+    <span>(
+      <span th:each="authority : ${#authentication.getAuthorities()}"
+         th:if="${authority.getAuthority().startsWith('ROLE_')}"
+         th:text="${authority.getAuthority().replaceFirst('ROLE_', '')} + ' '">
+      </span>)
+    </span>
+  </div>
   <form th:action="@{/logout}" method="post">
     <input class="btn-logout-btn" type="submit" value="ログアウト">
   </form> 

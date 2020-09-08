@@ -272,24 +272,40 @@ table th, table td {
   margin: 10px 0 0 110px;
 }
 
+/* ログイン画面のフォーム */
 .form-center {
   text-align: center;
 }
 
+/* ログインエラーメッセージ */
 .login-error {
   text-align: center;
   font-size: 16px;
   color: red;
 }
 
+/* 画面下部のログラウトボタン */
 .btn-logout-btn {
   position: absolute;
   left: 87%;
-  margin: 10px 0 20px 10px;
+  margin: 20px 0 20px 10px;
   border-radius: 5%;
   font-size: 15px;
   padding: 5px 20px;
   border-style: none;
   border: 1px solid #000;
   background-color: #808080;
+}
+
+/* 画面下部のユーザー情報 */
+.user-info {
+  position: absolute;
+  left: 62%;
+  margin: 20px 0 20px 10px;
+  font-size: 14px;
+}
+
+/* アクセス権限エラーメッセージ */
+.role-error {
+  color: red;
 }

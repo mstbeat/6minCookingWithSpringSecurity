@@ -29,4 +29,8 @@ function returnConfirm(btn) {
 			location.href = href;
 		}
 	}
+	if (btn == 4) {
+		href = "product-list";
+		location.href = href;
+	}
 }

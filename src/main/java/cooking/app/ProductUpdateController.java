@@ -19,6 +19,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -119,6 +120,7 @@ public class ProductUpdateController {
 	 * @param locale 実行環境のロケール
 	 * @return 削除が完了した場合は商品情報一覧画面、削除対象の商品がない場合は商品情報更新画面
 	 */
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/product-delete")
 	public String deleteProduct(@ModelAttribute("product") Product product,
 			Model model,

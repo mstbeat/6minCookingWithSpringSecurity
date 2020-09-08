@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>アクセス拒否</title>
+</head>
+<link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
+<script type="text/javascript" th:src="@{/js/script.js}"></script>
+<title>商品情報登録</title>
+</head>
+<body>
+  <h3>商品情報管理システム</h3>
+  <h2 class=role-error>アクセス権限がありません</h2>
+  <button type="button" onclick="returnConfirm(4)" class="btn-goback-btn">戻る</button> 
+</body>
+</html>
