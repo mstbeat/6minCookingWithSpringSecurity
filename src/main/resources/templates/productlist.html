@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
@@ -14,7 +15,7 @@
   <form th:action="@{/list-sheet}" th:method="post">
     <input class="sheet-btn" type="submit" value="帳票">
   </form>
-  <button type="button" class="submit-btn" onclick="window.location.href='product-registration'">登録</button>
+  <button sec:authorize="hasRole('ROLE_ADMIN')" type="button" class="submit-btn" onclick="window.location.href='product-registration'">登録</button>
   <div class="list-count">商品情報件数 <span th:text="${listProducts.size()}"></span> 件</div>
   <table border="1">
     <tr>

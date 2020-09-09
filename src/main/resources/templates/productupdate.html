@@ -69,7 +69,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     </div>
   </form>
   <form th:action="@{/product-delete}" th:method="delete" th:object="${product}">
-    <div class="btn">
+    <div class="btn" sec:authorize="hasRole('ROLE_ADMIN')">
       <input type="hidden" th:field="*{productID}">
       <input type="hidden" th:field="*{updateDate}">
       <input class="btn-delete-btn" type="submit" value="削除" onclick="return returnConfirm(2)">
