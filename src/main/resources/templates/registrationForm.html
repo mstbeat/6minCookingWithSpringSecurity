@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
+<title>ユーザー登録</title>
+</head>
+<body>
+  <h3>商品情報管理システム</h3>
+  <h2>ユーザー登録</h2>
+  <form th:action="@{/register}" th:object="${userRegistrationForm}" th:method="post">
+    <p class="form-center">ユーザー名: <input type="text" th:field="*{username}" /></p>
+    <p class="form-center">パスワード: <input type="password" th:field="*{password}" /></p>
+    <p class="form-center">権限: 
+      <input type="checkbox" th:field="*{roleId}" value="1" />ADMIN
+      <input type="checkbox" th:field="*{roleId}" value="2" />MANAGER
+      <input type="checkbox" th:field="*{roleId}" value="3" />EMPLOYEE
+    </p>
+    <div class="form-center"><input type="submit" value="登録" /></div>
+  </form>
+  <div class="form-center-register">
+    <a href="/showMyLoginPage">ログイン画面</a>
+  </div>
+</body>
+</html>

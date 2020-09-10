@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cooking.repository.RegisterUserMapper">
+	<insert id="insertUserInfo"
+		parameterType="cooking.entity.User">
+		INSERT INTO Users (
+			Username,
+			Password
+		) VALUES (
+			#{username},
+			#{password}
+		)
+		<selectKey resultType="Long" keyProperty="userId" order="AFTER">
+			select @@IDENTITY
+ 		</selectKey>
+	</insert>
+	<insert id="insertUserAuthorityInfo">
+		INSERT INTO Users_Authorities (
+			UserId,
+			RoleId
+		) VALUES (
+			#{userId},
+			#{a.roleId}
+		)
+	</insert>
+</mapper>
