@@ -1,32 +1,29 @@
 package cooking.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import cooking.entity.User;
-import cooking.repository.UserRepository;
+import cooking.repository.LoginMapper;
 
 @Service
-@Primary
-public class UserServiceImpl implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
-	private UserRepository userRepository;
+	@Autowired
+	LoginMapper loginMapper;
 
 	@Override
+	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		if (StringUtils.isEmpty(username)) {
-			throw new UsernameNotFoundException("");
-		}
 
-		User user = userRepository.findByUsername(username);
-		if (user == null) {
-			throw new UsernameNotFoundException("");
-		}
+		User user = Optional.ofNullable(loginMapper.findByUsername(username))
+				.orElseThrow(() -> new UsernameNotFoundException("該当するユーザー名は存在しません。"));
 
 		//		Collection<? extends GrantedAuthority> roles = user.getAuthorities();
 		//		for (GrantedAuthority role : roles) {
@@ -35,10 +32,4 @@ public class UserServiceImpl implements UserDetailsService {
 
 		return user;
 	}
-
-	@Autowired
-	public void setUserRepository(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-
 }

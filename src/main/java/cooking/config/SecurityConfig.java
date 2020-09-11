@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/product-registration").hasRole("ADMIN")
 				.antMatchers("/product-update").hasAnyRole("ADMIN", "MANAGER")
 				.antMatchers("/css/**").permitAll()
-				.antMatchers("/registrationForm").permitAll()
+				.antMatchers("/registrationForm").hasRole("ADMIN")
 				.antMatchers("/register").permitAll()
 				.antMatchers("/result").permitAll()
 				.anyRequest().authenticated();
@@ -57,6 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	@Autowired
+	void configureAuthenticationManager(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService)
+				.passwordEncoder(passwordEncoder());
 	}
 
 }

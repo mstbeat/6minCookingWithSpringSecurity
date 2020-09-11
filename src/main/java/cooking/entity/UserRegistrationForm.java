@@ -1,11 +1,17 @@
 package cooking.entity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 public class UserRegistrationForm {
 
+	@NotBlank
 	private String username;
 	
+	@NotBlank
 	private String password;
 	
+	@NotEmpty
 	private Long[] roleId;
 
 	public String getUsername() {

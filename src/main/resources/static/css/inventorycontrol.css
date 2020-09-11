@@ -316,3 +316,41 @@ table th, table td {
   margin-top: 10px;
   font-size: 16px;
 }
+
+/* ユーザー登録エラーメッセージのマージン設定 */
+.register-error {
+  text-align: center;
+  font-size: 16px;
+  color: red;
+  height: auto;
+}
+
+/* ユーザー登録エラーメッセージのリスト */
+.register-error li {
+  list-style: none;
+}
+
+/* 画面下部のユーザー登録ボタン */
+.btn-register-btn {
+  position: absolute;
+  left: 77%;
+  margin: 20px 0 20px 10px;
+  border-radius: 5%;
+  font-size: 15px;
+  padding: 5px 20px;
+  border-style: none;
+  border: 1px solid #000;
+  background-color: #808080;
+}
+
+/* ユーザー登録画面の登録ボタン */
+.form-center-btn {
+  text-align: center;
+  margin: 20px 0 20px 10px;
+  border-radius: 5%;
+  font-size: 20px;
+  padding: 5px 20px;
+  border-style: none;
+  border: 1px solid #000;
+  background-color: #808080;
+}

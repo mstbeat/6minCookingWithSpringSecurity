@@ -3,6 +3,8 @@ package cooking.app;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,17 +26,23 @@ public class UserRegistrationController {
 	}
 
 	@RequestMapping("/register")
-	public String registerUser(@ModelAttribute UserRegistrationForm userRegistrationForm) {
+	public String registerUser(@Validated @ModelAttribute UserRegistrationForm userRegistrationForm,
+			BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			return "registrationForm";
+		}
+
 		User user = new User();
 
-//		String encodedPassword = new BCryptPasswordEncoder().encode(userRegistrationForm.getPassword());
+		//		String encodedPassword = new BCryptPasswordEncoder().encode(userRegistrationForm.getPassword());
 		user.setUsername(userRegistrationForm.getUsername());
 		user.setPassword(userRegistrationForm.getPassword());
-		
+
 		Authority authority = new Authority();
-		
+
 		registerUserService.registerUser(user, authority);
-		
+
 		for (Long roleId : userRegistrationForm.getRoleId()) {
 			authority.setRoleId(roleId);
 			registerUserService.registerRole(user, authority);

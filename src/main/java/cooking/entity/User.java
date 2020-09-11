@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,15 +34,18 @@ public class User implements UserDetails {
 	@Column(name = "userid", nullable = false, unique = true)
 	private Long userId;
 
+	@NotBlank
 	@Column(nullable = false, unique = true)
 	private String username;
 
+	@NotBlank
 	@Column(nullable = false)
 	private String password;
 
 	@Column(name = "enabled", nullable = false)
 	private int enbaled;
 
+	@NotBlank
 	@ManyToMany(targetEntity = Authority.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "Users_Authorities",
 			joinColumns = {
