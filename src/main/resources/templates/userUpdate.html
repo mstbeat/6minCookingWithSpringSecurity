@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
+<script type="text/javascript" th:src="@{/js/script.js}"></script>
+<title>ユーザー更新</title>
+</head>
+<body>
+  <h3>商品情報管理システム</h3>
+  <h2>ユーザー更新</h2>
+  <form th:action="@{/user-update}" th:object="${user}" th:method="put">
+    <div class="register-error" th:object="${roleIds}">
+      <ul th:if="${#fields.hasAnyErrors()}">
+        <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+      </ul>
+    </div>
+    <p class="form-center">ユーザー名: <input type="text" th:field="*{username}" /></p>
+    <p class="form-center">パスワード: <input type="password" th:field="*{password}" /></p>
+    <p class="form-center">権限: 
+      <input type="checkbox" value="1" th:checked="${roleIds.contains(1)}"/>ADMIN 
+      <input type="checkbox" value="2" th:checked="${roleIds.contains(2)}" />MANAGER 
+      <input type="checkbox" value="3" th:checked="${roleIds.contains(3)}" />EMPLOYEE
+    </p>
+    <input type="hidden" th:field="*{userId}">
+    <div class="form-center"><input type="submit" value="更新" class="form-center-btn"/></div>
+  </form>
+  <button type="button" onclick="returnConfirm(5)" class="btn-goback-btn">戻る</button>
+</body>
+</html>

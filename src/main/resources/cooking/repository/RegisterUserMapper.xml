@@ -26,4 +26,14 @@
 			#{a.roleId}
 		)
 	</insert>
+	<update id="updateUserInfo"
+		parameterType="cooking.entity.User">
+		UPDATE
+			User
+		SET
+			Username = #{userame},
+			Password = #{password}
+		WHERE
+			UserId = #{userId}
+	</update>
 </mapper>

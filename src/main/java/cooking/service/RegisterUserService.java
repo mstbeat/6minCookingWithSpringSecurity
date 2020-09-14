@@ -27,4 +27,9 @@ public class RegisterUserService {
 	public void registerRole(User user, Authority authority) {
 		registerUserMapper.insertUserAuthorityInfo(user.getUserId(), authority);
 	}
+
+	public void update(User user) {
+		registerUserMapper.updateUserInfo(user);
+		
+	}
 }

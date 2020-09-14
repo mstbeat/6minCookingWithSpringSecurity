@@ -33,4 +33,11 @@ function returnConfirm(btn) {
 		href = "product-list";
 		location.href = href;
 	}
+	if (btn == 5) {
+		href = "user-list";
+		ret = confirm("入力内容は保存されません。前画面に戻りますか？");
+		if (ret == true) {
+			location.href = href;
+		}
+	}
 }

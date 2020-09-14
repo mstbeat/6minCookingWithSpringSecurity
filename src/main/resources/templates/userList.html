@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script type="text/javascript" th:src="@{/js/script.js}"></script>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/inventorycontrol.css}">
+<title>ユーザー管理画面</title>
+</head>
+<body>
+  <h3>商品情報管理システム</h3>
+  <h2>ユーザー一覧</h2>
+  <div class="messages">
+    <p th:text="${message}">
+  </div>
+  <button class="btn-register-btn" sec:authorize="hasRole('ROLE_ADMIN')" type="button" onclick="window.location.href='registrationForm'">ユーザー登録</button>
+  <div class="list-count">ユーザー数 <span th:text="${listUsers.size()}"></span> 人</div>
+  <table border="1">
+    <tr>
+      <th class="table-header table-header-id">ユーザーID</th>
+      <th class="table-header table-header-genre">ユーザー名</th>
+      <th class="table-header table-header-maker">有効</th>
+      <th class="table-header table-header-name">権限</th>
+      <th class="table-header table-header-btn">更新</th>
+    </tr>
+    <tr th:each="user : ${listUsers}">
+      <td class="table-right" th:text="${user.userId}" />
+      <td class="table-left" th:text="${user.username}" />
+      <td class="table-left" th:text="${user.enbaled}" />
+      <td class="table-left">
+        <span th:each="authority : ${user.getAuthorities()}"
+          th:if="${authority.getAuthority().startsWith('ROLE_')}"
+          th:text="${authority.getAuthority().replaceFirst('ROLE_', '')} + ' '">
+        </span>
+      </td>
+      <td class="table-center">
+        <form th:action="@{/user-update}" th:method="post">
+          <input type="hidden" name="userId" th:value="${user.userId}">
+          <input class="update-btn" type="submit" value="更新">
+        </form>
+      </td>
+    </tr>
+  </table>
+  <form th:action="@{/logout}" method="post">
+    <input class="btn-logout-btn" type="submit" value="ログアウト">
+  </form>
+  <button type="button" onclick="returnConfirm(3)" class="btn-goback-btn">戻る</button>
+</body>
+</html>
