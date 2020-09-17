@@ -23,13 +23,21 @@ public class RegisterUserService {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		registerUserMapper.insertUserInfo(user);
 	}
-	
+
 	public void registerRole(User user, Authority authority) {
 		registerUserMapper.insertUserAuthorityInfo(user.getUserId(), authority);
 	}
 
 	public void update(User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		registerUserMapper.updateUserInfo(user);
-		
+	}
+
+	public void deleteRole(User user) {
+		registerUserMapper.deleteUserAuthorityInfo(user.getUserId());
+	}
+
+	public void updateRole(User user, Authority authority) {
+		registerUserMapper.insertUserAuthorityInfo(user.getUserId(), authority);
 	}
 }

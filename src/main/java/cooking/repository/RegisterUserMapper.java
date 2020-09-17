@@ -10,8 +10,12 @@ import cooking.entity.User;
 public interface RegisterUserMapper {
 
 	public void insertUserInfo(User user);
-	
+
 	public void insertUserAuthorityInfo(@Param("userId") Long userId, @Param("a") Authority authority);
 
 	public void updateUserInfo(User user);
+
+	public void updateUserAuthorityInfo(@Param("userId") Long userId, @Param("a") Authority authority);
+
+	public void deleteUserAuthorityInfo(Long userId);
 }

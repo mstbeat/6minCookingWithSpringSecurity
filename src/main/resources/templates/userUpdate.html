@@ -10,17 +10,17 @@
   <h3>商品情報管理システム</h3>
   <h2>ユーザー更新</h2>
   <form th:action="@{/user-update}" th:object="${user}" th:method="put">
-    <div class="register-error" th:object="${roleIds}">
+    <div class="register-error" th:object="${form}">
       <ul th:if="${#fields.hasAnyErrors()}">
         <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
       </ul>
     </div>
     <p class="form-center">ユーザー名: <input type="text" th:field="*{username}" /></p>
     <p class="form-center">パスワード: <input type="password" th:field="*{password}" /></p>
-    <p class="form-center">権限: 
-      <input type="checkbox" value="1" th:checked="${roleIds.contains(1)}"/>ADMIN 
-      <input type="checkbox" value="2" th:checked="${roleIds.contains(2)}" />MANAGER 
-      <input type="checkbox" value="3" th:checked="${roleIds.contains(3)}" />EMPLOYEE
+    <p class="form-center" th:object="${form}">権限: 
+      <input type="checkbox" value="1" th:checked="${roleIds.contains(1)}" th:field="*{roleId}" />ADMIN 
+      <input type="checkbox" value="2" th:checked="${roleIds.contains(2)}" th:field="*{roleId}" />MANAGER 
+      <input type="checkbox" value="3" th:checked="${roleIds.contains(3)}" th:field="*{roleId}" />EMPLOYEE
     </p>
     <input type="hidden" th:field="*{userId}">
     <div class="form-center"><input type="submit" value="更新" class="form-center-btn"/></div>

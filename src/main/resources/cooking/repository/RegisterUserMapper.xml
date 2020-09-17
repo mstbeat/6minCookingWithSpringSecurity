@@ -29,11 +29,29 @@
 	<update id="updateUserInfo"
 		parameterType="cooking.entity.User">
 		UPDATE
-			User
+			Users
 		SET
-			Username = #{userame},
+			Username = #{username},
 			Password = #{password}
 		WHERE
 			UserId = #{userId}
 	</update>
+	<update id="updateUserAuthorityInfo">
+		INSERT INTO Users_Authorities (
+			UserId,
+			RoleId
+		) SELECT * FROM (
+			SELECT
+				#{userId},
+				#{a.roleId}
+		) AS tmp
+		WHERE NOT EXISTS (
+			SELECT * FROM Users_Authorities WHERE  UserId=#{userId} AND RoleId=#{a.roleId}
+		) LIMIT 1
+	</update>
+	<delete id="deleteUserAuthorityInfo">
+		DELETE FROM Users_Authorities
+		WHERE
+			UserId = #{userId}
+	</delete>
 </mapper>

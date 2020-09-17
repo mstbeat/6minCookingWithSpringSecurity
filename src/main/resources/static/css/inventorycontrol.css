@@ -284,13 +284,13 @@ table th, table td {
   color: red;
 }
 
-/* 画面下部のログラウトボタン */
+/* 画面下部のログアウトボタン */
 .btn-logout-btn {
   position: absolute;
   left: 87%;
   margin: 20px 0 20px 10px;
   border-radius: 5%;
-  font-size: 15px;
+  font-size: 20px;
   padding: 5px 20px;
   border-style: none;
   border: 1px solid #000;
@@ -330,13 +330,13 @@ table th, table td {
   list-style: none;
 }
 
-/* 画面下部のユーザー登録ボタン */
+/* 画面下部のユーザー管理ボタン */
 .btn-register-btn {
   position: absolute;
-  left: 77%;
+  left: 72%;
   margin: 20px 0 20px 10px;
   border-radius: 5%;
-  font-size: 15px;
+  font-size: 20px;
   padding: 5px 20px;
   border-style: none;
   border: 1px solid #000;
